@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 16:05:35 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/05 17:25:07 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ void	prompt(void)
 		{
 			root = lexer(input, &root);
 			ft_print_lexer(root);
-			ft_lexer_clear(&root);
 			printf("t'as dit \"%s\"\n", input);
+			ft_lexer_clear(&root);
 			free(input);
 		}
 	}
