@@ -1,36 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   lst_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/06/29 18:45:11 by marine           ###   ########.fr       */
+/*   Created: 2023/05/01 18:57:48 by marine            #+#    #+#             */
+/*   Updated: 2023/07/05 15:20:25 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	prompt(void)
+void	ft_lexer_del_one(t_lexer *node)
 {
-	char	*input;
+	free (node->word);
+	node->word = NULL;
+	free (node);
+}
 
-	while (1)
+void	ft_lexer_clear(t_lexer **node)
+{
+	t_lexer	*p;
+
+	if (node)
 	{
-		input = readline("aristoshell$ ");
-		add_history(input);
-		if (!input || ft_strncmp(input, "exit", ft_strlen(input) + 1) == 0)
+		p = *node;
+		while (*node)
 		{
-			printf("exit\n");
-			free(input);
-			clear_history();
-			return ;
-		}
-		if (input && input[0] != 0)
-		{
-			printf("t'as dit \"%s\"\n", input);
-			free(input);
+			p = (*node)->next;
+			ft_lexer_del_one(*node);
+			*node = p;
+			//surement des leaks lol
 		}
 	}
 }
