@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 17:52:19 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/07/04 16:08:42 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/07/05 19:57:55 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,18 +114,11 @@ char *get_args(t_cmd cmd, char **argv)
 
 void    child_process(t_cmd cmd, char **argv, char **envp)
 {
-    int take_from = 1;
-    int send_to = 0;
-
-    if (take_from == 1)
-        dup2(0, cmd.infile);
-    if (send_to == 1)
-        dup2(1, cmd.outfile);
     cmd.paths = find_path(envp);
     cmd.cmd_paths = ft_split(cmd.paths, ':');
     cmd.cmd_args = ft_split(get_args(cmd, argv), ' ');
     cmd.cmd = get_cmd(cmd.cmd_paths, cmd.cmd_args[0]);
-    if(!cmd.cmd || (send_to == 1 && cmd.outfile == -1))
+    if(!cmd.cmd)
     {
         printf("cmd error\n");
         exit(1);
@@ -137,8 +130,6 @@ int main(int argc, char **argv, char **envp)
 {
     t_cmd   cmd;
 
-    cmd.infile = open("in", O_RDONLY);
-    cmd.outfile = open("out", O_CREAT | O_TRUNC | O_RDWR, 0777);
     cmd.pid1 = fork();
     if(cmd.pid1 == 0)
         child_process(cmd, argv, envp);
