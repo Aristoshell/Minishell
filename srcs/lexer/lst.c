@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 18:57:48 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 15:47:55 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/06 10:42:32 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ t_lexer	*ft_last_lexer_node(t_lexer *node)
 void	ft_node_lexer_add_back(t_lexer **node, t_lexer *new)
 {
 	t_lexer	*temp_last;
-	
+
 	if (*node != NULL)
 	{
 		temp_last = ft_last_lexer_node(*node);
@@ -59,7 +59,8 @@ void	ft_node_lexer_add_back(t_lexer **node, t_lexer *new)
 	else
 		*node = new;
 }
-void ft_print_lexer(t_lexer	*node)
+
+void	ft_print_lexer(t_lexer	*node)
 {
 	while (node)
 	{

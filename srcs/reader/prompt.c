@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 17:25:07 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/06 10:39:43 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	prompt(void)
 {
 	char	*input;
-	t_lexer *root;
+	t_lexer	*root;
 
 	root = NULL;
 	while (1)

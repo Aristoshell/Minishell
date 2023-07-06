@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 16:02:38 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/06 10:41:18 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ t_lexer_type	check_type(char *input)
 t_lexer	*lexer(char *input, t_lexer **root)
 {
 	char	**line;
-	t_lexer *new;
+	t_lexer	*new;
+	int		i;
 
-	new = NULL;
 	line = ft_split_space(input);
-	int i = 0;
+	new = NULL;
+	i = 0;
 	while (line[i])
 	{
 		new = ft_new_lexer_node(line[i], i);
 		if (new == NULL)
-			return(ft_lexer_clear(root), NULL);
+			return (ft_lexer_clear(root), NULL);
 		ft_node_lexer_add_back(root, new);
 		i++;
 	}
@@ -48,7 +49,7 @@ t_lexer	*lexer(char *input, t_lexer **root)
 // 	int i;
 // 	int count_s_quote;
 // 	int count_d_quote;
-	
+
 // 	i = 0;
 // 	count_s_quote = 0;
 // 	count_d_quote = 0;
