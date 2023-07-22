@@ -1,4 +1,4 @@
 logs/
-./a.out
-./minishell
+a.out
+minishell
 *.o
