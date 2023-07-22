@@ -4,6 +4,12 @@ Notes 06/07/2023 :
 
 Executable : minishell
 
+**Built-in**
+22/07 : 
+- echo et echo -n fait (vérifs à faire + sûrement à adapter un peu pour l'exec)
+- cd en cours
+- pwd en cours
+
 **Prompt**
 
 Un prompt avec historique fonctionnel

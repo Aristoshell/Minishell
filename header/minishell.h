@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/07/06 10:47:52 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/22 23:07:58 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 //include 
-# include "libft.h"
+# include "../libft/libft.h"
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -60,18 +60,21 @@ typedef enum e_in_out
 {
 	stdin_,
 	stdout_,
+	heredoc_,
+	append_,
 	pipe_,
 	file_
 }			t_in_out;
 
 typedef struct s_cmd
 {
-	char				**command;
-	t_builtin			command_source;
-	char				*path_cmd;
+	pid_t				pid;
+	char				**cmd_args;
+	t_builtin			cmd_type;
+	char				**path_cmd;
 	t_in_out			input;
-	int					fd_in;
 	t_in_out			output;
+	int					fd_in;
 	int					fd_out;
 	struct s_cmd		*next;
 }			t_cmd;
