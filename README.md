@@ -21,9 +21,6 @@ Utilisation :
 
 Un prompt avec historique fonctionnel
 
-Besoin de : 
-- checker les leaks
-
 Gestion des quotes :
 - normalement ça marche, j'ai bien testé plusieurs cas, 
 - besoin de checker les leaks
@@ -39,10 +36,11 @@ Besoin de :
 - double chainer la liste
 - checker l'histoire des quotes
 
+Problème possible : 
+- on fait un split avec des espaces, mais si j'ai un "echo coucou|ls", les mots ne vont pas être séparés mais pourtant dans le shell ils devraient
+- or si j'utilise mes tokens en séparateur, je ne suis pas à l'abris d'avoir un token dans une quote qui ne devrait pas être séparé....
+
+
 **Parser**
 
 Regrouper les mots et les tokens en paquet pour fournir à Louis ce dont il a besoin
-
-Besoin de :
-- mieux comprendre ce dont Louis a besoin
-- y a t'il besoin d'une liste doublement chaînée ?
