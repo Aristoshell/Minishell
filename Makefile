@@ -6,12 +6,13 @@
 #    By: marine <marine@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/07/05 15:20:16 by marine           ###   ########.fr        #
+#    Updated: 2023/07/27 18:29:44 by marine           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_FILES	= 	main.c \
 				reader/prompt.c \
+				reader/check_quotes.c \
 				lexer/lexer.c \
 				lexer/split_space.c \
 				lexer/lst.c \

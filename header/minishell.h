@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/07/22 23:07:58 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/27 22:51:54 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,14 @@
 
 //include 
 # include "../libft/libft.h"
+# include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
 //defines
-
+# define double_quote 34
+# define simple_quote 39
+ 
 //typedefs
 
 /* Lexer */
@@ -89,6 +92,8 @@ typedef struct s_data
 
 /* Général */
 void	prompt(void);
+char 	check_open_quote(char *input);
+char *close_quote(char quote);
 
 /* Lexer */
 char	**ft_split_space(char const *str);
