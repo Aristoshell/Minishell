@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 23:33:01 by marine            #+#    #+#             */
-/*   Updated: 2023/07/24 00:08:07 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/28 12:12:25 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-void pwd(void)
+void	pwd(void)
 {
-	char *working_dir;
+	char	*working_dir;
 
 	working_dir = NULL;
 	getcwd(working_dir, 1024);
@@ -24,7 +24,7 @@ void pwd(void)
 		printf("pwd : %s\n", working_dir);
 }
 
-int main(void)
+int	main(void)
 {
 	pwd();
 }

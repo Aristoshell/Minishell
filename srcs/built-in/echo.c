@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:56:57 by marine            #+#    #+#             */
-/*   Updated: 2023/07/22 23:23:52 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/28 12:12:00 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	echo(char **argv, int n)
 		ft_printf(1, "%s", argv[i]);
 		i++;
 		if (argv[i] && argv[i][0])
-			ft_printf(1," ");
+			ft_printf(1, " ");
 	}
 	if (n == 1)
-		ft_printf(1,"\n");
+		ft_printf(1, "\n");
 }
 
 int	main(int argc, char **argv)

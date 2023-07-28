@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/07/27 22:51:54 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/28 12:08:28 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ typedef struct s_data
 
 /* Général */
 void	prompt(void);
+char 	*manage_quote(char *input);
 char 	check_open_quote(char *input);
-char *close_quote(char quote);
+char 	*close_quote(char quote);
 
 /* Lexer */
 char	**ft_split_space(char const *str);

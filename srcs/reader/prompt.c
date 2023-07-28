@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 11:56:17 by madavid          ###   ########.fr       */
+/*   Updated: 2023/07/28 12:08:36 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 void	prompt(void)
 {
 	char	*input;
-	char	quote;
+	char	*tmp;
+
 	//t_lexer	*root;
-	char *end_ofquote;
-	char *tmp;
-	quote = 0;
-	end_ofquote = NULL;
 	//root = NULL;
+	tmp = NULL;
 	while (1)
 	{
 		input = readline("aristoshell$ ");
@@ -35,17 +33,9 @@ void	prompt(void)
 		}
 		if (input && input[0] != 0)
 		{
-			quote = check_open_quote(input);
-			while (quote != 0)
-			{
-				end_ofquote = close_quote(quote);
-				tmp = ft_strdup(input);
-				free(input);
-				input = ft_strjoin(tmp, end_ofquote);
-				free(end_ofquote);
-				free(tmp);
-				quote = check_open_quote(input);
-			}
+			tmp = manage_quote(input);
+			input = ft_strdup(tmp);
+			free(tmp);
 			//root = lexer(input, &root);
 			//ft_print_lexer(root);
 			printf("t'as dit \"%s\"\n", input);
