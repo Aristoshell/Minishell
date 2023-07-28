@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 12:08:36 by madavid          ###   ########.fr       */
+/*   Updated: 2023/07/28 18:47:58 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	prompt(void)
 {
 	char	*input;
-	char	*tmp;
+	//char	*tmp;
 
-	//t_lexer	*root;
-	//root = NULL;
+	t_lexer	*root;
+	root = NULL;
 	tmp = NULL;
 	while (1)
 	{
@@ -33,13 +33,15 @@ void	prompt(void)
 		}
 		if (input && input[0] != 0)
 		{
+			/*partie quote
 			tmp = manage_quote(input);
 			input = ft_strdup(tmp);
 			free(tmp);
-			//root = lexer(input, &root);
-			//ft_print_lexer(root);
-			printf("t'as dit \"%s\"\n", input);
-			//ft_lexer_clear(&root);
+			*/
+			root = lexer(input, &root);
+			ft_print_lexer(root);
+			//printf("t'as dit \"%s\"\n", input);
+			ft_lexer_clear(&root);
 			free(input);
 		}
 	}

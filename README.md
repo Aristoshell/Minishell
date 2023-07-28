@@ -44,3 +44,19 @@ Problème possible :
 **Parser**
 
 Regrouper les mots et les tokens en paquet pour fournir à Louis ce dont il a besoin
+
+
+
+
+**Parsing**
+
+Etape 1 : reader
+- Va donner une grande chaine de charactere
+
+Etape 2 : lexer
+- va separer chaque mot un a un en indiquant son token
+- utiliser un enum pour check si on est dans une quote ou pas
+- format liste chainee
+
+Etape 3 : parser
+- va creer un maillon par commande en incluant ses redirections

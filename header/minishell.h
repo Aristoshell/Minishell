@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 12:08:28 by madavid          ###   ########.fr       */
+/*   Updated: 2023/07/28 17:30:35 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,14 @@
 
 /* Lexer */
 
+
+typedef enum e_open_quote
+{
+	no_q,
+	simple_q,
+	double_q
+}			t_open_quote;
+
 typedef enum e_lexer_type
 {
 	word,
@@ -37,7 +45,7 @@ typedef enum e_lexer_type
 
 typedef struct s_lexer
 {
-	int				index;
+	int				i;
 	t_lexer_type	type;
 	char			*word;
 	struct s_lexer	*previous;
@@ -84,8 +92,9 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	int		pipe;
-	t_cmd	*first_arg;
+	int				pipe;
+	t_open_quote	open_quote;
+	t_cmd			*first_arg;
 }			t_data;
 
 //fonctions
