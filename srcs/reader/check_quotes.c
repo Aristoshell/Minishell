@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 00:29:07 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/28 11:53:35 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,23 +38,29 @@ char *close_quote(char quote)
 	while (ft_srch_char(additional_line, quote) == 0)
 	{
 		if (end_of_input)
+		{
 			tmp = ft_strjoin(end_of_input, additional_line);
+			free(end_of_input);
+		}
 		else
 			tmp = strdup(additional_line);
-		free(end_of_input);
 		free(additional_line);
 		end_of_input = ft_strdup(tmp);
+		free(tmp);
 		write(1, ">", 1);
 		additional_line = ft_get_next_line(0);
 	}
 	if (end_of_input == NULL)
-		end_of_input = strdup(additional_line);
+		tmp = strdup(additional_line);
 	else
-		end_of_input = ft_strjoin(end_of_input, additional_line);
-	int size = strlen(end_of_input);
-	end_of_input[size - 1] = 0;
+	{
+		tmp = ft_strjoin(end_of_input, additional_line);
+		free(end_of_input);	
+	}
+	int size = strlen(tmp);
+	tmp[size - 1] = 0;
 	free(additional_line);
-	return (end_of_input);
+	return (tmp);
 }
 
 char	check_open_quote(char *input)

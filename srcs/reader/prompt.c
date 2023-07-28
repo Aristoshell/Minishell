@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 00:27:38 by marine           ###   ########.fr       */
+/*   Updated: 2023/07/28 11:56:17 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	prompt(void)
 	char	quote;
 	//t_lexer	*root;
 	char *end_ofquote;
-
+	char *tmp;
 	quote = 0;
 	end_ofquote = NULL;
 	//root = NULL;
@@ -38,12 +38,12 @@ void	prompt(void)
 			quote = check_open_quote(input);
 			while (quote != 0)
 			{
-				if (end_ofquote != NULL)
-					free (end_ofquote);
 				end_ofquote = close_quote(quote);
-				char *tmp = ft_strdup(input);
+				tmp = ft_strdup(input);
 				free(input);
 				input = ft_strjoin(tmp, end_ofquote);
+				free(end_ofquote);
+				free(tmp);
 				quote = check_open_quote(input);
 			}
 			//root = lexer(input, &root);
