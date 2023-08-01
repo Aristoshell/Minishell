@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:56:57 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 12:12:00 by madavid          ###   ########.fr       */
+/*   Updated: 2023/08/01 16:57:14 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	echo(char **argv, int n)
 		if (argv[i] && argv[i][0])
 			ft_printf(1, " ");
 	}
-	if (n == 1)
+	if (n == 0)
 		ft_printf(1, "\n");
 }
 

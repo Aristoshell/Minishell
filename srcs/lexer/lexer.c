@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/06 10:41:18 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/01 18:55:00 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ t_lexer_type	check_type(char *input)
 
 t_lexer	*lexer(char *input, t_lexer **root)
 {
-	char	**line;
 	t_lexer	*new;
 	int		i;
+	int		index;
 
-	line = ft_split_space(input);
 	new = NULL;
 	i = 0;
-	while (line[i])
+	index = 0;
+	while (input[i])
 	{
-		new = ft_new_lexer_node(line[i], i);
+		new = ft_new_lexer_node(ft_split_lexer(input, &i), index);
 		if (new == NULL)
 			return (ft_lexer_clear(root), NULL);
 		ft_node_lexer_add_back(root, new);
-		i++;
+		index++;
 	}
 	return (*root);
 }

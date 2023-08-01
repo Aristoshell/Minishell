@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_space.c                                      :+:      :+:    :+:   */
+/*   split_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:47:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 12:33:14 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/01 17:45:05 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,31 +65,46 @@ void	clear_split(char **split, int words)
 	free(split);
 }
 
-char	**ft_split_space(char const *str)
+char	*ft_split_lexer(char const *str, int *i)
 {
-	char	**tab;
-	int		words;
-	int		chars;
-	int		i;
+	char			*word;
+	int				len_word;
+	t_open_quote	open_quote;
+	int				j;
+	int				last_is_backslash;
 
-	words = 0;
-	i = 0;
+	len_word = 0;
+	open_quote = no;
+	j = 0;
 	if (!str)
 		return (NULL);
-	tab = malloc((countword(str) + 1) * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	while (words < countword(str))
+	while (str[*i])
 	{
-		chars = 0;
-		while (str[i] && is_printable(str[i]) == 0)
-			i++;
-		tab[words] = malloc((countlenword(&str[i]) + 1) * sizeof(char));
-		if (!tab[words])
-			return (clear_split(tab, words), NULL);
+		if (is_meta(str[*i]) == 1)
+		{
+			word = malloc (sizeof(char) * 2);
+			if (word == NULL)
+				return (NULL);
+			word[0] = str[*i];
+			word[1] = 0;
+		}
+		while (str[*i] && is_printable(str[*i]) == 0) /sauter les espaces debut
+		{
+			*i++;
+			j++;
+		}
+		while(str[*i] && is_printable(str[*i]) == 1 &&)
+		{
+			
+		}
+
+
+		word = malloc((len_word + 1) * sizeof(char));
+		if (word)
+			return (NULL);
 		while (str[i] && is_printable(str[i]) == 1)
 			tab[words][chars++] = str[i++];
 		tab[words++][chars] = 0;
 	}
-	return (tab[words] = NULL, tab);
+	return (word);
 }
