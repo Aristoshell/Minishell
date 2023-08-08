@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/08/07 18:41:36 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:04:37 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ void	prompt(void)
 			free(tmp);
 			*/
 			root = lexer(input, &root);
-			ft_print_lexer(root);
+			ft_print_lexer(&root);
 			//printf("t'as dit \"%s\"\n", input);
 			ft_lexer_clear(&root);
-			free(input);
 		}
+		free(input);
 	}
 }

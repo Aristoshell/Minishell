@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:47:29 by marine            #+#    #+#             */
-/*   Updated: 2023/08/07 19:07:19 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/08 19:33:19 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,40 @@ int	is_printable(char c)
 	return (0);
 }
 
+bool	is_meta(char c)
+{
+	if (c == '|' || c == '<' || c == '>')
+		return (true);
+	return (false);
+}
+
+bool	is_quote(char c)
+{
+	if (c == '\'' || c == '\"')
+		return (true);
+	return (false);
+}
+
+
+int	countwordlenquote(char const *str, int *i, char quote)
+{
+	int		len_word;
+
+	len_word = 0;
+	while(str[*i] && str[*i] != quote) // ici futur probleme pour la gestion des quotes car le meta est important si quote
+	{
+		*i += 1 ;
+		len_word++;
+	}
+	return (len_word);
+}
+
 int	countwordlen(char const *str, int *i)
 {
 	int		len_word;
 
 	len_word = 0;
-	while(str[*i] && is_printable(str[*i]) == 1 /*&& is_meta(str[*i]) == 0*/) // ici futur probleme pour la gestion des quotes car le meta est important si quote
+	while(str[*i] && is_printable(str[*i]) == 1 && is_meta(str[*i]) == false && is_quote(str[*i]) == false) // ici futur probleme pour la gestion des quotes car le meta est important si quote
 	{
 		*i += 1 ;
 		len_word++;
@@ -45,6 +73,35 @@ char	*malloc_meta(char const *str, int *i)
 	return(word);
 }
 
+char	*malloc_quote(char const *str, int *i)
+{
+	char	quote;
+	char	*word;
+	int				len_word;
+	int j;
+
+	j = 0;
+	quote = str[*i];
+	len_word = 0;
+	*i += 1;
+	len_word = countwordlenquote(str, i, quote); // compter taille mot
+	*i = *i - len_word;
+	word = malloc((len_word + 1) * sizeof(char));
+	if (!word)
+		return (NULL);
+	while (j < len_word)
+	{
+		word[j] = str[*i];
+		j++;
+		*i += 1;
+	}
+	word[len_word] = 0;
+	if (str[*i] == quote)
+		*i += 1;
+	return(word);
+}
+
+
 char	*ft_split_lexer(char const *str, int *i)
 {
 	char			*word;
@@ -58,8 +115,10 @@ char	*ft_split_lexer(char const *str, int *i)
 	return (NULL);
 	while (str[*i] && is_printable(str[*i]) == 0) // sauter les espaces
 		*i = *i + 1;
-	//if (is_meta(str[*i]) == 1) // check si meta
-	//	return (malloc_meta(str, i));
+	if (is_meta(str[*i]) == true) // check si meta
+		return (malloc_meta(str, i));
+	if (is_quote(str[*i]) == true) // check si meta
+		return (malloc_quote(str, i));
 	len_word = countwordlen(str, i); // compter taille mot
 	*i = *i - len_word;
 	word = malloc((len_word + 1) * sizeof(char));

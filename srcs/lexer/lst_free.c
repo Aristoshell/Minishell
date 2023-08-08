@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lst_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 18:57:48 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 15:20:25 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/08 16:10:35 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	ft_lexer_clear(t_lexer **node)
 		p = *node;
 		while (*node)
 		{
+			printf("node : %s\n", (*node)->word);
 			p = (*node)->next;
 			ft_lexer_del_one(*node);
 			*node = p;
