@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 17:30:35 by madavid          ###   ########.fr       */
+/*   Updated: 2023/08/07 17:15:24 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	ft_print_lexer(t_lexer	*node);
 void	ft_lexer_del_one(t_lexer *node);
 void	ft_lexer_clear(t_lexer **node);
 //void 			check_quote(char *input);
+char	*ft_split_lexer(char const *str, int *i);
 
 /* Parser */
 

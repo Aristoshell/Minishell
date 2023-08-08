@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 18:57:48 by marine            #+#    #+#             */
-/*   Updated: 2023/07/06 10:42:32 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/07 17:19:47 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ t_lexer	*ft_new_lexer_node(char *input, int index)
 {
 	t_lexer	*new_node;
 
+	(void) index;
 	new_node = malloc(sizeof(t_lexer));
 	if (new_node == NULL)
 		return (NULL);
@@ -24,7 +25,7 @@ t_lexer	*ft_new_lexer_node(char *input, int index)
 		new_node->word = input;
 	else
 		new_node->word = NULL;
-	new_node->index = index;
+	//new_node->index = index;
 	new_node->previous = NULL;
 	new_node->next = NULL;
 	return (new_node);
@@ -64,7 +65,7 @@ void	ft_print_lexer(t_lexer	*node)
 {
 	while (node)
 	{
-		printf("Index : %d, type : %u, word : |%s|\n", node->index, node->type, node->word);
+		printf("type : %u, word : |%s|\n", node->type, node->word);
 		if (!node->next)
 			return ;
 		*node = *node->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_lexer.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:47:29 by marine            #+#    #+#             */
-/*   Updated: 2023/08/01 17:45:05 by madavid          ###   ########.fr       */
+/*   Updated: 2023/08/07 19:07:19 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,92 +19,68 @@ int	is_printable(char c)
 	return (0);
 }
 
-static int	countword(char const *s)
+int	countwordlen(char const *str, int *i)
 {
-	int	i;
-	int	counter;
+	int		len_word;
 
-	i = 0;
-	counter = 0;
-	while (s[i])
+	len_word = 0;
+	while(str[*i] && is_printable(str[*i]) == 1 /*&& is_meta(str[*i]) == 0*/) // ici futur probleme pour la gestion des quotes car le meta est important si quote
 	{
-		while (is_printable(s[i]) == 0 && s[i] != 0)
-			i++;
-		if (is_printable(s[i]) == 1 && s[i] != 0)
-			counter++;
-		while (is_printable(s[i]) == 1 && s[i] != 0)
-			i++;
+		*i += 1 ;
+		len_word++;
 	}
-	return (counter);
+	return (len_word);
 }
 
-static int	countlenword(char const *s)
+char	*malloc_meta(char const *str, int *i)
 {
-	int	count;
-	int	i;
+	char	*word;
 
-	count = 0;
-	i = 0;
-	while (is_printable(s[i]) == 0 && s[i] != 0)
-		i++;
-	while (is_printable(s[i]) == 1 && s[i] != 0)
-	{
-		i++;
-		count++;
-	}
-	return (count);
-}
-
-void	clear_split(char **split, int words)
-{
-	int	i;
-
-	i = 0;
-	while (i < words)
-		free(split[i++]);
-	free(split);
+	word = malloc (sizeof(char) * 2);
+	if (word == NULL)
+		return (NULL);
+	word[0] = str[*i];
+	word[1] = 0;
+	*i += 1;
+	return(word);
 }
 
 char	*ft_split_lexer(char const *str, int *i)
 {
 	char			*word;
 	int				len_word;
-	t_open_quote	open_quote;
+	//t_open_quote	open_quote;
 	int				j;
-	int				last_is_backslash;
-
 	len_word = 0;
-	open_quote = no;
+	//open_quote = no;
 	j = 0;
 	if (!str)
+	return (NULL);
+	while (str[*i] && is_printable(str[*i]) == 0) // sauter les espaces
+		*i = *i + 1;
+	//if (is_meta(str[*i]) == 1) // check si meta
+	//	return (malloc_meta(str, i));
+	len_word = countwordlen(str, i); // compter taille mot
+	*i = *i - len_word;
+	word = malloc((len_word + 1) * sizeof(char));
+	if (!word)
 		return (NULL);
-	while (str[*i])
+	while (j < len_word)
 	{
-		if (is_meta(str[*i]) == 1)
-		{
-			word = malloc (sizeof(char) * 2);
-			if (word == NULL)
-				return (NULL);
-			word[0] = str[*i];
-			word[1] = 0;
-		}
-		while (str[*i] && is_printable(str[*i]) == 0) /sauter les espaces debut
-		{
-			*i++;
-			j++;
-		}
-		while(str[*i] && is_printable(str[*i]) == 1 &&)
-		{
-			
-		}
-
-
-		word = malloc((len_word + 1) * sizeof(char));
-		if (word)
-			return (NULL);
-		while (str[i] && is_printable(str[i]) == 1)
-			tab[words][chars++] = str[i++];
-		tab[words++][chars] = 0;
+		word[j] = str[*i];
+		j++;
+		*i += 1;
 	}
+	word[len_word] = 0;
 	return (word);
 }
+
+
+/* 
+
+Vérifications à faire
+
+- si on est dans une quote, ne pas prendre en compte les metas characteres
+- tant qu'une quote n'est pas fermée, on n'a pas fini le len word 
+- vérifier si on a des \
+*/

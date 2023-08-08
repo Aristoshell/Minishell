@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/28 18:47:58 by madavid          ###   ########.fr       */
+/*   Updated: 2023/08/07 18:41:36 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	prompt(void)
 
 	t_lexer	*root;
 	root = NULL;
-	tmp = NULL;
+	//tmp = NULL;
 	while (1)
 	{
 		input = readline("aristoshell$ ");
