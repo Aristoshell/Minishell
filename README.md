@@ -60,3 +60,9 @@ Etape 2 : lexer
 
 Etape 3 : parser
 - va creer un maillon par commande en incluant ses redirections
+
+
+
+
+--> split sur l'espace qui renvoie un tab de char *
+--> parcours le tab de char avec double boucle

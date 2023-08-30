@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/08/08 14:54:27 by madavid          ###   ########.fr       */
+/*   Updated: 2023/08/28 18:21:28 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,12 @@ typedef struct s_cmd
 	int					fd_out;
 	struct s_cmd		*next;
 }			t_cmd;
+
+typedef struct s_indexer
+{
+	char	*word;
+	int		index;
+}			t_indexer;
 
 typedef struct s_data
 {

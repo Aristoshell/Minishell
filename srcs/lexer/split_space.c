@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:47:29 by marine            #+#    #+#             */
-/*   Updated: 2023/07/05 12:33:14 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/28 18:35:18 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,27 @@ void	clear_split(char **split, int words)
 
 char	**ft_split_space(char const *str)
 {
-	char	**tab;
-	int		words;
-	int		chars;
-	int		i;
+	t_indexer	*tab;
+	int			words;
+	int			chars;
+	int			i;
+	int			j;
 
 	words = 0;
 	i = 0;
+	j = 0;
 	if (!str)
 		return (NULL);
-	tab = malloc((countword(str) + 1) * sizeof(char *));
+	tab = malloc((countword(str) + 1) * sizeof(t_indexer));
 	if (!tab)
 		return (NULL);
-	while (words < countword(str))
+	
+	while (i < countword(str) - 1)
 	{
+		tab[i].index = i;
+		tab[i].word = create_word();
+
+		//aller rinma
 		chars = 0;
 		while (str[i] && is_printable(str[i]) == 0)
 			i++;
@@ -90,6 +97,7 @@ char	**ft_split_space(char const *str)
 		while (str[i] && is_printable(str[i]) == 1)
 			tab[words][chars++] = str[i++];
 		tab[words++][chars] = 0;
+		i++;
 	}
 	return (tab[words] = NULL, tab);
 }
