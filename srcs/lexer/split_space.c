@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_space.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 19:47:29 by marine            #+#    #+#             */
-/*   Updated: 2023/08/28 18:35:18 by marine           ###   ########.fr       */
+/*   Updated: 2023/08/30 17:19:26 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ char	**ft_split_space(char const *str)
 		tab[i].index = i;
 		tab[i].word = create_word();
 
-		//aller rinma
 		chars = 0;
 		while (str[i] && is_printable(str[i]) == 0)
 			i++;

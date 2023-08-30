@@ -3,21 +3,16 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marine <marine@student.42.fr>              +#+  +:+       +#+         #
+#    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/08/28 18:32:24 by marine           ###   ########.fr        #
+#    Updated: 2023/08/30 17:22:30 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_FILES	= 	main.c \
 				reader/prompt.c \
-				reader/check_quotes.c \
-				lexer/lexer.c \
-				lexer/split_lexer.c \
-				lexer/split_space.c \
-				lexer/lst.c \
-				lexer/lst_free.c
+				reader/check_quotes.c
 
 PREFIX	= srcs
 
