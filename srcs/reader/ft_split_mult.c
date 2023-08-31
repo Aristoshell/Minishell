@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/08/30 17:43:01 by madavid          ###   ########.fr       */
+/*   Updated: 2023/08/31 13:48:03 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,5 +82,5 @@ char	**ft_split_mult(char const *s, char *charset)
 
 int	main(void)
 {
-	ft_split_mult("Wesh|alors > hihi < grr")
+	ft_split_mult("Wesh|alors > hihi < grr", );
 }
