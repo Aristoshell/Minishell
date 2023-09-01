@@ -6,11 +6,25 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/08/31 13:45:32 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/01 17:15:37 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_free_2d_array(char **two_di_array)
+{
+	int	i;
+
+	i = 0;
+	while (two_di_array[i])
+	{
+		ft_bzero(two_di_array[i], ft_strlen(two_di_array[i]));
+		free(two_di_array[i]);
+		i++;
+	}
+	free (two_di_array);
+}
 
 void	prompt(void)
 {
@@ -33,7 +47,7 @@ void	prompt(void)
 				dprintf(2, "aristoshell : syntax error near unclosed quote\n"); //penser a mettre une fonction dprintf recoded
 			else
 			{	
-				words = ft_split(input, 32);
+				words = ft_split_space(input);
 				int i = 0;
 				while(words[i])
 				{
@@ -43,6 +57,6 @@ void	prompt(void)
 			}
 		}
 		free(input);
-		//free le double tableau
+		ft_free_2d_array(words);
 	}
 }

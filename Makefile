@@ -6,13 +6,15 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/08/30 17:22:30 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/01 16:42:58 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_FILES	= 	main.c \
 				reader/prompt.c \
+				reader/ft_split_spaces.c \
 				reader/check_quotes.c
+				
 
 PREFIX	= srcs
 

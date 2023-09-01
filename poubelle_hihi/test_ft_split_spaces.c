@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_spaces.c                                  :+:      :+:    :+:   */
+/*   test_ft_split_spaces.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/01 17:07:27 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/01 17:06:28 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-
+#include "../../libft/libft.h"
+#include <stdbool.h>
 
 int	is_printable(char c)
 {
@@ -71,19 +71,30 @@ static int	countword(char const *s)
 		{
 			i++;
 			while (s[i] != quote && s[i] != 0)
+			{
+				//printf("\033[93ms[i] : \033[0m%c\n", s[i]);
 				i++;
+			}
 			i++;
 			quote = 0;
 		}
 		else if (op == true)
 		{
+			//printf("\033[95ms[i] : \033[0m%c\n", s[i]);
 			i++;
 			op = false;
 		}
 		else
+		{
 			while (is_printable(s[i]) == 1 && s[i] != 0 && is_op(s[i]) == 0)
+			{
+				//printf("s[i] : %c\n", s[i]);	
 				i++;
+			}
+		}
+		//printf("\n");
 	}
+	//printf("count : %d\n", counter);
 	return (counter);
 }
 
@@ -91,12 +102,15 @@ static int	countlenword(char const *s)
 {
 	int	count;
 	int	i;
-
+	
+	// if (s)
+	// 	printf("mot recu : %s\n", s);
 	count = 0;
 	i = 0;
 	while (is_printable(s[i]) == 0 && s[i] != 0)
 		i++;
 	if (is_op(s[i]))
+		//return (printf("size = %d\n", 1), 1);
 		return (1);
 	char quote = is_quote(s[i]);
 	if (quote != 0)
@@ -117,6 +131,7 @@ static int	countlenword(char const *s)
 			count++;
 		}
 	}
+	//printf("size = %d\n", count);
 	return (count);
 }
 
@@ -164,6 +179,7 @@ void fill_word(const char *str, char *word, int *i)
 		}
 	}
 	word[c] = 0;
+	//printf("\033[98mword : \033[0m%s\n", word);
 }
 
 char	**ft_split_space(char const *str)
@@ -192,4 +208,19 @@ char	**ft_split_space(char const *str)
 		words++;
 	}
 	return (tab[words] = NULL, tab);
+}
+
+int main(void)
+{
+	char **new;
+
+	//new = ft_split_space("coucou   '\"|\"' hihiihihi 'grrrr|>hihi' | ><| | < >'bouhiuu hfdgh dsfk'   grrr");
+	new = ft_split_space("ls -la|wc -l");
+	(void) new;
+	int i = 0;
+	while (new[i])
+	{
+		printf("new[i] = %s\n", new[i]);
+		i++;
+	}
 }
