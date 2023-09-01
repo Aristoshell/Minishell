@@ -6,30 +6,39 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/01 17:15:37 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/01 19:08:29 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_2d_array(char **two_di_array)
+void	ft_free_2d_array(char ***tab)
 {
 	int	i;
 
 	i = 0;
-	while (two_di_array[i])
+	char **two_di_array;
+	two_di_array = *tab;
+	if (two_di_array)
 	{
-		ft_bzero(two_di_array[i], ft_strlen(two_di_array[i]));
-		free(two_di_array[i]);
-		i++;
+		while (two_di_array[i])
+		{
+			ft_bzero(two_di_array[i], ft_strlen(two_di_array[i]));
+			free(two_di_array[i]);
+			two_di_array[i] = NULL;
+			i++;
+		}
+		free (two_di_array);
+		*tab = NULL;
 	}
-	free (two_di_array);
 }
 
 void	prompt(void)
 {
 	char	*input;
 	char	**words;
+
+	words = NULL;
 	while (1)
 	{
 		input = readline("\033[93maristoshell$ \033[0m");
@@ -57,6 +66,7 @@ void	prompt(void)
 			}
 		}
 		free(input);
-		ft_free_2d_array(words);
+		if (words)
+			ft_free_2d_array(&words);
 	}
 }

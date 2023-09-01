@@ -6,12 +6,18 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/01 17:07:27 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/01 20:05:37 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	is_sep(char c)
+{
+	if ((c >= 33 && c <= 126) || c == '|' || c == '>' || c == '<')
+		return (1);
+	return (0);
+}
 
 int	is_printable(char c)
 {
@@ -41,6 +47,7 @@ static int	countword(char const *s)
 	int	i;
 	int	counter;
 	char quote = 0;
+	bool quoote = false;
 	bool op;
 
 	i = 0;
@@ -55,35 +62,33 @@ static int	countword(char const *s)
 			quote = is_quote(s[i]);
 			if (quote != 0)
 			{
+				quoote = true;
 				counter++;
-				while (s[i] != quote)
+				printf("mot : |%s|\n", &s[i]);
+				while (quoote || (!quoote && !is_sep(s[i + 1])))
+				{
+					if (is_quote(s[i]))
+						quoote = false;
 					i++;
+				}
 			}
 			else if (is_op(s[i]) == true) // pour racourcir, envoyer pointer sur bool pour quil soit modif direct dans fonction
 			{
 				op = true;
 				counter++;
+				printf("mot : |%s|\n", &s[i]);
+				i++;
 			}
 			else
+			{
 				counter++;
+				printf("mot : |%s|\n", &s[i]);
+				while(s[i] && is_printable(s[i]))
+					i++;
+			}
 		}
-		if (quote != 0)
-		{
-			i++;
-			while (s[i] != quote && s[i] != 0)
-				i++;
-			i++;
-			quote = 0;
-		}
-		else if (op == true)
-		{
-			i++;
-			op = false;
-		}
-		else
-			while (is_printable(s[i]) == 1 && s[i] != 0 && is_op(s[i]) == 0)
-				i++;
 	}
+	printf("counter : %d\n", counter);
 	return (counter);
 }
 
@@ -102,12 +107,14 @@ static int	countlenword(char const *s)
 	if (quote != 0)
 	{
 		i++;
+		count++;
 		while (s[i] != quote)
 		{
 			i++;
 			count++;
 		}
 		i++;
+		count++;
 	}
 	else
 	{
@@ -145,14 +152,18 @@ void fill_word(const char *str, char *word, int *i)
 	}
 	if (quote != 0)
 	{
+		word[c] = str[*i];
 		*i += 1;
+		c++;
 		while (str[*i] != quote)
 		{
 			word[c] = str[*i];
 			c++;
 			*i += 1;
 		}
+		word[c] = str[*i];
 		*i += 1;
+		c++;
 	}
 	else
 	{	

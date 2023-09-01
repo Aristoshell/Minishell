@@ -6,11 +6,11 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/01 17:06:28 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/01 18:59:19 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft/libft.h"
+#include "../libft/libft.h"
 #include <stdbool.h>
 
 int	is_printable(char c)
@@ -215,7 +215,7 @@ int main(void)
 	char **new;
 
 	//new = ft_split_space("coucou   '\"|\"' hihiihihi 'grrrr|>hihi' | ><| | < >'bouhiuu hfdgh dsfk'   grrr");
-	new = ft_split_space("ls -la|wc -l");
+	new = ft_split_space("echo\"lol\"");
 	(void) new;
 	int i = 0;
 	while (new[i])
