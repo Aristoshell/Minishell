@@ -6,18 +6,18 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/01 18:59:19 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/04 18:26:42 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
 #include <stdbool.h>
 
-int	is_printable(char c)
+bool	is_space(char c)
 {
-	if (c >= 33 && c <= 126)
-		return (1);
-	return (0);
+	if (c == 32 || c == 9)
+		return (true);
+	return (false);
 }
 
 char	is_quote(char c)
@@ -35,104 +35,129 @@ bool	is_op(char c)
 		return (true);
 	return (false);
 }
-
-static int	countword(char const *s)
+int	count_quote(char const *str, int *i)
 {
-	int	i;
-	int	counter;
-	char quote = 0;
-	bool op;
-
-	i = 0;
-	counter = 0;
-	op = false;
-	while (s[i])
+	char	quote;
+	
+	quote = 0;
+	int	count;
+	count = 0;
+	while (str[*i] && (str[*i] == '\'' || str[*i] == '"'))
 	{
-		while (is_printable(s[i]) == 0 && s[i] != 0)
-			i++;
-		if (is_printable(s[i]) == 1 && s[i] != 0)
+		quote = str[*i];
+		*i += 1;
+		while (str[*i] && str[*i] != quote)
 		{
-			quote = is_quote(s[i]);
-			if (quote != 0)
+			*i += 1;
+			count++;
+		}
+		*i += 1;
+		count++;
+		if (is_space(str[*i]) == true)
+			return (printf("str[%d] : %c (%d), taille mot : %d\n", *i, str[*i], str[*i], count), count);
+		if (is_op(str[*i]) == true)
+			return (printf("str[%d] : %c (%d), taille mot : %d\n", *i, str[*i], str[*i], count), count);
+		quote = str[*i];
+	}
+	return (printf("str[%d] : %c (%d), taille mot : %d\n", *i, str[*i], str[*i], count), count);
+}
+
+void	manage_quote(char const *str, int *i)
+{
+	char	quote;
+	
+	quote = 0;
+	while (str[*i] && (str[*i] == '\'' || str[*i] == '"'))
+	{
+		quote = str[*i];
+		*i += 1;
+		while (str[*i] && str[*i] != quote)
+			*i += 1;
+		*i += 1;
+		if (is_space(str[*i]) == true)
+			return ;
+		if (is_op(str[*i]) == true)
+			return;
+		quote = str[*i];
+	}
+}
+
+
+static int	countword(char const *str)
+{
+	int		counter;
+	int		i;
+
+	counter = 0;
+	i = 0;
+	if (!str[i])
+		return (0);
+	while (str[i])
+	{
+		while (str[i] && is_space(str[i]))
+			i++;
+		printf("str[%d] : %c (%d)\n", i, str[i], str[i]);
+		counter++;
+		if (is_op(str[i]))
+			i++;
+		else
+		{	
+			while (str[i] && !is_space(str[i]) && !is_op(str[i]))
 			{
-				counter++;
-				while (s[i] != quote)
+				if (is_quote(str[i]))
+					manage_quote(str, &i);
+				else
 					i++;
 			}
-			else if (is_op(s[i]) == true) // pour racourcir, envoyer pointer sur bool pour quil soit modif direct dans fonction
-			{
-				op = true;
-				counter++;
-			}
-			else
-				counter++;
 		}
-		if (quote != 0)
-		{
+		while (str[i] && is_space(str[i]) == true)
 			i++;
-			while (s[i] != quote && s[i] != 0)
-			{
-				//printf("\033[93ms[i] : \033[0m%c\n", s[i]);
-				i++;
-			}
-			i++;
-			quote = 0;
-		}
-		else if (op == true)
-		{
-			//printf("\033[95ms[i] : \033[0m%c\n", s[i]);
-			i++;
-			op = false;
-		}
-		else
-		{
-			while (is_printable(s[i]) == 1 && s[i] != 0 && is_op(s[i]) == 0)
-			{
-				//printf("s[i] : %c\n", s[i]);	
-				i++;
-			}
-		}
-		//printf("\n");
 	}
-	//printf("count : %d\n", counter);
 	return (counter);
 }
 
-static int	countlenword(char const *s)
+int	*countlenword(char const *str, int nb_words)
 {
-	int	count;
+	int	word;
 	int	i;
-	
-	// if (s)
-	// 	printf("mot recu : %s\n", s);
-	count = 0;
+
+	word = 0;
 	i = 0;
-	while (is_printable(s[i]) == 0 && s[i] != 0)
-		i++;
-	if (is_op(s[i]))
-		//return (printf("size = %d\n", 1), 1);
-		return (1);
-	char quote = is_quote(s[i]);
-	if (quote != 0)
+	int	*tab;
+
+	if (!str[i])
+		return (NULL);
+	tab = malloc(nb_words);
+	while (str[i])
 	{
-		i++;
-		while (s[i] != quote)
+		while (str[i] && is_space(str[i]))
+			i++;
+		if (is_op(str[i]))
 		{
 			i++;
-			count++;
+			tab[word] = 1;
 		}
-		i++;
-	}
-	else
-	{
-		while (is_printable(s[i]) == 1 && s[i] != 0 && is_op(s[i]) == 0)
-		{
-			i++;
-			count++;
+		else
+		{	
+			tab[word] = 0;
+			while (str[i] && !is_space(str[i]) && !is_op(str[i]))
+			{
+				if (is_quote(str[i]))
+				{
+					tab[word] = count_quote(str, &i);
+					break;
+				}
+				else
+				{
+					tab[word]++;
+					i++;
+				}
+			}
 		}
+		word++;
+
 	}
-	//printf("size = %d\n", count);
-	return (count);
+	return (tab);
 }
 
 void	clear_split(char **split, int words)
@@ -144,70 +169,81 @@ void	clear_split(char **split, int words)
 		free(split[i++]);
 	free(split);
 }
-void fill_word(const char *str, char *word, int *i)
-{
-	int c;
-	char quote;
+// void fill_word(const char *str, char *word, int *i)
+// {
+// 	int c;
+// 	char quote;
 
-	c = 0;
-	quote = is_quote(str[*i]);
-	if (is_op(str[*i]))
-	{
-		word[0] = str[*i];
-		word[1] = 0;
-		*i += 1;
-		return;
-	}
-	if (quote != 0)
-	{
-		*i += 1;
-		while (str[*i] != quote)
-		{
-			word[c] = str[*i];
-			c++;
-			*i += 1;
-		}
-		*i += 1;
-	}
-	else
-	{	
-		while (is_printable(str[*i]) == 1 && str[*i] != quote && is_op(str[*i]) == 0)
-		{
-			word[c] = str[*i];
-			c++;
-			*i += 1;
-		}
-	}
-	word[c] = 0;
-	//printf("\033[98mword : \033[0m%s\n", word);
-}
+// 	c = 0;
+// 	quote = is_quote(str[*i]);
+// 	if (is_op(str[*i]))
+// 	{
+// 		word[0] = str[*i];
+// 		word[1] = 0;
+// 		*i += 1;
+// 		return;
+// 	}
+// 	if (quote != 0)
+// 	{
+// 		*i += 1;
+// 		while (str[*i] != quote)
+// 		{
+// 			word[c] = str[*i];
+// 			c++;
+// 			*i += 1;
+// 		}
+// 		*i += 1;
+// 	}
+// 	else
+// 	{	
+// 		while (is_printable(str[*i]) == 1 && str[*i] != quote && is_op(str[*i]) == 0)
+// 		{
+// 			word[c] = str[*i];
+// 			c++;
+// 			*i += 1;
+// 		}
+// 	}
+// 	word[c] = 0;
+// 	//printf("\033[98mword : \033[0m%s\n", word);
+// }
 
 char	**ft_split_space(char const *str)
 {
-	char	**tab;
-	int		words;
+	//char	**tab;
+	//int		words;
 	int		nb_words;
-	int		i;
+	//int		i;
 
-	words = 0;
-	i = 0;
+	//words = 0;
+	//i = 0;
 	if (!str)
 		return (NULL);
 	nb_words = countword(str);
-	tab = malloc((nb_words + 1) * sizeof(char *));
-	if (!tab)
-		return (NULL);
-	while (words < nb_words)
+ 	printf("nb words : %d\n", nb_words);
+	int *tab;
+	tab = countlenword(str, nb_words);
+	int grr = 0;
+	while (grr < nb_words)
 	{
-		while (str[i] && is_printable(str[i]) == 0)
-			i++;
-		tab[words] = malloc((countlenword(&str[i]) + 1) * sizeof(char));
-		if (!tab[words])
-			return (clear_split(tab, words), NULL);
-		fill_word(str, tab[words], &i);
-		words++;
+		printf("size word[%d] : %d\n", grr, tab[grr]);
+		grr++;
 	}
-	return (tab[words] = NULL, tab);
+	
+	// tab = malloc((nb_words + 1) * sizeof(char *));
+	// if (!tab)
+	// 	return (NULL);
+	// while (words < nb_words)
+	// {
+	// 	while (str[i] && is_printable(str[i]) == 0)
+	// 		i++;
+	// 	tab[words] = malloc((countlenword(&str[i]) + 1) * sizeof(char));
+	// 	if (!tab[words])
+	// 		return (clear_split(tab, words), NULL);
+	// 	fill_word(str, tab[words], &i);
+	// 	words++;
+	// }
+	//return (tab[words] = NULL, tab);
+	return(NULL);
 }
 
 int main(void)
@@ -215,12 +251,13 @@ int main(void)
 	char **new;
 
 	//new = ft_split_space("coucou   '\"|\"' hihiihihi 'grrrr|>hihi' | ><| | < >'bouhiuu hfdgh dsfk'   grrr");
-	new = ft_split_space("echo\"lol\"");
+	new = ft_split_space("	omg 'ntm>'|echo'lol' > \"bjr|ahah | hihi\"  coucou jpp putain| |||  | |>");
+	// new = ft_split_space("\"lol                                 bonjour\"lal\"lil\"");
 	(void) new;
-	int i = 0;
-	while (new[i])
-	{
-		printf("new[i] = %s\n", new[i]);
-		i++;
-	}
+	// int i = 0;
+	// while (new[i])
+	// {
+	// 	printf("new[i] = %s\n", new[i]);
+	// 	i++;
+	// }
 }
