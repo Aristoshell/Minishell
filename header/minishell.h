@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/08/30 17:28:41 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/06 10:52:21 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef enum e_lexer_type
 	token_in,
 	token_out
 }			t_lexer_type;
+
+typedef struct s_parts
+{
+	char			*string;
+	t_lexer_type	token;
+}			t_parts;
 
 typedef struct s_lexer
 {
