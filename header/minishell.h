@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/06 10:52:21 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/06 16:14:40 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ char 	check_open_quote(char *input);
 char 	*close_quote(char quote);
 
 /* Lexer */
-char	**ft_split_space(char const *str);
+// char	**ft_split_space(char const *str);
 t_lexer	*lexer(char *input, t_lexer **root);
 t_lexer_type	check_type(char *word);
 t_lexer	*ft_new_lexer_node(char *input, int index);
