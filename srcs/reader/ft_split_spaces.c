@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/06 16:56:24 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/08 10:32:46 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	get_part_len_manage_quote(char c, bool	*in_quote, char *quote_type)
 	}
 }
 
-int	get_part_len( char *p, int *i)
+int	get_part_len(char *p, int *i)
 {
 	bool		in_quote;
 	char		quote_type;
@@ -140,30 +140,52 @@ int	get_part_len( char *p, int *i)
 	in_quote = false;
 	len = 0;
 	quote_type = 0;
-	while (p[*i] && is_space(p[*i]))
-		*i+=1;
 	if (!p[*i])
 		return (*i+=1, 0);
+	while (p[*i] && is_space(p[*i]))
+	{
+		// printf("str[%d] = %c \n", *i, p[*i]);
+		*i+=1;
+	}
 	if (is_op(p[*i]))
+	{
+		// printf("str[%d] = %c\n", *i, p[*i]);
 		return (*i+=1, 1);
+	}
 	while (p[*i] && (in_quote || (!in_quote && !is_separator(p[*i]))))
 	{
+		// printf("str[%d] = %c\n", *i, p[*i]);
 		get_part_len_manage_quote(p[*i], &in_quote, &quote_type);
 		*i+=1;
 		len++;
 	}
 	return (len);
 }
-
+void	fillword(char	*buffer, char *partition, int size, int i)
+{
+	int	position;
+	int	j;
+	
+	position = i - size;
+	j = 0;
+	while (j < size)
+	{
+		buffer[j] = partition[position];
+		j++;
+		position++;
+	}
+	buffer[j] = 0;
+}
 char	*get_part(char *partition, int *i)
 {
 	char	*word;
 	int		size;
-	printf("recu : %s, %d\n", partition, *i);
-	size = get_part_len(&partition[*i], i);
+	size = get_part_len(partition, i);
+	if (size == 0)
+		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));
-	printf("size : %d\n", size);
-	//fillword(word);
+	fillword(word, partition, size, *i);
+	//printf("word : %s\n", word);
 	return (word);
 }
 
@@ -183,31 +205,18 @@ t_parts	**ft_split_space(char const *str)
 	partition = malloc(sizeof(t_parts *) * nb_words);
 	if (!partition)
 		return (NULL);
+	i = 0;
 	while (j < nb_words)
 	{
-		i = 0;
+		//printf("\ni = %d\n", i);
 		partition[j] = malloc(sizeof(t_parts));
 		if (!partition[j])
-			return (NULL); // et supprime aussi celles d'avant
-		partition[j]->string = get_part((char *)str, &i); //fonction à coder pour fill la string
-		// //partition[j]->token = get_token(partition[j]->string);
-		// //printf("tab[%d] = %c, token = %d\n", j, str[i], partition[j]->token);
+			return (NULL); // et mettre fonction pour que supprime aussi celles d'avant
+		partition[j]->string = get_part((char *)str, &i);
+		partition[j]->token = get_token(partition[j]->string);
+		printf("tab[%d] = %s, token = %d\n", j, partition[j]->string, partition[j]->token);
 		j++;
 	}
-	// tab = malloc((nb_words + 1) * sizeof(char *));
-	// if (!tab)
-	// 	return (NULL);
-	// while (words < nb_words)
-	// {
-	// 	while (str[i] && is_printable(str[i]) == 0)
-	// 		i++;
-	// 	tab[words] = malloc((countlenword(&str[i]) + 1) * sizeof(char));
-	// 	if (!tab[words])
-	// 		return (clear_split(tab, words), NULL);
-	// 	fill_word(str, tab[words], &i);
-	// 	words++;
-	// }
-	//return (tab[words] = NULL, tab);
 	return(partition);
 }
 
@@ -215,7 +224,7 @@ t_parts	**ft_split_space(char const *str)
 
 int	main(void)
 {
-	char *str = "grrrr omg jpppp ohlala 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'";
+	char *str = ">grrrr omg<jpppp ohlala |< > 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'> <";
 	int	nb_words;
 
 	nb_words = countword(str);
@@ -232,8 +241,8 @@ int	main(void)
 
 int	main(void)
 {
-	char *str = "grrrr omg jpppp ohlala 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'";
-	//int	nb_words;
+	char *str = ">grrrr omg<jpppp ohlala |< > 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'> <";
 
 	ft_split_space(str);
+	
 }
