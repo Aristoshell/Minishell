@@ -6,51 +6,18 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/08 11:17:01 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/08 14:53:22 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
-
-/* fonctions qui renvoient des bool*/
-
-bool	is_space(char c)
-{
-	if (c == 32 || c == 9)
-		return (true);
-	return (false);
-}
-
-char	is_quote(char c)
-{
-	if (c == '"')
-		return ('"');
-	if (c == '\'')
-		return ('\'');
-	return (0);
-}
-
-bool	is_op(char c)
-{
-	if (c == '>' || c == '<' || c == '|')
-		return (true);
-	return (false);
-}
-
-bool	is_separator(char c)
-{
-	if (is_op(c) || is_space(c))
-		return (true);
-	return (false);
-}
-
 
 /* compte le nb de mots*/
 
 void	count_word_manage_quote(char const *str, int *i)
 {
 	char	quote;
-	
+
 	quote = 0;
 	while (str[*i] && (str[*i] == '\'' || str[*i] == '"'))
 	{
@@ -62,7 +29,7 @@ void	count_word_manage_quote(char const *str, int *i)
 		if (is_space(str[*i]) == true)
 			return ;
 		if (is_op(str[*i]) == true)
-			return;
+			return ;
 		quote = str[*i];
 	}
 }
@@ -80,6 +47,8 @@ static int	countword(char const *str)
 	{
 		while (str[i] && is_space(str[i]))
 			i++;
+		if (!str[i])
+			return (counter);
 		counter++;
 		if (is_op(str[i]))
 			i++;
@@ -107,10 +76,18 @@ t_lexer_type	get_token(char *part)
 	i = 0;
 	if (part[i] == '|' && part[i + 1] == 0)
 		return (token_pipe);
+	else if (part[i] == ';' && part[i + 1] == 0)
+		return (token_semicolon);
+	else if (part[i] == '&' && part[i + 1] == 0)
+		return (token_ampersand);
 	else if (part[i] == '>' && part[i + 1] == 0)
 		return (token_out);
+	// else if (part[i] == '>>' && part[i + 1] == 0)
+	// 	return (append_); // attention car j'ai pas encore changé le code pour avoir les doubles
 	else if (part[i] == '<' && part[i + 1] == 0)
 		return (token_in);
+	// else if (part[i] == '<<' && part[i + 1] == 0)
+	// 	return (heredoc_); // attention car j'ai pas encore changé le code pour avoir les doubles
 	else
 		return (word);
 }
@@ -139,24 +116,25 @@ int	get_part_len(char *p, int *i)
 	len = 0;
 	quote_type = 0;
 	if (!p[*i])
-		return (*i+=1, 0);
+		return (*i += 1, 0);
 	while (p[*i] && is_space(p[*i]))
-		*i+=1;
+		*i += 1;
 	if (is_op(p[*i]))
-		return (*i+=1, 1);
+		return (*i += 1, 1);
 	while (p[*i] && (in_quote || (!in_quote && !is_separator(p[*i]))))
 	{
 		get_part_len_manage_quote(p[*i], &in_quote, &quote_type);
-		*i+=1;
+		*i += 1;
 		len++;
 	}
 	return (len);
 }
+
 void	fillword(char	*buffer, char *partition, int size, int i)
 {
 	int	position;
 	int	j;
-	
+
 	position = i - size;
 	j = 0;
 	while (j < size)
@@ -167,10 +145,12 @@ void	fillword(char	*buffer, char *partition, int size, int i)
 	}
 	buffer[j] = 0;
 }
+
 char	*get_part(char *partition, int *i)
 {
 	char	*word;
 	int		size;
+
 	size = get_part_len(partition, i);
 	if (size == 0)
 		return (NULL);
@@ -199,11 +179,13 @@ int	ft_split_space(char const *str, t_info *info)
 {
 	int		i;
 	int		j;
-	
+
 	if (!str)
 		return (-1);
 	j = 0;
 	info->nb_words = countword(str);
+	if (info->nb_words < 1)
+		return (0);
 	info->words = malloc(sizeof(t_parts *) * info->nb_words);
 	if (!info->words)
 		return (-2);
@@ -217,8 +199,7 @@ int	ft_split_space(char const *str, t_info *info)
 		info->words[j]->token = get_token(info->words[j]->string);
 		j++;
 	}
-	
-	return(0);
+	return (0);
 }
 
 /* main de vérif de fonctions 

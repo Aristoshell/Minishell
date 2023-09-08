@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/08 11:32:27 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/08 15:14:47 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	prompt(void)
 		{
 			printf("exit\n");
 			free(input);
+			free(info);
 			clear_history();
 			return ;
 		}
@@ -63,6 +64,7 @@ void	prompt(void)
 					printf("[%d] [%d]: %s\n", i, info->words[i]->token, info->words[i]->string);
 					i++;	
 				}
+				parser(info);
 			}
 		}
 		free(input);
