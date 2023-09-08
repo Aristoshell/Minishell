@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/06 16:14:40 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:01:22 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ typedef struct s_lexer
 	struct s_lexer	*previous;
 	struct s_lexer	*next;
 }			t_lexer;
+
+typedef struct s_info
+{
+	int	nb_words;
+	t_parts	**words;
+}			t_info;
+
 
 /* Parsing */
 
@@ -118,18 +125,8 @@ char 	check_open_quote(char *input);
 char 	*close_quote(char quote);
 
 /* Lexer */
-// char	**ft_split_space(char const *str);
-t_lexer	*lexer(char *input, t_lexer **root);
-t_lexer_type	check_type(char *word);
-t_lexer	*ft_new_lexer_node(char *input, int index);
-t_lexer	*ft_last_lexer_node(t_lexer *node);
-void	ft_node_lexer_add_back(t_lexer **node, t_lexer *new);
-void	ft_print_lexer(t_lexer	**node);
-void	ft_lexer_del_one(t_lexer *node);
-void	ft_lexer_clear(t_lexer **node);
-//void 			check_quote(char *input);
-char	*ft_split_lexer(char const *str, int *i);
-char	**ft_split_mult(char const *s, char c);
+int	ft_split_space(char const *str, t_info *info);
+
 /* Parser */
 
 /* Catégorie 3 */

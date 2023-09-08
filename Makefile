@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
+#    By: marine <marine@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/01 18:46:27 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/08 11:04:29 by marine           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ INCLUDE	= -Ilibft -Iheader -Ireadline
 
 CC    = cc
 
-FLAGS  = -Wall -Wextra -Werror -g3 -fsanitize=address
+FLAGS  = -Wall -Wextra -Werror #-g3 -fsanitize=address
 
 NAME    = minishell
 

@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/08 10:32:46 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/08 11:17:01 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,6 @@ static int	countword(char const *str)
 	return (counter);
 }
 
-
-
 /* remplir le tableau de structure */
 t_lexer_type	get_token(char *part)
 {
@@ -143,18 +141,11 @@ int	get_part_len(char *p, int *i)
 	if (!p[*i])
 		return (*i+=1, 0);
 	while (p[*i] && is_space(p[*i]))
-	{
-		// printf("str[%d] = %c \n", *i, p[*i]);
 		*i+=1;
-	}
 	if (is_op(p[*i]))
-	{
-		// printf("str[%d] = %c\n", *i, p[*i]);
 		return (*i+=1, 1);
-	}
 	while (p[*i] && (in_quote || (!in_quote && !is_separator(p[*i]))))
 	{
-		// printf("str[%d] = %c\n", *i, p[*i]);
 		get_part_len_manage_quote(p[*i], &in_quote, &quote_type);
 		*i+=1;
 		len++;
@@ -185,39 +176,49 @@ char	*get_part(char *partition, int *i)
 		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));
 	fillword(word, partition, size, *i);
-	//printf("word : %s\n", word);
 	return (word);
 }
 
 /* fonction principale */
-
-t_parts	**ft_split_space(char const *str)
+void	delete_t_parts(t_info *info)
 {
-	int		nb_words;
-	t_parts **partition;
-	int		j;
+	int	i;
+
+	i = 0;
+	while (i < info->nb_words)
+	{
+		if (info->words[i])
+			free(info->words[i]);
+		i++;
+	}
+	info->nb_words = 0;
+	info->words = NULL;
+}
+
+int	ft_split_space(char const *str, t_info *info)
+{
 	int		i;
+	int		j;
 	
 	if (!str)
-		return (NULL); // comment faire la diff avec mauvais malloc et juste str vide ? en vrai normalement si la str est vide ca aura été géré avant hihi (mais à check quand même)
+		return (-1);
 	j = 0;
-	nb_words = countword(str);
-	partition = malloc(sizeof(t_parts *) * nb_words);
-	if (!partition)
-		return (NULL);
+	info->nb_words = countword(str);
+	info->words = malloc(sizeof(t_parts *) * info->nb_words);
+	if (!info->words)
+		return (-2);
 	i = 0;
-	while (j < nb_words)
+	while (j < info->nb_words)
 	{
-		//printf("\ni = %d\n", i);
-		partition[j] = malloc(sizeof(t_parts));
-		if (!partition[j])
-			return (NULL); // et mettre fonction pour que supprime aussi celles d'avant
-		partition[j]->string = get_part((char *)str, &i);
-		partition[j]->token = get_token(partition[j]->string);
-		printf("tab[%d] = %s, token = %d\n", j, partition[j]->string, partition[j]->token);
+		info->words[j] = malloc(sizeof(t_parts));
+		if (!info->words[j])
+			return (-2);
+		info->words[j]->string = get_part((char *)str, &i);
+		info->words[j]->token = get_token(info->words[j]->string);
 		j++;
 	}
-	return(partition);
+	
+	return(0);
 }
 
 /* main de vérif de fonctions 
@@ -239,10 +240,16 @@ int	main(void)
 }
 */
 
-int	main(void)
-{
-	char *str = ">grrrr omg<jpppp ohlala |< > 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'> <";
-
-	ft_split_space(str);
-	
-}
+// int	main(void)
+// {
+// 	char *str = ">grrrr omg<jpppp ohlala |< > 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'> <";
+// 	t_info	info;
+// 	ft_split_space(str, &info);
+// 	int i = 0;
+// 	printf("nb mots : %d\n", info.nb_words);
+// 	while (i < info.nb_words)
+// 	{
+// 		printf("mot : %s, token : %d\n", info.words[i]->string, info.words[i]->token);
+// 		i++;
+// 	}
+// }

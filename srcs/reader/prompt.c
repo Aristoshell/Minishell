@@ -3,42 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/01 19:08:29 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/08 11:32:27 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_2d_array(char ***tab)
+void	ft_free_info(t_info *info)
 {
 	int	i;
 
 	i = 0;
-	char **two_di_array;
-	two_di_array = *tab;
-	if (two_di_array)
-	{
-		while (two_di_array[i])
-		{
-			ft_bzero(two_di_array[i], ft_strlen(two_di_array[i]));
-			free(two_di_array[i]);
-			two_di_array[i] = NULL;
-			i++;
-		}
-		free (two_di_array);
-		*tab = NULL;
+	while (i < info->nb_words)
+	{		
+ 		ft_bzero(info->words[i]->string, ft_strlen(info->words[i]->string));
+		if (info->words[i]->string)
+			free(info->words[i]->string);
+		info->words[i]->string = NULL;
+		i++;
 	}
+	if (info->nb_words > 0)
+		free(info->words);
+	info->nb_words = -1;
 }
 
 void	prompt(void)
 {
 	char	*input;
-	char	**words;
+ 	t_info	*info;
 
-	words = NULL;
+	info = malloc(sizeof(t_info));
+	if (!info)
+		dprintf(2, "Problem with memory allocation\n");
+	info->words = NULL;
 	while (1)
 	{
 		input = readline("\033[93maristoshell$ \033[0m");
@@ -56,17 +56,17 @@ void	prompt(void)
 				dprintf(2, "aristoshell : syntax error near unclosed quote\n"); //penser a mettre une fonction dprintf recoded
 			else
 			{	
-				words = ft_split_space(input);
+				ft_split_space(input, info);
 				int i = 0;
-				while(words[i])
+				while(i < info->nb_words)
 				{
-					printf("mot %d |%s|\n", i, words[i]);
+					printf("[%d] [%d]: %s\n", i, info->words[i]->token, info->words[i]->string);
 					i++;	
 				}
 			}
 		}
 		free(input);
-		if (words)
-			ft_free_2d_array(&words);
+		if (info->words)
+			ft_free_info(info);
 	}
 }
