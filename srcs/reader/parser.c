@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 20:20:31 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/10 21:37:13 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,55 @@ void	init_cmd(t_cmd	*cmd)
 	cmd->fd_out = -1;
 }
 
-// void	fill_cmd(t_cmd	*cmd, t_parts **words, int *current)
-// {
-// 	while (words[*current]->token >= word)
-// 	{
-// 		/* code */
-// 	}	
-// }
+// penser a initialiser les currents
+
+void	check_redirect_in(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
+{
+	if (word[0])
+}
+
+void	fill_cmd(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
+{
+	while (words[*curr_word]->token > token_pipe)
+	{
+		check_redirect_in(cmd, words, curr_cmd, curr_word);
+	}	
+}
+
+/*
+Composition commande
+
+boucle tant quon a fini le tableau
+
+	boucle jusqua ce quon n'ai pas de pipe
+	
+	1) Checker si redirection d'intfile
+		si pas premier bout + ce que celui davant est une pipe
+			--> redirection in pipe
+		sinon si j'ai <<
+			--> redirection heredoc avec separator = tab[+1]
+		sinon si j'ai <
+			--> redirection fichier de tab[+1]
+		sinon
+			--> no redirect
+		attention ! bien verifier quon a un tab[+1], sinon renvoyer erreur i guess ?
+	
+	2) le truc actuel est une commande
+		- checker si tab[i] est un built in ou pas
+		tant qu'on na pas > ou >> ou | (faire bool opearateur redirection)
+			- mettre dans **cmd_args les mots de tab[current]
+	3) checker redirection out
+		si > ou >> ou |
+			si > open le suivant en mode edition, puis tant quon na pas de pipe on avance
+			si >> open le suivant en mode append, puis tant quon na pas de pipe on avance
+			si | pipe, pipe
+
+	quand est ce que je check les ./ ???
+		
+		
+		
+
+*/
 
 int	parser(t_info	*info)
 {
@@ -68,7 +110,7 @@ int	parser(t_info	*info)
 		if(!data->cmd[i])
 			return (-1); //supp autre chose
 		init_cmd(data->cmd[i]);
-		//fill_cmd(data->cmd[i], info->words, info->current);
+		//fill_cmd(data->cmd[i], info->words, data->current_cmd, info->current_word);
 		i++;
 	}
 	(void) i;
@@ -101,38 +143,3 @@ ls -la > hihi ; cat hihi > bruh ; ls -la | wc -l
 		- innit cette struct cmd
 		- remplir cette struct cmd à partir de info
 */
-
-/*
-Composition commande
-
-boucle tant quon a fini le tableau
-
-	boucle jusqua ce quon n'ai pas de pipe
-	
-	1) Checker si redirection d'outfile
-		si pas premier bout + ce que celui davant est une pipe
-			--> redirection in pipe
-		sinon si j'ai <<
-			--> redirection heredoc avec separator = tab[+1]
-		sinon si j'ai <
-			--> redirection fichier de tab[+1]
-		sinon
-			--> no redirect
-		attention ! bien verifier quon a un tab[+1], sinon renvoyer erreur i guess ?
-	
-	2) le truc actuel est une commande
-		- checker si tab[i] est un built in ou pas
-		tant qu'on na pas > ou >> ou | (faire bool opearateur redirection)
-			- mettre dans **cmd_args les mots de tab[current]
-	3) checker redirection out
-		si > ou >> ou |
-			si > open le suivant en mode edition, puis tant quon na pas de pipe on avance
-			si >> open le suivant en mode append, puis tant quon na pas de pipe on avance
-			si | pipe, pipe
-
-	quand est ce que je check les ./ ???
-		
-		
-		
-
-*

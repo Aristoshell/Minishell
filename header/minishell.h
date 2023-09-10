@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 18:59:23 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/10 21:33:23 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ typedef enum e_open_quote
 typedef enum e_lexer_type
 {
 	token_pipe,
-	word,
+	token_word,
 	token_in,
 	token_out,
 	token_heredoc,
@@ -53,7 +53,7 @@ typedef struct s_parts
 typedef struct s_info
 {
 	int	nb_words;
-	int	*current;
+	int	*current_word;
 	t_parts	**words;
 }			t_info;
 
@@ -101,6 +101,7 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
+	int			*current_cmd;
 	int			nb_command;
 	t_cmd		**cmd;
 }			t_data;
