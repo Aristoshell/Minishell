@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/08 16:47:45 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/10 17:18:31 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ void	init_cmd(t_cmd	*cmd)
 	cmd->fd_out = -1;
 }
 
-void	fill_cmd(t_cmd	*cmd, t_parts **words, int *current)
-{
-	while (words[*current]->token >= word)
-	{
-		/* code */
-	}
-	
-}
+// void	fill_cmd(t_cmd	*cmd, t_parts **words, int *current)
+// {
+// 	while (words[*current]->token >= word)
+// 	{
+// 		/* code */
+// 	}	
+// }
 
 int	parser(t_info	*info)
 {
@@ -69,7 +68,7 @@ int	parser(t_info	*info)
 		if(!data->cmd[i])
 			return (-1); //supp autre chose
 		init_cmd(data->cmd[i]);
-		fill_cmd(data->cmd[i], info->words, info->current);
+		//fill_cmd(data->cmd[i], info->words, info->current);
 		i++;
 	}
 	(void) i;

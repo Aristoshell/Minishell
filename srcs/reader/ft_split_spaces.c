@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_spaces.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/08 14:53:22 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/10 18:49:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,15 +45,20 @@ static int	countword(char const *str)
 		return (0);
 	while (str[i])
 	{
+		printf("%s\n", &str[i]);
 		while (str[i] && is_space(str[i]))
 			i++;
 		if (!str[i])
 			return (counter);
 		counter++;
 		if (is_op(str[i]))
+		{
+			if ((str[i] == '>' && str[i+1] == '>') || (str[i] == '<' && str[i+1] == '<'))
+				i++;
 			i++;
+		}	
 		else
-		{	
+		{
 			while (str[i] && !is_space(str[i]) && !is_op(str[i]))
 			{
 				if (is_quote(str[i]))
@@ -65,6 +70,7 @@ static int	countword(char const *str)
 		while (str[i] && is_space(str[i]) == true)
 			i++;
 	}
+	printf("nb mots : %d\n", counter);
 	return (counter);
 }
 
@@ -76,18 +82,14 @@ t_lexer_type	get_token(char *part)
 	i = 0;
 	if (part[i] == '|' && part[i + 1] == 0)
 		return (token_pipe);
-	else if (part[i] == ';' && part[i + 1] == 0)
-		return (token_semicolon);
-	else if (part[i] == '&' && part[i + 1] == 0)
-		return (token_ampersand);
 	else if (part[i] == '>' && part[i + 1] == 0)
 		return (token_out);
-	// else if (part[i] == '>>' && part[i + 1] == 0)
-	// 	return (append_); // attention car j'ai pas encore changé le code pour avoir les doubles
+	else if (part[i] == '>' && part[i + 1] == '>' && part[i + 2] == 0)
+		return (token_append);
 	else if (part[i] == '<' && part[i + 1] == 0)
 		return (token_in);
-	// else if (part[i] == '<<' && part[i + 1] == 0)
-	// 	return (heredoc_); // attention car j'ai pas encore changé le code pour avoir les doubles
+	else if (part[i] == '<' && part[i + 1] == '<' && part[i + 2] == 0)
+		return (token_heredoc);
 	else
 		return (word);
 }
@@ -120,7 +122,11 @@ int	get_part_len(char *p, int *i)
 	while (p[*i] && is_space(p[*i]))
 		*i += 1;
 	if (is_op(p[*i]))
+	{
+		if ((p[*i] == '>' && p[*i+1] == '>') || (p[*i] == '<' && p[*i+1] == '<'))
+			return (*i += 2, 2);
 		return (*i += 1, 1);
+	}
 	while (p[*i] && (in_quote || (!in_quote && !is_separator(p[*i]))))
 	{
 		get_part_len_manage_quote(p[*i], &in_quote, &quote_type);
@@ -152,6 +158,7 @@ char	*get_part(char *partition, int *i)
 	int		size;
 
 	size = get_part_len(partition, i);
+	printf("size : %d\n", size);
 	if (size == 0)
 		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));

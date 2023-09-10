@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/08 16:42:02 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/10 18:14:37 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ typedef enum e_open_quote
 typedef enum e_lexer_type
 {
 	token_pipe,
-	token_ampersand,
-	token_semicolon,
 	word,
 	token_in,
 	token_out,
@@ -89,7 +87,7 @@ typedef enum e_in_out
 
 typedef struct s_cmd
 {
-	pid_t				pid; //
+	pid_t				pid;
 	char				**cmd_args;
 	t_builtin			cmd_type;
 	char				**path_cmd;
