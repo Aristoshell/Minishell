@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 17:18:31 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/10 20:20:31 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,3 +102,37 @@ ls -la > hihi ; cat hihi > bruh ; ls -la | wc -l
 		- remplir cette struct cmd à partir de info
 */
 
+/*
+Composition commande
+
+boucle tant quon a fini le tableau
+
+	boucle jusqua ce quon n'ai pas de pipe
+	
+	1) Checker si redirection d'outfile
+		si pas premier bout + ce que celui davant est une pipe
+			--> redirection in pipe
+		sinon si j'ai <<
+			--> redirection heredoc avec separator = tab[+1]
+		sinon si j'ai <
+			--> redirection fichier de tab[+1]
+		sinon
+			--> no redirect
+		attention ! bien verifier quon a un tab[+1], sinon renvoyer erreur i guess ?
+	
+	2) le truc actuel est une commande
+		- checker si tab[i] est un built in ou pas
+		tant qu'on na pas > ou >> ou | (faire bool opearateur redirection)
+			- mettre dans **cmd_args les mots de tab[current]
+	3) checker redirection out
+		si > ou >> ou |
+			si > open le suivant en mode edition, puis tant quon na pas de pipe on avance
+			si >> open le suivant en mode append, puis tant quon na pas de pipe on avance
+			si | pipe, pipe
+
+	quand est ce que je check les ./ ???
+		
+		
+		
+
+*

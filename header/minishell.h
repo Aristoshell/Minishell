@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 18:14:37 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/10 18:59:23 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ typedef struct s_cmd
 	char				**path_cmd;
 	t_in_out			input;
 	t_in_out			output;
+	char				*heredoc_name;
+	char				*heredoc_sep;
 	int					fd_in;
 	int					fd_out;
 }			t_cmd;
