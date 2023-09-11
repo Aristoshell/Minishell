@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 21:37:13 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/11 19:41:49 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,18 +41,18 @@ void	init_cmd(t_cmd	*cmd)
 
 // penser a initialiser les currents
 
-void	check_redirect_in(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
-{
-	if (word[0])
-}
+// void	check_redirect_in(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
+// {
+// 	if (word[0])
+// }
 
-void	fill_cmd(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
-{
-	while (words[*curr_word]->token > token_pipe)
-	{
-		check_redirect_in(cmd, words, curr_cmd, curr_word);
-	}	
-}
+// void	fill_cmd(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
+// {
+// 	while (words[*curr_word]->token > token_pipe)
+// 	{
+// 		check_redirect_in(cmd, words, curr_cmd, curr_word);
+// 	}	
+// }
 
 /*
 Composition commande
