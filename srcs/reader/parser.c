@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/11 19:41:49 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:44:54 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ int	parser(t_info	*info)
 	t_data	*data;
 	
 	i = 0;
-	info->current = 0;
+	//info->current = 0;
 	data = malloc(sizeof(t_data));
 	if (!data)
 		return (-1);

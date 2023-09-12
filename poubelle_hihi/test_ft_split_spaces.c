@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   test_ft_split_spaces.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/06 14:49:08 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/12 16:50:15 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,7 +232,6 @@ int main(void)
 	int	size;
 
 	size = get_part_len("|");
-	printf("size : %d\n", size);
 }
 /*
 void	clear_split(char **split, int words)

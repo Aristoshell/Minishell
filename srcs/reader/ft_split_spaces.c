@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/10 18:49:09 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/12 16:51:03 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	countword(char const *str)
 		return (0);
 	while (str[i])
 	{
-		printf("%s\n", &str[i]);
 		while (str[i] && is_space(str[i]))
 			i++;
 		if (!str[i])
@@ -70,7 +69,6 @@ static int	countword(char const *str)
 		while (str[i] && is_space(str[i]) == true)
 			i++;
 	}
-	printf("nb mots : %d\n", counter);
 	return (counter);
 }
 
@@ -91,7 +89,7 @@ t_lexer_type	get_token(char *part)
 	else if (part[i] == '<' && part[i + 1] == '<' && part[i + 2] == 0)
 		return (token_heredoc);
 	else
-		return (word);
+		return (token_word);
 }
 
 void	get_part_len_manage_quote(char c, bool	*in_quote, char *quote_type)
@@ -158,7 +156,6 @@ char	*get_part(char *partition, int *i)
 	int		size;
 
 	size = get_part_len(partition, i);
-	printf("size : %d\n", size);
 	if (size == 0)
 		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));
