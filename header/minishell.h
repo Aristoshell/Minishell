@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 21:33:23 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/13 19:10:47 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@
 //defines
 # define double_quote 34
 # define simple_quote 39
- 
+# define two_pipes (is_pipe(str[i]) && check)
+# define first_is_pipe (is_pipe(str[i]) && !wrd)
+# define this_pipe_is_last (is_pipe(str[i]) && !str[i])
+# define last_is_pipe (!str[i] && check)
+
 //typedefs
 
 /* Lexer */
