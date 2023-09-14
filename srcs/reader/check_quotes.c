@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_pipes.c                                      :+:      :+:    :+:   */
+/*   check_quotes.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/13 19:27:09 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 12:16:14 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,3 @@ char	*manage_quote(char *input)
 	}
 	return (input);
 }
-
-// int main(void)
-// {
-// 	printf("Doit afficher 1 : %c\n", check_open_quote("\"Coucou\" \"hihi\" \" dddd "));
-// 	//printf("Doit afficher 0 : %c\n", check_open_quote("Coucou  \'hihi\'"));
-
-// 	return(1);
-// }

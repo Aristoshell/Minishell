@@ -6,20 +6,11 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:42:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/13 20:33:44 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 12:56:17 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
-#include <stdbool.h>
-
-# define two_pipes (is_pipe(str[i]) && check)
-# define first_is_pipe (is_pipe(str[i]) && !wrd)
-# define last_is_pipe (!str[i] && check)
-
-// checker les quotes ouvertes
-// checker les pipes (interupteur et disjoncteur)
-// checker les redirects
+#include "../../header/minishell.h"
 
 bool	is_pipe(char c)
 {
@@ -27,7 +18,6 @@ bool	is_pipe(char c)
 		return (true);
 	return (false);
 }
-
 
 void	change_data_check_pipe(char c, bool	*check, bool *wrd)
 {
@@ -39,7 +29,7 @@ void	change_data_check_pipe(char c, bool	*check, bool *wrd)
 		*wrd = true;
 }
 
-void	check_pipe_quote(char *str, int *i)
+void	pass_when_quote(char *str, int *i)
 {
 	char	quote;
 
@@ -50,43 +40,46 @@ void	check_pipe_quote(char *str, int *i)
 		while (str[*i] != quote)
 			*i += 1;
 		*i += 1;
-		if (!is_quote(str[*i]))	
+		if (!is_quote(str[*i]))
 			return ;
 	}
+}
+
+bool	check(char c, bool pipe, bool word)
+{
+	bool	two_pipes;
+	bool	first_is_pipe;
+	bool	last_is_pipe;
+
+	two_pipes = (is_pipe(c) && pipe);
+	first_is_pipe = (is_pipe(c) && !word);
+	last_is_pipe = (!c && pipe);
+	if (two_pipes || first_is_pipe || last_is_pipe)
+		return (false);
+	return (true);
 }
 
 int	check_pipe(char *str)
 {
 	int		i;
-	bool	check;
+	bool	pipe;
 	bool	wrd;
 
 	i = -1;
-	check = false;
+	pipe = false;
 	wrd = false;
 	while (str[++i])
 	{
 		while (str[i] && is_space(str[i]) == 1)
 			i++;
-		if (two_pipes || first_is_pipe || last_is_pipe) // faire une fonction avec des bits
-			return (printf("two_pipes : %d, first_is_pipe : %d, last_is_pipe : %d\n", two_pipes, first_is_pipe, last_is_pipe),false);
+		if (!check(str[i], pipe, wrd))
+			return (false);
 		if (is_quote(str[i]))
-			check_pipe_quote(str, &i);
+			pass_when_quote(str, &i);
 		if (str[i])
-			change_data_check_pipe(str[i], &check, &wrd);
+			change_data_check_pipe(str[i], &pipe, &wrd);
 	}
-	if (last_is_pipe)
+	if (!str[i] && pipe)
 		return (false);
 	return (true);
 }
-
-int main(void)
-{
-	char *test;
-	test = "| '||||' | cc|vv";
-	int rez = check_pipe(test);
-	printf("test : \"%s\" rez = %d\n", test, rez);
-	return (0);
-}
-
-

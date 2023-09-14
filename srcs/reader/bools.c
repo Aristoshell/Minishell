@@ -6,11 +6,11 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:22:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/10 17:18:17 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 11:54:02 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../header/minishell.h"
 
 bool	is_space(char c)
 {
