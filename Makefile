@@ -6,18 +6,17 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/14 14:41:05 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/14 16:13:12 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_FILES	= 	main.c \
-				reader/prompt.c \
-				reader/ft_split_spaces.c \
+SRCS_FILES	= 	prompt.c \
 				reader/bools.c \
-				reader/parser.c \
-				reader/check_quotes.c \
 				reader/check_pipes.c \
-				reader/check_redir.c 
+				reader/check_quotes.c \
+				reader/check_redir.c \
+				lexer/ft_split_spaces.c \
+				parser/parser.c
 
 PREFIX	= srcs
 
