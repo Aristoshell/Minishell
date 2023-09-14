@@ -6,11 +6,11 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/12 16:51:03 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:41:16 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "minishell.h"
 
 /* compte le nb de mots*/
 

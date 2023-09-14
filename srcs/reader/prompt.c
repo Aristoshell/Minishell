@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/08 15:14:47 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/14 14:43:29 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ void	prompt(void)
 		}
 		if (input && input[0] != 0)
 		{
-			if (check_open_quote(input) != 0)
-				dprintf(2, "aristoshell : syntax error near unclosed quote\n"); //penser a mettre une fonction dprintf recoded
+			if (!check_syntax(input))
+				dprintf(2, "aristoshell : syntax error\n"); //penser a mettre une fonction dprintf recoded + adapter le message derreur
 			else
 			{	
 				ft_split_space(input, info);

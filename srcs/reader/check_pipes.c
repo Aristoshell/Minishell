@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checks_pipes.c                                     :+:      :+:    :+:   */
+/*   check_pipes.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:42:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/14 12:56:17 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:45:56 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "minishell.h"
 
 bool	is_pipe(char c)
 {
@@ -73,13 +73,13 @@ int	check_pipe(char *str)
 		while (str[i] && is_space(str[i]) == 1)
 			i++;
 		if (!check(str[i], pipe, wrd))
-			return (false);
+			return (true);
 		if (is_quote(str[i]))
 			pass_when_quote(str, &i);
 		if (str[i])
 			change_data_check_pipe(str[i], &pipe, &wrd);
 	}
 	if (!str[i] && pipe)
-		return (false);
-	return (true);
+		return (true);
+	return (false);
 }

@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/10 15:55:06 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/14 14:41:05 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ SRCS_FILES	= 	main.c \
 				reader/ft_split_spaces.c \
 				reader/bools.c \
 				reader/parser.c \
-				reader/check_quotes.c				
+				reader/check_quotes.c \
+				reader/check_pipes.c \
+				reader/check_redir.c 
 
 PREFIX	= srcs
 

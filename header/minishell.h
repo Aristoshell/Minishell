@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/13 19:10:47 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 14:42:43 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,6 @@
 //defines
 # define double_quote 34
 # define simple_quote 39
-# define two_pipes (is_pipe(str[i]) && check)
-# define first_is_pipe (is_pipe(str[i]) && !wrd)
-# define this_pipe_is_last (is_pipe(str[i]) && !str[i])
-# define last_is_pipe (!str[i] && check)
 
 //typedefs
 
@@ -131,6 +127,11 @@ char	is_quote(char c);
 bool	is_op(char c);
 bool	is_separator(char c);
 bool	is_cmd_separator(char c);
+
+/* Check pre parsing*/
+bool	check_syntax(char	*str);
+void	pass_when_quote(char *str, int *i);
+int		check_pipe(char *str);
 
 /* Catégorie n */
 
