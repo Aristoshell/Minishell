@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/14 16:11:12 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/14 19:46:44 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	prompt(void)
 	{
 		input = readline("\033[93maristoshell$ \033[0m");
 		add_history(input);
-		if (!input || ft_strncmp(input, "exit", ft_strlen(input) + 1) == 0)
+		if (!input || ft_strncmp(input, "exit", ft_strlen(input) + 1) == 0)// a changer, car ca doit faire partie de lexec
 		{
 			printf("exit\n");
 			free(input);
@@ -73,23 +73,10 @@ void	prompt(void)
 	}
 }
 
-// int	parse_envp(t_data *data, char **envp)
-// {
-// 	int		i;
-
-// 	i = 0;
-// 	if (!envp[0])
-// 		return (0);
-// 	while (envp[i] && ft_strncmp(envp[i], "PATH=", 5) != 0)
-// 		i++;
-// 	if (envp[i])
-// 	{
-// 		data->path = ft_split(&envp[i][5], ':');
-// 		if (data->path == NULL)
-// 			return (-1);
-// 	}
-// 	return (0);
-// }
+int	parse_envp(t_data *data, char **envp)
+{
+	
+}
 
 int	main(int argc, char **argv, char **envp)
 {
