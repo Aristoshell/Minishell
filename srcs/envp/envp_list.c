@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/15 16:37:39 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 20:44:45 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,18 @@ void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new)
 		*lst = new ;
 }
 
+
+void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_envlist *new)
+{
+	if (!next)
+		ft_lst_env_add_back(lst, )
+}
+
 void	set_flag(int *flag, char *val)
 {
+	*flag = MASK_EXPORT;
 	if (val)
-		*flag |= var_set | var_exported;
-	else
-		*flag = var_exported;
+		*flag |= MASK_SET;
 }
 
 t_envlist	*ft_lst_env_new(char *key, char *val)

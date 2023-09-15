@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/15 16:39:33 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:09:37 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,19 @@ void	ft_free_info(t_info *info)
 	info->nb_words = -1;
 }
 
-void	prompt(t_envlist **parsed_env)
+void	prompt()
 {
 	char	*input;
  	t_info	*info;
 
 	info = malloc(sizeof(t_info));
 	if (!info)
-		dprintf(2, "Problem with memory allocation\n");
+		dprintf(STDERR_FILENO, "Problem with memory allocation\n");
 	info->words = NULL;
 	while (1)
 	{
-		input = readline("\033[93maristoshell$ \033[0m");
+		// faire un wrapper, add input to history qui va check si l'input est pas vide pour pas add un !ligne a mon historique
+		input = readline(YELLOW"aristoshell$ "NC);
 		add_history(input);
 		if (!input || ft_strncmp(input, "exit", ft_strlen(input) + 1) == 0)// a changer, car ca doit faire partie de lexec
 		{
@@ -54,7 +55,12 @@ void	prompt(t_envlist **parsed_env)
 		if (input && input[0] != 0)
 		{
 			if (!check_syntax(input))
-				dprintf(2, "aristoshell : syntax error\n"); //penser a mettre une fonction dprintf recoded + adapter le message derreur
+			{
+				dprintf(STDERR_FILENO, "aristoshell : syntax error\n"); //penser a mettre une fonction dprintf recoded + adapter le message derreur
+				free(input);
+				// penser a free les structures
+				return ;
+			}
 			else
 			{	
 				ft_split_space(input, info);
@@ -73,7 +79,6 @@ void	prompt(t_envlist **parsed_env)
 	}
 }
 
-
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
@@ -81,8 +86,9 @@ int	main(int argc, char **argv, char **envp)
 	if (argc == 1)
 	{
 		parsed_env = get_envp(envp);
+		(void) parsed_env;
+		prompt();
 		ft_lst_env_clear(&parsed_env);// mettre autre part plus tard
-		prompt(&parsed_env);
 		return (0);
 	}
 	return (perror("Error : Please launch minishell with no additional argument"), -1);

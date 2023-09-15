@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/12 16:50:15 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:31:41 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-# define double_quote 34
-# define simple_quote 39
+# define DOUBLE_QUOTE 34
+# define SIMPLE_QUOTE 39
  
 typedef enum e_lexer_type
 {

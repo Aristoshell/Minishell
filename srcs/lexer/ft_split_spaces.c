@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/14 14:41:16 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 18:15:51 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,7 +186,6 @@ int	ft_split_space(char const *str, t_info *info)
 
 	if (!str)
 		return (-1);
-	j = 0;
 	info->nb_words = countword(str);
 	if (info->nb_words < 1)
 		return (0);
@@ -194,6 +193,7 @@ int	ft_split_space(char const *str, t_info *info)
 	if (!info->words)
 		return (-2);
 	i = 0;
+	j = 0;
 	while (j < info->nb_words)
 	{
 		info->words[j] = malloc(sizeof(t_parts));

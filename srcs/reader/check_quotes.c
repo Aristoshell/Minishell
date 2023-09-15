@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/14 14:41:26 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:31:41 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	check_open_quote(char *input)
 	delimiter = 0;
 	while (input[i])
 	{
-		if (input[i] == double_quote || input[i] == simple_quote)
+		if (input[i] == DOUBLE_QUOTE || input[i] == SIMPLE_QUOTE)
 		{
 			delimiter = input[i];
 			i++;

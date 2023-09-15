@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/15 16:34:40 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 19:45:57 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,19 @@
 # include <readline/history.h>
 
 //defines
-# define double_quote 34
-# define simple_quote 39
-# define var_set 0b0000001
-# define var_exported 0b00000010
+// a mettre en majuscule
+# define DOUBLE_QUOTE 	34
+# define SIMPLE_QUOTE 	39
+# define MASK_SET		0x10
+# define MASK_EXPORT	0x01
+# define MASK_ENV		0x11
+# define YELLOW "\033[93m"
+# define NC		"\033[0m"
+
 
 //typedefs
+
+typedef int	t_flag;
 
 /* Env */
 typedef struct s_envlist
@@ -55,6 +62,7 @@ typedef enum e_lexer_type
 	token_append
 }			t_lexer_type;
 
+// romann : token = struct avec une valeur et un type donc changer les noms
 typedef struct s_parts
 {
 	char			*string;
