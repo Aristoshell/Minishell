@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   prompt.c                                           :+:      :+:    :+:   */
+/*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/14 19:46:44 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 16:39:33 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	ft_free_info(t_info *info)
 	info->nb_words = -1;
 }
 
-void	prompt(void)
+void	prompt(t_envlist **parsed_env)
 {
 	char	*input;
  	t_info	*info;
@@ -62,7 +62,7 @@ void	prompt(void)
 				while(i < info->nb_words)
 				{
 					printf("[%d] [%d]: %s\n", i, info->words[i]->token, info->words[i]->string);
-					i++;	
+					i++;
 				}
 				parser(info);
 			}
@@ -73,18 +73,16 @@ void	prompt(void)
 	}
 }
 
-int	parse_envp(t_data *data, char **envp)
-{
-	
-}
 
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
-	(void) envp;
+	t_envlist *parsed_env;
 	if (argc == 1)
 	{
-		prompt();
+		parsed_env = get_envp(envp);
+		ft_lst_env_clear(&parsed_env);// mettre autre part plus tard
+		prompt(&parsed_env);
 		return (0);
 	}
 	return (perror("Error : Please launch minishell with no additional argument"), -1);

@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/20 21:49:59 by madavid           #+#    #+#              #
-#    Updated: 2023/05/09 15:19:09 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/15 16:10:02 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ SRCS = ft_bzero.c \
 	ft_toupper.c \
 	ft_tolower.c \
 	ft_strchr.c \
+	ft_strchr_int.c \
 	ft_strrchr.c \
 	ft_strncmp.c \
 	ft_memchr.c \

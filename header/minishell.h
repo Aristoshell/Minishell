@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/14 14:42:43 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/15 16:34:40 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,19 @@
 //defines
 # define double_quote 34
 # define simple_quote 39
+# define var_set 0b0000001
+# define var_exported 0b00000010
 
 //typedefs
+
+/* Env */
+typedef struct s_envlist
+{
+	char				*key;
+	char				*val;
+	int					flag;
+	struct s_envlist	*next;
+}					t_envlist;
 
 /* Lexer */
 
@@ -104,6 +115,7 @@ typedef struct s_data
 	int			*current_cmd;
 	int			nb_command;
 	t_cmd		**cmd;
+	t_envlist	*envp;
 }			t_data;
 
 //fonctions
@@ -133,6 +145,10 @@ bool	check_syntax(char	*str);
 void	pass_when_quote(char *str, int *i);
 int		check_pipe(char *str);
 
-/* Catégorie n */
+/* Env n */
+t_envlist	*ft_lst_env_new(char *key, char *val);
+void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new);
+void	ft_lst_env_clear(t_envlist **lst);
+t_envlist	*get_envp(char **envp);
 
 #endif

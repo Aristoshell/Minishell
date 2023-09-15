@@ -6,18 +6,19 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/14 19:51:20 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/15 16:06:04 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_FILES	= 	prompt.c \
+SRCS_FILES	= 	minishell.c \
 				reader/bools.c \
 				reader/check_pipes.c \
 				reader/check_quotes.c \
 				reader/check_redir.c \
 				lexer/ft_split_spaces.c \
 				parser/parser.c \
-				envp/envp_lists.c
+				envp/envp_list.c \
+				envp/get_env.c
 
 PREFIX	= srcs
 
