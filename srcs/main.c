@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/07/11 18:35:38 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/16 12:41:17 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,44 +20,47 @@ void	error_fork(void)
 
 int	main(int argc, char **argv, char **envp)
 {
-	t_cmd	*cmd;
+	t_cmd	*cmd[4];
+	
+	if (!argv || !argc || !envp)
+		printf("no arg");
 
-	cmd = malloc(sizeof(t_cmd));
-	cmd->next = malloc(sizeof(t_cmd));
-	if (!cmd)
-		return (-1);
+	cmd[0] = malloc(sizeof(t_cmd));
+	cmd[1] = malloc(sizeof(t_cmd));
+	cmd[2] = malloc(sizeof(t_cmd));
+	cmd[3] = NULL;
+	
+	cmd[0]->pid = -1;
+	cmd[0]->cmd_args = gen_first_cmd(argv);
+	cmd[0]->cmd_type = no;
+	cmd[0]->input = file_;
+	cmd[0]->output = pipe_;
+	cmd[0]->heredoc_name = NULL;
+	cmd[0]->heredoc_sep = NULL;
+	cmd[0]->fd_in = open("in", O_RDONLY);
+	cmd[0]->fd_out = -2;
+	
+	
+	cmd[1]->pid = -1;
+	cmd[1]->cmd_args = gen_sec_cmd(argv);
+	cmd[1]->cmd_type = no;
+	cmd[1]->input = file_;
+	cmd[1]->output = pipe_;
+	cmd[1]->heredoc_name = NULL;
+	cmd[1]->heredoc_sep = NULL;
+	cmd[1]->fd_in = -2;
+	cmd[1]->fd_out = -2;
+	
 
-	//first command
-	cmd->cmd_args = gen_first_cmd(argv);
-	cmd->cmd_type = no;
-	cmd->input = file_;
-	cmd->output = pipe_;
-	cmd->fd_in = open("in", O_RDONLY);
-	cmd->fd_out = -2;
-	//second command
-	cmd->next->cmd_args = gen_sec_cmd(argv, argc);
-	cmd->cmd_type = no;
-	cmd->next->input = pipe_;
-	cmd->next->input = file_;
-	cmd->fd_in = -2;
-	cmd->next->fd_out = open("out", O_CREAT | O_TRUNC | O_RDWR, 0777);
-	cmd->next->next = NULL;
-	// for(int i = 0; cmd->cmd_args[i]; i++)
-		// printf("%s ", cmd->cmd_args[i]);
-	// printf("\n");
-	// for(int i = 0; cmd->next->cmd_args[i]; i++)
-		// printf("%s ", cmd->next->cmd_args[i]);
-	// printf("\n");
-	cmd->pid = fork();
-	if (cmd->pid == -1)
-		error_fork();
-	if (cmd->pid == 0)
-		child_process(&cmd, envp);
-	if (cmd->next->pid == -1)
-		error_fork();
-	if (cmd->next->pid == 0)
-		child_process(&cmd, envp);
-	waitpid(cmd->pid, 0, 0);
-	waitpid(cmd->next->pid, 0, 0);
+	cmd[2]->pid = -1;
+	cmd[2]->cmd_args = gen_third_cmd(argv,argc);
+	cmd[2]->cmd_type = no;
+	cmd[2]->input = file_;
+	cmd[2]->output = pipe_;
+	cmd[2]->heredoc_name = NULL;
+	cmd[2]->heredoc_sep = NULL;
+	cmd[2]->fd_in = -2;
+	cmd[2]->fd_out = open("out", O_CREAT | O_TRUNC | O_RDWR, 0777);
+	cross_array_list(cmd, envp);
 	return (0);
 }

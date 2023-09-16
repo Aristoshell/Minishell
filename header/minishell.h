@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:39:47 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/07/11 18:35:59 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/16 12:47:55 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,29 +47,25 @@ typedef enum e_in_out
 	file_
 }			t_in_out;
 
+typedef struct s_pipe
+{
+	int tube[2][2];
+}	t_pipe;
+
 typedef struct s_cmd
 {
-	pid_t				pid;
-	char				**cmd_args;
-	t_builtin			cmd_type;
-	char				**path_cmd;
-	t_in_out			input;
-	t_in_out			output;
-	int					fd_in;
-	int					fd_out;
-	struct s_cmd		*next;
-}			t_cmd;
+    pid_t                pid;
+    char                **cmd_args;
+    t_builtin            cmd_type;
+    char                **path_cmd;
+    t_in_out            input;
+    t_in_out            output;
+    char                *heredoc_name;
+    char                *heredoc_sep;
+    int                    fd_in;
+    int                    fd_out;
+}      t_cmd;
 
-/*typedef struct s_cmd
-{
-	pid_t	pid1;
-	char	*paths;
-	char	**cmd_paths;
-	char	**cmd_args;
-	char	*cmd;
-    int     infile;
-    int     outfile;
-}t_cmd;*/
 
 void	child_process(t_cmd **cmd, char **envp);
 char	*get_args(char **argv);
@@ -77,4 +73,6 @@ char	*get_cmd(char **paths, char *cmd);
 char	*nopath(char *cmd);
 char	*find_path(char **envp);
 char	**gen_first_cmd(char **argv);
-char	**gen_sec_cmd(char **argv, int argc);
+char	**gen_sec_cmd(char **argv);
+char	**gen_third_cmd(char **argv, int argc);
+void	cross_array_list(t_cmd *cmd[4], char **envp);

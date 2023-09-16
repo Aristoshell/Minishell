@@ -6,21 +6,12 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:39:26 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/07/11 18:35:42 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/16 12:34:23 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header/minishell.h"
 
-char* ft_strncat(char* destination, const char* source, size_t num)
-{
-    char* ptr = destination + ft_strlen(destination);
-    while (*source != '\0' && num--) {
-        *ptr++ = *source++;
-    }
-    *ptr = '\0';
-    return (destination);
-}
 
 char *get_args(char **argv)
 {
@@ -31,11 +22,11 @@ char *get_args(char **argv)
     i = 2;
     space = ' ';
     final = ft_strdup(argv[1]);
-    final = ft_strncat(final, &space, 1);
+    final = strncat(final, &space, 1);
     while (argv[i] != NULL)
     {
         final = ft_strjoin(final, argv[i]);
-        final = ft_strncat(final, &space, 1);
+        final = strncat(final, &space, 1);
         i++;
     }
     return (final);
@@ -47,31 +38,54 @@ char **gen_first_cmd(char **argv)
 	char *final;
 
 	final = ft_strdup(argv[1]);
-	final = strcat(final, " ");
-	while(argv[i] && ft_strncmp(argv[i], "|", ft_strlen(argv[i])))
+	final = ft_strcat(final, " ");
+	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
 	{
-		final = strcat(final, argv[i]);
-		final = strcat(final, " ");
+		final = ft_strcat(final, argv[i]);
+		final = ft_strcat(final, " ");
 		i++;
 	}
 	return (ft_split(final, ' '));
 }
 
-char **gen_sec_cmd(char **argv, int argc)
+char **gen_sec_cmd(char **argv)
 {
 	char *final;
 	int i = 2;
 	
-	while(argv[i] && ft_strncmp(argv[i], "|", ft_strlen(argv[i])))
+	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
 		i++;
 	i++;
 	final = ft_strdup(argv[i]);
-	final = strcat(final, " ");
+	final = ft_strcat(final, " ");
+	i++;
+	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
+	{
+		final = ft_strcat(final, argv[i]);
+		final = ft_strcat(final, " ");
+		i++;
+	}
+	return (ft_split(final, ' '));
+}
+
+char **gen_third_cmd(char **argv, int argc)
+{
+	char *final;
+	int i = 2;
+	
+	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
+		i++;
+	i++;
+	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
+		i++;
+	i++;
+	final = ft_strdup(argv[i]);
+	final = ft_strcat(final, " ");
 	i++;
 	while(i < argc)
 	{
-		final = strcat(final, argv[i]);
-		final = strcat(final, " ");
+		final = ft_strcat(final, argv[i]);
+		final = ft_strcat(final, " ");
 		i++;
 	}
 	return (ft_split(final, ' '));
