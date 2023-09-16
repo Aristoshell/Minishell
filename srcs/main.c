@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 12:41:17 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/16 14:32:35 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@ void	error_fork(void)
 	printf("error_fork");
 	exit(1);
 }
+
+/*
+creation des arguments des listes qu'on vas utiliser
+*/
 
 int	main(int argc, char **argv, char **envp)
 {
@@ -61,6 +65,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd[2]->heredoc_sep = NULL;
 	cmd[2]->fd_in = -2;
 	cmd[2]->fd_out = open("out", O_CREAT | O_TRUNC | O_RDWR, 0777);
+
 	cross_array_list(cmd, envp);
 	return (0);
 }

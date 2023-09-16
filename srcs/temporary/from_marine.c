@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:39:26 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 12:34:23 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/16 14:31:49 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ char *get_args(char **argv)
     }
     return (final);
 }
+
+//recuperation des arguments pour decouper comme le parsing le ferais
+//a la place d'utiliser je char "|" on utilise "I" car cela creais des soucis
+
 
 char **gen_first_cmd(char **argv)
 {
