@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/17 17:27:23 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/17 23:53:12 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,16 +74,16 @@ void	print_env(t_envlist *env)
 	}
 }
 
-// void	add_new_node(t_envlist **lst, char *var)
-// {
-// 	t_envlist	*prev;
-// 	t_envlist	*next;
-// 	t_envlist	*new;
+void	add_new_node(t_envlist **lst, char *var)
+{
+	t_envlist	*prev;
+	t_envlist	*next;
+	t_envlist	*new;
 
-// 	new = ft_new_envvar(var);
-// 	// add protection
-// 	while ()
-// }
+	new = ft_new_envvar(var);
+	// add protection
+	while ()
+}
 
 t_envlist	*get_envp(char **envp)
 {

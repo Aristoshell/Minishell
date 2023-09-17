@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
+#    By: marine <marine@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/20 21:49:59 by madavid           #+#    #+#              #
-#    Updated: 2023/09/17 17:27:13 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/18 00:12:37 by marine           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,53 +15,57 @@ NAME = libft.a
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
-SRCS = ft_bzero.c \
-	ft_isalpha.c \
-	ft_isascii.c \
-	ft_isdigit.c \
-	ft_isalnum.c \
-	ft_isprint.c \
-	ft_memcpy.c \
-	ft_memmove.c \
-	ft_memset.c \
-	ft_strlcpy.c \
-	ft_strlen.c \
-	ft_strlcat.c \
-	ft_toupper.c \
-	ft_tolower.c \
-	ft_strchr.c \
-	ft_strchr_int.c \
-	ft_strrchr.c \
-	ft_strncmp.c \
-	ft_memchr.c \
-	ft_memcmp.c \
-	ft_strnstr.c \
-	ft_atoi.c \
-	ft_calloc.c \
-	ft_strdup.c \
-	ft_substr.c \
-	ft_strjoin.c \
-	ft_strtrim.c \
-	ft_split.c \
-	ft_itoa.c \
-	ft_putchar_fd.c \
-	ft_putstr_fd.c \
-	ft_putendl_fd.c \
-	ft_putnbr_fd.c \
-	ft_strmapi.c \
-	ft_striteri.c \
-	ft_lstnew.c\
-	ft_lstadd_front.c \
-	ft_lstsize.c \
-	ft_lstlast.c \
-	ft_lstadd_back.c \
-	ft_lstdelone.c \
-	ft_lstclear.c \
-	ft_lstiter.c \
-	ft_lstmap.c \
-	ft_get_next_line.c \
-	ft_printf_fd.c \
-    ft_printf_utils_fd.c \
+SRCS_FILES = 	memory/ft_bzero.c \
+				memory/ft_memcpy.c \
+				memory/ft_memmove.c \
+				memory/ft_memset.c \
+				memory/ft_memchr.c \
+				memory/ft_memcmp.c \
+				memory/ft_calloc.c \
+				bools/ft_isalpha.c \
+				bools/ft_isascii.c \
+				bools/ft_isdigit.c \
+				bools/ft_isalnum.c \
+				bools/ft_isprint.c \
+				strings/ft_strlcpy.c \
+				strings/ft_strlen.c \
+				strings/ft_strlcat.c \
+				strings/ft_strchr.c \
+				strings/ft_strchr_int.c \
+				strings/ft_strrchr.c \
+				strings/ft_strncmp.c \
+				strings/ft_strnstr.c \
+				strings/ft_strdup.c \
+				strings/ft_substr.c \
+				strings/ft_strjoin.c \
+				strings/ft_strtrim.c \
+				strings/ft_split.c \
+				chars/ft_tolower.c \
+				chars/ft_toupper.c \
+				numbers/ft_atoi.c \
+				numbers/ft_itoa.c \
+				display/ft_putchar_fd.c \
+				display/ft_putstr_fd.c \
+				display/ft_putendl_fd.c \
+				display/ft_putnbr_fd.c \
+				strings/ft_strmapi.c \
+				strings/ft_striteri.c \
+				linkedlists/ft_lstnew.c\
+				linkedlists/ft_lstadd_front.c \
+				linkedlists/ft_lstsize.c \
+				linkedlists/ft_lstlast.c \
+				linkedlists/ft_lstadd_back.c \
+				linkedlists/ft_lstdelone.c \
+				linkedlists/ft_lstclear.c \
+				linkedlists/ft_lstiter.c \
+				linkedlists/ft_lstmap.c \
+				gnl/ft_get_next_line.c \
+				printf/ft_printf_fd.c \
+				printf/ft_printf_utils_fd.c 
+
+PREFIX	= srcs
+
+SRCS = $(addprefix ${PREFIX}/, ${SRCS_FILES})
 
 OBJS = $(SRCS:.c=.o) 
 
