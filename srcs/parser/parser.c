@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/12 16:44:54 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/17 15:51:45 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ on reçoit une struct info avec
 	- tableau de partitions avec les mots
 on veut : une struct data avec
 	- nb de commandes
-	- un tableau de commandes avec le nom de la commande, ses flags et arguments, entrée et sortie standard
+	- un tableau de commandes avec le nom de la commande, ses CFLAGS et arguments, entrée et sortie standard
 
 
 exemple :
