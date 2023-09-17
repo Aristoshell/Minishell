@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/15 19:09:51 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/17 17:27:23 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,11 +74,22 @@ void	print_env(t_envlist *env)
 	}
 }
 
+// void	add_new_node(t_envlist **lst, char *var)
+// {
+// 	t_envlist	*prev;
+// 	t_envlist	*next;
+// 	t_envlist	*new;
+
+// 	new = ft_new_envvar(var);
+// 	// add protection
+// 	while ()
+// }
+
 t_envlist	*get_envp(char **envp)
 {
 	int			i;
 	t_envlist	*list;
-	
+
 	i = 0;
 	list = NULL;
 	if (!envp[0])
@@ -92,9 +103,12 @@ t_envlist	*get_envp(char **envp)
 				return (NULL);
 		}
 		else
+		{
+			//fonction pour add au bon endroit et je lui envoi envp[i]
 			ft_lst_env_add_back(&list, ft_new_envvar(envp[i])); // ya pas de verif
+		}
 		i++;
 	}
-	//print_env(list);
+	print_env(list);
 	return (list);	
 }

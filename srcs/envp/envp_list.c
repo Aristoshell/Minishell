@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/15 20:44:45 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/17 15:23:54 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,32 @@ void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new)
 		*lst = new ;
 }
 
+void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new)
+{
+	if (lst != NULL)
+	{
+		if (*lst != NULL)
+		{
+			new->next = (*lst);
+		}
+		*lst = new;
+	}
+}
 
 void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_envlist *new)
 {
+	// a proteger mieux I guess
+	if (!*lst)
+		*lst = new;
 	if (!next)
-		ft_lst_env_add_back(lst, )
+		ft_lst_env_add_back(lst, new);
+	else if ((*lst)->key == new->key)
+		ft_lst_env_add_front(lst, new);
+	else
+	{
+		prev->next = new;
+		new->next = next;		
+	}
 }
 
 void	set_flag(int *flag, char *val)

@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/15 16:06:04 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/17 17:57:45 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,35 +27,69 @@ SRCS = $(addprefix ${PREFIX}/, ${SRCS_FILES})
 OBJS = $(SRCS:.c=.o)
 
 LIB = -Llibft -lft -lreadline
+LIBFT_DIR = libft/
+LIBFT = $(LIBFT_DIR)/libft.a
 
 INCLUDE	= -Ilibft -Iheader -Ireadline
 
 CC    = cc
 
-FLAGS  = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 NAME    = minishell
 
 DEPS			=	${SRCS:.c=.d}
 
-.c.o:
-	${CC} ${FLAGS} ${CDFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
+
+#################
+#### DISPLAY ####
+#################
+
+RED=\033[0;31m
+BOLD_WHITE=\033[1m
+GREEN=\033[1;32m
+ORANGE=\033[0;33m
+YELLOW=\033[1;33m
+BLUE=\033[1;36m
+NC=\033[0m # No Color
+
+
+#################
+##### RULES #####
+#################
+
+all: ${LIBFT} ${NAME}
+
+${LIBFT}:
+	echo -n "${BOLD_WHITE}⏳ COMPILING LIBFT${NC}"
+	${MAKE} -sC ${LIBFT_DIR}
+	echo "${GREEN}Done 💅${NC}"
 
 ${NAME}: ${OBJS}
-	${MAKE} -C libft
-	${CC} ${FLAGS} ${OBJS} ${LIB} -o ${NAME}
+	echo -n "${BOLD_WHITE}⏳ COMPILING MINISHELL${NC}"
+	${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
+	echo "${GREEN}Done 💅${NC}"
 
-all: ${NAME}
+.c.o:
+	${CC} ${CFLAGS} ${CDCFLAGS} ${INCLUDE} -c $< -o ${<:.c=.o}
+
 
 clean:
-	${MAKE} -C libft clean
-	rm -f ${OBJS}
-	rm -f ${DEPS}
+	echo -n "${BOLD_WHITE}🧹 CLEANING OBJECTS\t${NC}"
+	${MAKE} -sC ${LIBFT_DIR} clean
+	${RM} ${OBJS}
+	${RM} ${DEPS}
+	echo "${GREEN}Done 💅${NC}"
+
 
 fclean: clean
-	${MAKE} -C libft fclean
-	rm -f ${NAME}
+	echo -n "${BOLD_WHITE}⏳ CLEANING EXEC\t${NC}"
+	${MAKE} -sC ${LIBFT_DIR} fclean
+	${RM} ${NAME}
+	echo "${GREEN}Done 💅${NC}"
 
-re: fclean all
+re : fclean
+	${MAKE}
 
 .PHONY: re fclean all
+.SILENT:

@@ -6,14 +6,14 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/20 21:49:59 by madavid           #+#    #+#              #
-#    Updated: 2023/09/15 16:10:02 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/17 17:27:13 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
-CC = gcc
-FLAGS = -Wall -Wextra -Werror
+CC = cc
+CFLAGS = -Wall -Wextra -Werror
 
 SRCS = ft_bzero.c \
 	ft_isalpha.c \
@@ -65,20 +65,22 @@ SRCS = ft_bzero.c \
 
 OBJS = $(SRCS:.c=.o) 
 
-.c.o:
-	${CC} ${FLAGS} -c $< -o ${<:.c=.o}
-
 all: $(NAME)
+
+.c.o:
+	${CC} ${CFLAGS} -c $< -o ${<:.c=.o}
 
 $(NAME): $(OBJS)
 	ar -rcs $(NAME) $(OBJS) 
 
 clean :
-	rm -f $(OBJS)
+	${RM} $(OBJS)
 	
 fclean : clean
-	rm -f $(NAME)
+	${RM} $(NAME)
 
-re : fclean all
+re : fclean
+	${MAKE}
 
 .PHONY : all clean fclean re
+.SILENT:
