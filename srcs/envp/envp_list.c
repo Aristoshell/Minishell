@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/17 15:23:54 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/18 01:37:32 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,18 @@ void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_en
 	if (!*lst)
 		*lst = new;
 	if (!next)
+	{
+		printf(RED"add back\n"NC);
 		ft_lst_env_add_back(lst, new);
+	}
 	else if ((*lst)->key == new->key)
+	{
+		printf(RED"add front\n"NC);
 		ft_lst_env_add_front(lst, new);
+	}
 	else
 	{
+		printf(RED"insert\n"NC);
 		prev->next = new;
 		new->next = next;		
 	}

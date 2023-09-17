@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/18 00:14:08 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/18 01:36:41 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,12 @@
 # define MASK_SET		0x10
 # define MASK_EXPORT	0x01
 # define MASK_ENV		0x11
-# define YELLOW "\033[93m"
-# define NC		"\033[0m"
-
+# define RED			"\033[1;31m"
+# define GREEN			"\033[1;32m"
+# define ORANGE			"\033[1;33m"
+# define YELLOW			"\033[1;33m"
+# define BLUE			"\033[1;36m"
+# define NC				"\033[0m"
 
 //typedefs
 
@@ -157,6 +160,7 @@ int		check_pipe(char *str);
 t_envlist	*ft_lst_env_new(char *key, char *val);
 void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new);
 void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new);
+void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_envlist *new);
 void	ft_lst_env_clear(t_envlist **lst);
 t_envlist	*get_envp(char **envp);
 

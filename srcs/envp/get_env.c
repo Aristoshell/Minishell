@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/17 23:53:12 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/18 01:27:37 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,28 @@ void	add_new_node(t_envlist **lst, char *var)
 	t_envlist	*prev;
 	t_envlist	*next;
 	t_envlist	*new;
+	//t_envlist	*curr;
 
+	int			len;
 	new = ft_new_envvar(var);
 	// add protection
-	while ()
+	len = ft_strlen(new->key);
+	prev = *lst;
+	next = NULL;
+	printf(YELLOW"nouvo : %s, current : %s\n"NC, new->key, prev->key);
+	while (*lst && ft_strncmp(new->key, prev->key, len) < 0)
+	{	
+		if ((*lst)->next)
+			prev = (*lst)->next;
+		else
+			break;
+	}
+	// if (ft_strncmp(new->key, prev->key, len) < 0)
+	// 	//action
+	// else if
+	if ((*lst)->next)
+		next = prev->next;
+	ft_lst_env_insert(lst, prev, next, new);
 }
 
 t_envlist	*get_envp(char **envp)
@@ -105,10 +123,12 @@ t_envlist	*get_envp(char **envp)
 		else
 		{
 			//fonction pour add au bon endroit et je lui envoi envp[i]
-			ft_lst_env_add_back(&list, ft_new_envvar(envp[i])); // ya pas de verif
+			//ft_lst_env_add_back(&list, ft_new_envvar(envp[i])); // ya pas de verif
+			add_new_node(&list, envp[i]);
+			print_env(list);
 		}
 		i++;
 	}
-	print_env(list);
+	//print_env(list);
 	return (list);	
 }
