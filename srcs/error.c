@@ -6,19 +6,19 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:56:33 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 10:08:05 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:26:20 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void error_dup2(void)
+void	error_dup2(void)
 {
 	printf("error dup2");
 	exit(1);
 }
 
-void error_pipe(void)
+void	error_pipe(void)
 {
 	printf("error pipe");
 	exit(1);

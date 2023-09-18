@@ -6,18 +6,18 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 10:56:48 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:24:48 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void wait_childs(t_cmd *cmd[4])
+void	wait_childs(t_cmd *cmd[4])
 {
-	int i;
-	
+	int	i;
+
 	i = 0;
-	while(cmd[i])
+	while (cmd[i])
 	{
 		waitpid(cmd[i]->pid, 0, 0);
 		i++;
@@ -36,16 +36,16 @@ void	child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
 {
 	char	*exec;
 	char	*path_temp;
-	
+
 	pipes = handle_redirection(cmd, pipes);
-	if(cmd->cmd_type != no)
+	if (cmd->cmd_type != no)
 		handle_builtins(cmd, pipes, envp);
 	path_temp = find_path(envp);
 	if (path_temp)
 		cmd->path_cmd = ft_split(path_temp, ':');
 	else
 		cmd->path_cmd = NULL;
-	if(!cmd->cmd_args)
+	if (!cmd->cmd_args)
 	{
 		//si la commande est mauvais il faut free et close
 		return ;
@@ -101,7 +101,7 @@ apres appel :
 [1][1] --> 10
 */
 
-t_pipe *new_pipes(t_pipe *pipes, int i)
+t_pipe	*new_pipes(t_pipe *pipes, int i)
 {
 	if (i != 1)
 	{
@@ -110,7 +110,7 @@ t_pipe *new_pipes(t_pipe *pipes, int i)
 	}
 	pipes->tube[0][0] = pipes->tube[1][0];
 	pipes->tube[0][1] = pipes->tube[1][1];
-	if (pipe(pipes->tube[1]) !=0 )
+	if (pipe(pipes->tube[1]) != 0)
 		error_pipe();
 	return (pipes);
 }
@@ -122,8 +122,8 @@ et enfin appeler la fonction child process
 
 t_pipe	*gen_child(t_cmd *cmd, t_pipe *pipes, char **envp, int i)
 {
-	pid_t pid;
-	
+	pid_t	pid;
+
 	if (i == 0)
 	{
 		if (pipe(pipes->tube[1]) != 0)
@@ -137,7 +137,7 @@ t_pipe	*gen_child(t_cmd *cmd, t_pipe *pipes, char **envp, int i)
 	if (pid == 0)
 		child_process(cmd, pipes, envp);
 	cmd->pid = pid;
-	return(pipes);
+	return (pipes);
 }
 
 /*
@@ -154,16 +154,16 @@ free tout
 
 void	cross_array_list(t_cmd *cmd[4], char **envp)
 {
-	int 	i;
-	int 	len_list;
-	t_pipe 	*pipe;
+	int		i;
+	int		len_list;
+	t_pipe	*pipe;
 
 	i = 0;
 	pipe = malloc(sizeof(t_pipe));
 	if (!pipe)
 		error_malloc();
 	len_list = strlen_list(cmd);
-	while(i < len_list)
+	while (i < len_list)
 	{
 		pipe = gen_child(cmd[i], pipe, envp, i);
 		i++;
@@ -172,5 +172,5 @@ void	cross_array_list(t_cmd *cmd[4], char **envp)
 	wait_childs(cmd);
 	close_list_args(cmd, len_list);
 	free_list_args(cmd, pipe, len_list);
-	return;
+	return ;
 }

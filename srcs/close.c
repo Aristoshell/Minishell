@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:53:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 10:45:16 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 11:26:40 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	close_list_args(t_cmd *cmd[4], int len_list)
 	int	i;
 
 	i = 0;
-	while(i < len_list)
+	while (i < len_list)
 	{
 		if (cmd[i]->input == append_ || cmd[i]->input == file_
 			|| cmd[i]->input == heredoc_)

@@ -30,9 +30,10 @@ Fait lundi :
 
 - free + close tout les pipes et fd dans le cas ou tout est ok
 
+- norme
+
 A faire :
 
 - free + close tout les pipes et fd dans les cas d'erreur
 - retour du $?
-- norme
 - signaux ?
