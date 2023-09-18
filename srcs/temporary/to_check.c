@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:40:07 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 14:50:27 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 09:29:38 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,73 +52,86 @@ int strlen_list(t_cmd *cmd[4])
 	return (i);
 }
 
+t_pipe	*handle_redirection(t_cmd *cmd, t_pipe *pipes)
+{
+	if (cmd->input == pipe_ || cmd->output == pipe_)
+	{
+		if(cmd->input == pipe_ && cmd->output != pipe_)
+		{
+			if (dup2(pipes->tube[0][0], 0) == - 1 || dup2(cmd->fd_out, 1) == -1)
+				error_dup2();
+			close(pipes->tube[0][1]);
+			return(pipes);
+		}
+		
+		if(cmd->input != pipe_ && cmd->output == pipe_)
+		{
+			if (dup2(pipes->tube[1][1], 1) == - 1 || dup2(cmd->fd_in, 0) == -1)
+				error_dup2();
+			close(pipes->tube[1][0]);
+			return(pipes);
+		}
+		if (dup2(pipes->tube[0][0], 0) == - 1 || dup2(pipes->tube[1][1], 1) == -1)
+			error_dup2();
+		close (pipes->tube[0][1]);
+		close (pipes->tube[1][0]);
+		return(pipes);
+	}
+	else
+	{
+		if (dup2(cmd->fd_in, 0) == - 1 || dup2(cmd->fd_out, 1) == -1)
+			error_dup2();
+		close (pipes->tube[0][1]);
+		close (pipes->tube[1][0]);
+	}
+	return(pipes);
+}
+
+void	handle_builtin(t_cmd *cmd, t_pipe *pipes, char **envp)
+{
+	if (!envp || !pipes)
+		return ;
+	if (cmd->cmd_type == cmd_echo)
+		printf("builtin echo");
+	if (cmd->cmd_type == cmd_echo_n)
+		printf("builtin echo_n");
+	if (cmd->cmd_type == cmd_cd)
+		printf("builtin cd");
+	if (cmd->cmd_type == cmd_pwd)
+		printf("builtin pwd");
+	if (cmd->cmd_type == cmd_export)
+		printf("builtin export");
+	if (cmd->cmd_type == cmd_unset)
+		printf("builtin unset");
+	if (cmd->cmd_type == cmd_env)
+		printf("builtin env");
+	if (cmd->cmd_type == cmd_exit)
+		printf("builtin exit");
+}
+
+
 /*
 childs classique 
 - Le Paths de chaque fonction est recuperer dans celui ci afin de prevoir les probleme 
 au cas ou un unset soit realiser avant ou entre deux commande
 */
 
-void	first_child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
+void	child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
 {
 	char	*exec;
 	char	*path_temp;
 	
-	if (dup2(pipes->tube[1][1], 1) == - 1
-		|| dup2(cmd->fd_in, 0) == -1)
-		error_dup2();
-	close(pipes->tube[1][0]);
+	pipes = handle_redirection(cmd, pipes);
+	if(cmd->cmd_type != no)
+		handle_builtin(cmd, pipes, envp);
 	path_temp = find_path(envp);
 	if (path_temp)
 		cmd->path_cmd = ft_split(path_temp, ':');
 	else
 		cmd->path_cmd = NULL;
-	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	if(!cmd->cmd_args)
 		return ;
-	execve(exec, cmd->cmd_args, envp);[0][0] --> 5
-[0][1] --> 6
-[1][0] --> 7
-[1][1] --> 8
-}
-
-void	mid_child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
-{
-	char	*exec;
-	char	*path_temp;
-	
-	if (dup2(pipes->tube[0][0], 0) == - 1
-		|| dup2(pipes->tube[1][1], 1) == -1)
-		error_dup2();
-	close (pipes->tube[0][1]);
-	close (pipes->tube[1][0]);
-	path_temp = find_path(envp);
-	if (path_temp)
-		cmd->path_cmd = ft_split(path_temp, ':');
-	else
-		cmd->path_cmd = NULL;
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
-	if(!cmd->cmd_args)
-		return ;
-	execve(exec, cmd->cmd_args, envp);
-}
-
-void	last_child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
-{
-	char	*exec;
-	char	*path_temp;
-	
-	if (dup2(pipes->tube[0][0], 0) == - 1
-		|| dup2(cmd->fd_out, 1) == -1)
-		error_dup2();
-	close(pipes->tube[0][1]);
-	path_temp = find_path(envp);
-	if (path_temp)
-		cmd->path_cmd = ft_split(path_temp, ':');
-	else
-		cmd->path_cmd = NULL;
-	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
-	if(!cmd->cmd_args)
-		return ;
 	execve(exec, cmd->cmd_args, envp);
 }
 
@@ -147,15 +160,20 @@ c'est dans ces fonctions que l'on vas
 - appeller les childs
 */
 
-t_pipe	*gen_first_child(t_cmd *cmd, t_pipe *pipes, char **envp)
+t_pipe	*gen_child(t_cmd *cmd, t_pipe *pipes, char **envp, int i)
 {
 	pid_t pid;
 	
-	if (pipe(pipes->tube[1]) != 0)
-		error_pipe();
+	if (i == 0)
+	{
+		if (pipe(pipes->tube[1]) != 0)
+			error_pipe();
+	}
+	else
+		pipes = new_pipes(pipes, i);
 	pid = fork();
 	if (pid == 0)
-		first_child_process(cmd, pipes, envp);
+		child_process(cmd, pipes, envp);
 	cmd->pid = pid;
 	return(pipes);
 }
@@ -208,30 +226,6 @@ apres appel :
 [1][1] --> 10
 */
 
-t_pipe	*gen_mid_child(t_cmd *cmd, t_pipe *pipes, char **envp, int i)
-{
-	pid_t	pid;
-	
-	new_pipes(pipes, i);
-	pid = fork();
-	if (pid == 0)
-		mid_child_process(cmd, pipes, envp);
-	cmd->pid = pid;
-	return(pipes);
-}
-
-t_pipe	*gen_last_child(t_cmd *cmd, t_pipe *pipes, char **envp)
-{
-	pid_t pid;
-	
-	new_pipes(pipes, 0);
-	pid = fork();
-	if (pid == 0)
-		last_child_process(cmd, pipes, envp);
-	cmd->pid = pid;
-	return(pipes);
-}
-
 
 /*
 fonction principale qui permet de parcourir la liste que tu m'envoies
@@ -244,6 +238,28 @@ on close les pipes
 et on attends que les childs aient fini d'executer
 */
 
+void	free_list_args(t_cmd *cmd[4], t_pipe *pipes, int len_list)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < len_list)
+	{
+		j = 0;
+		while(cmd[i]->cmd_args[j])
+		{
+			free(cmd[i]->cmd_args[j]);
+			j++;
+		}
+		free(cmd[i]->cmd_args);
+		free(cmd[i]);
+		i++;
+	}
+	free(pipes);
+}
+
+
 void	cross_array_list(t_cmd *cmd[4], char **envp)
 {
 	int 	i;
@@ -252,17 +268,16 @@ void	cross_array_list(t_cmd *cmd[4], char **envp)
 
 	if (!envp)
 		return;
-	i = 1;
+	i = 0;
 	pipe = malloc(sizeof(t_pipe));
 	len_list = strlen_list(cmd);
-	pipe = gen_first_child(cmd[0], pipe, envp);
-	while(i < len_list - 1)
+	while(i < len_list)
 	{
-		pipe = gen_mid_child(cmd[i], pipe, envp, i);
+		pipe = gen_child(cmd[i], pipe, envp, i);
 		i++;
 	}
-	pipe = gen_last_child(cmd[i], pipe, envp);
 	close_pipes(pipe);
 	wait_childs(cmd);
+	free_list_args(cmd, pipe, len_list);
 	return;
 }

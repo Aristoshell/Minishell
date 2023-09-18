@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:39:26 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 14:31:49 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 09:26:05 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char **gen_first_cmd(char **argv)
 {
 	int i = 2;
 	char *final;
+	char **ret;
 
 	final = ft_strdup(argv[1]);
 	final = ft_strcat(final, " ");
@@ -49,12 +50,16 @@ char **gen_first_cmd(char **argv)
 		final = ft_strcat(final, " ");
 		i++;
 	}
-	return (ft_split(final, ' '));
+	ret = ft_split(final, ' ');
+	free(final);
+	return (ret);
 }
 
 char **gen_sec_cmd(char **argv)
 {
 	char *final;
+	char **ret;
+	
 	int i = 2;
 	
 	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
@@ -69,12 +74,16 @@ char **gen_sec_cmd(char **argv)
 		final = ft_strcat(final, " ");
 		i++;
 	}
-	return (ft_split(final, ' '));
+	ret = ft_split(final, ' ');
+	free(final);
+	return (ret);
 }
 
 char **gen_third_cmd(char **argv, int argc)
 {
 	char *final;
+	char **ret;
+	
 	int i = 2;
 	
 	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
@@ -92,5 +101,7 @@ char **gen_third_cmd(char **argv, int argc)
 		final = ft_strcat(final, " ");
 		i++;
 	}
-	return (ft_split(final, ' '));
+	ret = ft_split(final, ' ');
+	free(final);
+	return (ret);
 }

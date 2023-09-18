@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:39:47 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 12:47:55 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 08:33:52 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_cmd
 }      t_cmd;
 
 
-void	child_process(t_cmd **cmd, char **envp);
+void	child_process(t_cmd *cmd, t_pipe *pipes, char **envp);
 char	*get_args(char **argv);
 char	*get_cmd(char **paths, char *cmd);
 char	*nopath(char *cmd);

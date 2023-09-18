@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/16 12:00:31 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 12:08:33 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 09:22:17 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ char *ft_strcat(char *src, char *dest)
 		j++;
 	}
 	new[i+j] = '\0';
+	free(src);
 	return(new);
 }

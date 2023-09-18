@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/16 14:32:35 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 09:03:49 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	main(int argc, char **argv, char **envp)
 	cmd[1]->pid = -1;
 	cmd[1]->cmd_args = gen_sec_cmd(argv);
 	cmd[1]->cmd_type = no;
-	cmd[1]->input = file_;
+	cmd[1]->input = pipe_;
 	cmd[1]->output = pipe_;
 	cmd[1]->heredoc_name = NULL;
 	cmd[1]->heredoc_sep = NULL;
@@ -59,8 +59,8 @@ int	main(int argc, char **argv, char **envp)
 	cmd[2]->pid = -1;
 	cmd[2]->cmd_args = gen_third_cmd(argv,argc);
 	cmd[2]->cmd_type = no;
-	cmd[2]->input = file_;
-	cmd[2]->output = pipe_;
+	cmd[2]->input = pipe_;
+	cmd[2]->output = file_;
 	cmd[2]->heredoc_name = NULL;
 	cmd[2]->heredoc_sep = NULL;
 	cmd[2]->fd_in = -2;
