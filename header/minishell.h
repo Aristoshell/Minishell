@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/18 01:36:41 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/18 22:38:21 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ typedef int	t_flag;
 /* Env */
 typedef struct s_envlist
 {
-	char				*key;
+	const char				*key;
 	char				*val;
 	int					flag;
 	struct s_envlist	*next;
@@ -157,11 +157,17 @@ void	pass_when_quote(char *str, int *i);
 int		check_pipe(char *str);
 
 /* Env n */
-t_envlist	*ft_lst_env_new(char *key, char *val);
+t_envlist	*ft_lst_env_new(const char *key, char *val);
 void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new);
 void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new);
 void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_envlist *new);
 void	ft_lst_env_clear(t_envlist **lst);
 t_envlist	*get_envp(char **envp);
+t_envlist	*ft_new_envvar(char *line);
+void	ft_lst_pop(t_envlist **lst, char *key);
+
+
+/* Built-in */
+void	display_env(t_envlist *env);
 
 #endif

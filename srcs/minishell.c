@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/18 01:17:01 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/18 20:43:58 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	prompt()
 
 	info = malloc(sizeof(t_info));
 	if (!info)
-		dprintf(STDERR_FILENO, "Problem with memory allocation\n");
+		ft_dprintf(STDERR_FILENO, "Problem with memory allocation\n");
 	info->words = NULL;
 	while (1)
 	{
@@ -56,7 +56,7 @@ void	prompt()
 		{
 			if (!check_syntax(input))
 			{
-				dprintf(STDERR_FILENO, "aristoshell : syntax error\n"); //penser a mettre une fonction dprintf recoded + adapter le message derreur
+				ft_dprintf(STDERR_FILENO, "aristoshell : syntax error\n"); //penser a mettre une fonction dprintf recoded + adapter le message derreur
 				free(input);
 				// penser a free les structures
 				return ;
@@ -79,6 +79,7 @@ void	prompt()
 	}
 }
 
+
 int	main(int argc, char **argv, char **envp)
 {
 	(void) argv;
@@ -87,7 +88,8 @@ int	main(int argc, char **argv, char **envp)
 	{
 		parsed_env = get_envp(envp);
 		(void) parsed_env;
-		prompt();
+		//prompt();
+		//display_env(parsed_env);
 		ft_lst_env_clear(&parsed_env);// mettre autre part plus tard
 		return (0);
 	}

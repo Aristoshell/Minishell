@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_env.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/18 01:27:37 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/18 22:50:50 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,11 @@ char	*get_key(char *line, int sep)
 
 t_envlist	*ft_new_envvar(char *line)
 {
-	int			sep;
+	const int	sep = ft_strchr_int(line, '=');
+	const char	*key = get_key(line, sep);
 	char		*val;
-	char		*key;
 	t_envlist	*node;
-	sep = ft_strchr_int(line, '=');
-	key = get_key(line, sep);
+
 	node = NULL;
 	if (!key)
 		return (NULL); // attention, secu
@@ -61,10 +60,11 @@ t_envlist	*ft_new_envvar(char *line)
 			return (NULL);
 		node = ft_lst_env_new(key, val);
 		if (!node)
-			return (NULL);//bien clean
+			return (NULL);//penser a bien clean
 	}
 	return (node);
 }
+
 void	print_env(t_envlist *env)
 {
 	while (env)
@@ -74,39 +74,11 @@ void	print_env(t_envlist *env)
 	}
 }
 
-void	add_new_node(t_envlist **lst, char *var)
-{
-	t_envlist	*prev;
-	t_envlist	*next;
-	t_envlist	*new;
-	//t_envlist	*curr;
-
-	int			len;
-	new = ft_new_envvar(var);
-	// add protection
-	len = ft_strlen(new->key);
-	prev = *lst;
-	next = NULL;
-	printf(YELLOW"nouvo : %s, current : %s\n"NC, new->key, prev->key);
-	while (*lst && ft_strncmp(new->key, prev->key, len) < 0)
-	{	
-		if ((*lst)->next)
-			prev = (*lst)->next;
-		else
-			break;
-	}
-	// if (ft_strncmp(new->key, prev->key, len) < 0)
-	// 	//action
-	// else if
-	if ((*lst)->next)
-		next = prev->next;
-	ft_lst_env_insert(lst, prev, next, new);
-}
-
 t_envlist	*get_envp(char **envp)
 {
 	int			i;
 	t_envlist	*list;
+	t_envlist	*new;
 
 	i = 0;
 	list = NULL;
@@ -114,21 +86,18 @@ t_envlist	*get_envp(char **envp)
 		return (NULL);
 	while (envp[i])
 	{
+		new = ft_new_envvar(envp[i]);
+		if (!new)
+			return (NULL);
 		if (!list)
-		{
-			list = ft_new_envvar(envp[i]);
-			if (!list)
-				return (NULL);
-		}
+			list = new;
 		else
-		{
-			//fonction pour add au bon endroit et je lui envoi envp[i]
-			//ft_lst_env_add_back(&list, ft_new_envvar(envp[i])); // ya pas de verif
-			add_new_node(&list, envp[i]);
-			print_env(list);
-		}
+			ft_lst_env_add_back(&list, new);
 		i++;
 	}
-	//print_env(list);
+	print_env(list);
+	ft_lst_pop(&list, NULL);
+	printf("\n\n\n");
+	print_env(list);
 	return (list);	
 }

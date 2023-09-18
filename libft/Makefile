@@ -6,14 +6,14 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/20 21:49:59 by madavid           #+#    #+#              #
-#    Updated: 2023/09/18 14:04:19 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/18 22:45:33 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libft.a
 
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 SRCS_FILES = 	memory/ft_bzero.c \
 				memory/ft_memcpy.c \
@@ -34,6 +34,7 @@ SRCS_FILES = 	memory/ft_bzero.c \
 				strings/ft_strchr_int.c \
 				strings/ft_strrchr.c \
 				strings/ft_strncmp.c \
+				strings/ft_strcmp.c \
 				strings/ft_strnstr.c \
 				strings/ft_strdup.c \
 				strings/ft_substr.c \

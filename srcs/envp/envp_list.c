@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_list.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/18 01:37:32 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/18 22:45:00 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	ft_lst_env_delone(t_envlist *lst)
 {
 	if (lst == NULL)
 		return ;
-	ft_bzero(lst->key, ft_strlen(lst->key));
-	free(lst->key);
+	ft_bzero((void *)lst->key, ft_strlen(lst->key));
+	free((void *)lst->key);
 	ft_bzero(lst->val, ft_strlen(lst->val));
 	free(lst->val);
 	lst->flag = 0;
@@ -63,6 +63,35 @@ void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new)
 		*lst = new ;
 }
 
+void	ft_lst_pop(t_envlist **lst, char *key)
+{
+	t_envlist	*prev;
+	t_envlist	*next;
+	t_envlist	*curr;
+
+	prev = NULL;
+	curr = (*lst);
+	next = NULL;
+	if (!(*lst) || !key)
+		return ;
+	while (curr->next && ft_strcmp(key, curr->key))
+	{
+		prev = curr;
+		curr = curr->next;
+	}
+	if (!prev) // trouve mais premier maillon
+		(*lst) = (*lst)->next;
+	else // trouve
+	{
+		if (!curr || ft_strcmp(key, curr->key)) // pas trouve
+				return ;
+		next = curr->next;
+	}
+	ft_lst_env_delone(curr);
+	if (prev)
+		prev->next = next;
+}
+
 void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new)
 {
 	if (lst != NULL)
@@ -75,29 +104,6 @@ void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new)
 	}
 }
 
-void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_envlist *new)
-{
-	// a proteger mieux I guess
-	if (!*lst)
-		*lst = new;
-	if (!next)
-	{
-		printf(RED"add back\n"NC);
-		ft_lst_env_add_back(lst, new);
-	}
-	else if ((*lst)->key == new->key)
-	{
-		printf(RED"add front\n"NC);
-		ft_lst_env_add_front(lst, new);
-	}
-	else
-	{
-		printf(RED"insert\n"NC);
-		prev->next = new;
-		new->next = next;		
-	}
-}
-
 void	set_flag(int *flag, char *val)
 {
 	*flag = MASK_EXPORT;
@@ -105,7 +111,7 @@ void	set_flag(int *flag, char *val)
 		*flag |= MASK_SET;
 }
 
-t_envlist	*ft_lst_env_new(char *key, char *val)
+t_envlist	*ft_lst_env_new(const char *key, char *val)
 {
 	t_envlist	*newlist;
 

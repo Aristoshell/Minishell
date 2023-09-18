@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/17 17:57:45 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/18 22:45:28 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,9 @@ SRCS_FILES	= 	minishell.c \
 				lexer/ft_split_spaces.c \
 				parser/parser.c \
 				envp/envp_list.c \
-				envp/get_env.c
+				envp/get_env.c \
+				builtins/env.c \
+				builtins/export.c \
 
 PREFIX	= srcs
 
@@ -34,7 +36,7 @@ INCLUDE	= -Ilibft -Iheader -Ireadline
 
 CC    = cc
 
-CFLAGS  = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror -g3 -fsanitize=address
 
 NAME    = minishell
 
@@ -83,7 +85,7 @@ clean:
 
 
 fclean: clean
-	echo -n "${BOLD_WHITE}⏳ CLEANING EXEC\t${NC}"
+	echo -n "${BOLD_WHITE}🧹 CLEANING EXEC\t${NC}"
 	${MAKE} -sC ${LIBFT_DIR} fclean
 	${RM} ${NAME}
 	echo "${GREEN}Done 💅${NC}"
