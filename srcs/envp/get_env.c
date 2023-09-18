@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/18 22:50:50 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/18 23:02:44 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ t_envlist	*get_envp(char **envp)
 		i++;
 	}
 	print_env(list);
-	ft_lst_pop(&list, NULL);
+	ft_lst_env_pop(&list, NULL);
 	printf("\n\n\n");
 	print_env(list);
 	return (list);	

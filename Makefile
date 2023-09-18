@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/18 22:45:28 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/18 23:00:52 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS_FILES	= 	minishell.c \
 				envp/get_env.c \
 				builtins/env.c \
 				builtins/export.c \
+				builtins/unset.c 
 
 PREFIX	= srcs
 

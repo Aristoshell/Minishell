@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/18 22:38:21 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/18 23:04:52 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,10 +164,13 @@ void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_en
 void	ft_lst_env_clear(t_envlist **lst);
 t_envlist	*get_envp(char **envp);
 t_envlist	*ft_new_envvar(char *line);
-void	ft_lst_pop(t_envlist **lst, char *key);
+void	ft_lst_env_pop(t_envlist **lst, char *key);
 
 
 /* Built-in */
 void	display_env(t_envlist *env);
+int		unset(t_envlist **env, char *key);
+int		export(t_envlist **env, char *line);
+void	display_export(t_envlist *env);
 
 #endif
