@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 10:23:59 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 10:56:48 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,13 @@ void	child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
 	else
 		cmd->path_cmd = NULL;
 	if(!cmd->cmd_args)
+	{
+		//si la commande est mauvais il faut free et close
 		return ;
+	}
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
+	//si execve fail il faut free et close
 }
 
 /*
@@ -166,6 +170,7 @@ void	cross_array_list(t_cmd *cmd[4], char **envp)
 	}
 	close_pipes(pipe);
 	wait_childs(cmd);
+	close_list_args(cmd, len_list);
 	free_list_args(cmd, pipe, len_list);
 	return;
 }

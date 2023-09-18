@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:39:47 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 10:04:57 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 10:46:21 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ t_pipe	*handle_redirection(t_cmd *cmd, t_pipe *pipes);
 void	handle_builtins(t_cmd *cmd, t_pipe *pipes, char **envp);
 
 void	free_list_args(t_cmd *cmd[4], t_pipe *pipes, int len_list);
+void	close_list_args(t_cmd *cmd[4], int len_list);
 
 void	close_pipes(t_pipe *pipes);
 
