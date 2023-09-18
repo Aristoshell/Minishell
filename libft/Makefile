@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marine <marine@student.42.fr>              +#+  +:+       +#+         #
+#    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/20 21:49:59 by madavid           #+#    #+#              #
-#    Updated: 2023/09/18 00:12:37 by marine           ###   ########.fr        #
+#    Updated: 2023/09/18 14:04:19 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,13 @@ SRCS_FILES = 	memory/ft_bzero.c \
 				linkedlists/ft_lstmap.c \
 				gnl/ft_get_next_line.c \
 				printf/ft_printf_fd.c \
-				printf/ft_printf_utils_fd.c 
+				printf/ft_printf_utils_fd.c \
+				dprintf/converter1.c \
+				dprintf/ft_dprintf.c \
+				dprintf/ft_itoa_hex.c \
+				dprintf/str_management.c \
+				dprintf/converter2.c \
+				dprintf/ft_itoa_u.c
 
 PREFIX	= srcs
 
