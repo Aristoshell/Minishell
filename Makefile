@@ -3,7 +3,13 @@ NAME 		:= Exec_Minishell
 SRCS_FILES		:= set_up_cmd.c\
 				main.c\
 				temporary/from_marine.c\
-				temporary/to_check.c
+				exec.c\
+				close.c\
+				error.c\
+				free.c\
+				redir.c\
+				usefull.c\
+
 
 SRCS_FILE = srcs/
 HEADER := header/minishell.h

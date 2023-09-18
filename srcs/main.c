@@ -6,17 +6,11 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 09:03:49 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/18 10:01:26 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
-
-void	error_fork(void)
-{
-	printf("error_fork");
-	exit(1);
-}
 
 /*
 creation des arguments des listes qu'on vas utiliser
