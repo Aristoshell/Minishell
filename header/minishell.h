@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/19 14:25:54 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/19 18:04:04 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ typedef enum e_open_quote
 
 typedef enum e_lexer_type
 {
+	token_default,
 	token_pipe,
 	token_word,
 	token_in,
