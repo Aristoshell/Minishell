@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/18 20:43:58 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/19 14:35:31 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,15 @@ void	prompt()
 					printf("[%d] [%d]: %s\n", i, info->words[i]->token, info->words[i]->string);
 					i++;
 				}
-				parser(info);
+				parser(info); // ca va remplir la data
 			}
 		}
 		free(input);
+		// if (exec(t_data data) == exit)
+			// exit
 		if (info->words)
-			ft_free_info(info);
+			ft_free_info(info); // a integre dans le parser
+		// if (data.cmd) , free la cmd, mais cest louis qui va le faire
 	}
 }
 
@@ -86,11 +89,11 @@ int	main(int argc, char **argv, char **envp)
 	t_envlist *parsed_env;
 	if (argc == 1)
 	{
-		parsed_env = get_envp(envp);
+		//parsed_env = get_envp(envp);
 		(void) parsed_env;
-		//prompt();
+		prompt();
 		//display_env(parsed_env);
-		ft_lst_env_clear(&parsed_env);// mettre autre part plus tard
+		//ft_lst_env_clear(&parsed_env);// mettre autre part plus tard
 		return (0);
 	}
 	return (perror("Error : Please launch minishell with no additional argument"), -1);

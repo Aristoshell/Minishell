@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/18 23:04:52 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/19 14:25:54 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,13 +123,13 @@ typedef struct s_cmd
 
 typedef struct s_data
 {
-	int			*current_cmd;
-	int			nb_command;
-	t_cmd		**cmd;
-	t_envlist	*envp;
+	int			*current_cmd; // a sup apres louis
+	int			nb_command; // a sup apres louis
+	t_cmd		**cmd; // a sup apres louis
+	t_envlist	**envp; // a garder
 }			t_data;
 
-//fonctions
+ //fonctions
 
 /* GENERAL */
 void	prompt(void);
