@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:03:25 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/19 14:08:03 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 22:45:36 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,11 @@
 
 // la fonction va pas car je dois checker si la variable existe pas deja et aussi changer ses settings, 
 // si "export OMG" mais que omg existe deja et quon lui reassigne aucune valeur, on necrase pas sa valeur
-// si "export OMG=" la on met aucune valeur (mais elle reste dans lenv)
+// si "export OMG=" la on met aucune valeur (mais elle reste dans lenv, parce que ca va juste bzero mon char * ou malloc size of char  *1 = \0)
 // penser a bien checker les flags
+
+
+// attention !!!! je peux donner plusieurs arg a export ; ex = export hihi bla blu
 int	export(t_envlist **env, char *line)
 {
 	t_envlist	*new; 

@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:47:47 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 22:25:02 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ t_envlist	*ft_new_envvar(char *line)
 		val = get_val(&line[sep + 1]);
 		if (!val)
 			return (NULL);
-		node = ft_lst_env_new(key, val);
-		if (!node)
-			return (NULL);//penser a bien clean
 	}
+	node = ft_lst_env_new(key, val);
+	if (!node)
+		return (NULL);//penser a bien clean
 	return (node);
 }
