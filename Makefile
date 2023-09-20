@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/19 17:42:45 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/20 18:33:29 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,13 +17,25 @@ SRCS_FILES	= 	minishell.c \
 				reader/check_redir.c \
 				lexer/ft_split_spaces.c \
 				parser/parser.c \
-				envp/envp_list.c \
-				envp/get_env.c \
+				envp/ft_get_val.c \
+				envp/ft_new_envvar.c \
+				envp/get_envp.c \
+				envp/get_key.c \
+				envp/print_env.c \
+				envp/set_flag \
 				builtins/env.c \
 				builtins/export.c \
 				builtins/unset.c \
-				clean/clean_structs.c \
-				clean/free_two_di_arrays
+				clean/ft_clean_str \
+				clean/ft_clean_structs.c \
+				clean/ft_clean_2d_array \
+				clean/ft_clean_string.c \
+				clean/ft_clean_t_envlist.c \
+				lists/ft_lst_env_add_back.c \
+				lists/ft_lst_env_add_front.c \
+				lists/ft_lst_env_last.c \
+				lists/ft_lst_env_new.c \
+				lists/ft_lst_env_pop.c
 
 PREFIX	= srcs
 

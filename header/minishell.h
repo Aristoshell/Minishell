@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/19 18:04:04 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 18:54:13 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,30 +21,25 @@
 
 //defines
 // a mettre en majuscule
-# define DOUBLE_QUOTE 	34
-# define SIMPLE_QUOTE 	39
-# define MASK_SET		0x10
-# define MASK_EXPORT	0x01
-# define MASK_ENV		0x11
-# define RED			"\033[1;31m"
-# define GREEN			"\033[1;32m"
-# define ORANGE			"\033[1;33m"
-# define YELLOW			"\033[1;33m"
-# define BLUE			"\033[1;36m"
-# define NC				"\033[0m"
+# define FUNCTION_SUCCES	0
+# define MEMORY_ERROR_NB	1
+# define MEMORY_ERROR_PT	NULL
+# define DOUBLE_QUOTE 		34
+# define SIMPLE_QUOTE 		39
+# define MASK_SET			0x10
+# define MASK_EXPORT		0x01
+# define MASK_ENV			0x11
+# define RED				"\033[1;31m"
+# define GREEN				"\033[1;32m"
+# define ORANGE				"\033[1;33m"
+# define YELLOW				"\033[1;33m"
+# define BLUE				"\033[1;36m"
+# define NC					"\033[0m"
 
 //typedefs
 
 typedef int	t_flag;
 
-/* Env */
-typedef struct s_envlist
-{
-	const char				*key;
-	char				*val;
-	int					flag;
-	struct s_envlist	*next;
-}					t_envlist;
 
 /* Lexer */
 
@@ -87,6 +82,7 @@ typedef struct s_info
 
 typedef enum e_builtin
 {
+	no,
 	cmd_echo,
 	cmd_echo_n,
 	cmd_cd,
@@ -95,11 +91,11 @@ typedef enum e_builtin
 	cmd_unset,
 	cmd_env,
 	cmd_exit,
-	no
 }			t_builtin;
 
 typedef enum e_in_out
 {
+	none,
 	stdin_,
 	stdout_,
 	heredoc_,
@@ -122,12 +118,20 @@ typedef struct s_cmd
 	int					fd_out;
 }			t_cmd;
 
+typedef struct s_envlist
+{
+	const char			*key;
+	char				*val;
+	int					flag;
+	struct s_envlist	*next;
+}					t_envlist;
+
 typedef struct s_data
 {
 	int			*current_cmd; // a sup apres louis
 	int			nb_command; // a sup apres louis
 	t_cmd		**cmd; // a sup apres louis
-	t_envlist	**envp; // a garder
+	t_envlist	*envp; // a garder
 }			t_data;
 
  //fonctions
@@ -146,32 +150,41 @@ int	ft_split_space(char const *str, t_info *info);
 int	parser(t_info	*info);
 
 /* BOOLS */
-bool	is_space(char c);
-char	is_quote(char c);
-bool	is_op(char c);
-bool	is_separator(char c);
-bool	is_cmd_separator(char c);
+bool		is_space(char c);
+char		is_quote(char c);
+bool		is_op(char c);
+bool		is_separator(char c);
+bool		is_cmd_separator(char c);
 
 /* Check pre parsing*/
-bool	check_syntax(char	*str);
-void	pass_when_quote(char *str, int *i);
-int		check_pipe(char *str);
+bool		check_syntax(char	*str);
+void		pass_when_quote(char *str, int *i);
+int			check_pipe(char *str);
 
-/* Env n */
-t_envlist	*ft_lst_env_new(const char *key, char *val);
-void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new);
-void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new);
-void	ft_lst_env_insert(t_envlist **lst,  t_envlist *prev,  t_envlist *next, t_envlist *new);
-void	ft_lst_env_clear(t_envlist **lst);
-t_envlist	*get_envp(char **envp);
+/* Envp  */
+char		*get_val(char *line);
 t_envlist	*ft_new_envvar(char *line);
-void	ft_lst_env_pop(t_envlist **lst, char *key);
+t_envlist	*get_envp(char **envp);
+char		*get_key(char *line, int sep);
+void		print_env(t_envlist *env);
+void		set_flag(int *flag, char *val);
 
+/* Lists  */
+void		ft_lst_env_add_back(t_envlist **lst, t_envlist *new);
+void		ft_lst_env_add_front(t_envlist **lst, t_envlist *new);
+t_envlist	*ft_lst_env_last(t_envlist *lst);
+t_envlist	*ft_lst_env_new(const char *key, char *val);
+void		ft_lst_env_pop(t_envlist **lst, char *key);
+
+/* Clean*/
+void		ft_clean_2d_array(void **array, void (*clean_data)(void *));
+void		ft_clean_string(char *str);
+void		ft_clean_t_parts(t_parts *part);
 
 /* Built-in */
-void	display_env(t_envlist *env);
-int		unset(t_envlist **env, char *key);
-int		export(t_envlist **env, char *line);
-void	display_export(t_envlist *env);
+void		display_env(t_envlist *env);
+int			unset(t_envlist **env, char *key);
+int			export(t_envlist **env, char *line);
+void		display_export(t_envlist *env);
 
 #endif

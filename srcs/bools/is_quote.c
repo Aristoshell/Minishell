@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   bools copy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/08 14:22:34 by marine            #+#    #+#             */
+/*   Updated: 2023/09/20 19:06:26 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+char	is_quote(char c)
 {
-	ft_memset(s, 0, n);
+	if (c == '"')
+		return ('"');
+	if (c == '\'')
+		return ('\'');
+	return (0);
 }

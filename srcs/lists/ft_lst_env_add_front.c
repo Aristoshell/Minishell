@@ -1,18 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lst_env_add_front.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 18:49:00 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_lst_env_add_front(t_envlist **lst, t_envlist *new)
 {
-	ft_memset(s, 0, n);
+	if (lst != NULL)
+	{
+		if (*lst != NULL)
+		{
+			new->next = (*lst);
+		}
+		*lst = new;
+	}
 }

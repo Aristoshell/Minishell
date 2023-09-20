@@ -1,18 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_clean_t_data.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 18:37:40 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_free_data(t_data *data)
 {
-	ft_memset(s, 0, n);
+	*(data->current_cmd) = 0; //checker si jai bien modif la valeur
+	data->nb_command = 0;
+	//ft_clean_2d_array(data->cmd, fonction clean t_cmd);
+	//ft_clean_2d_array(data->envp, fonction clean t_envlist);
 }

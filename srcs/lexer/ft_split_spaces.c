@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/15 18:15:51 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 19:01:07 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,6 +159,8 @@ char	*get_part(char *partition, int *i)
 	if (size == 0)
 		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));
+	if (!word)
+		return (MEMORY_ERROR_PT); // penser a free ce qui a ete malloc avant aussi
 	fillword(word, partition, size, *i);
 	return (word);
 }
@@ -191,14 +193,14 @@ int	ft_split_space(char const *str, t_info *info)
 		return (0);
 	info->words = malloc(sizeof(t_parts *) * info->nb_words);
 	if (!info->words)
-		return (-2);
+		return (MEMORY_ERROR_NB); // attention retour fonction, celui la est 1 + free ce qui a ete free
 	i = 0;
 	j = 0;
 	while (j < info->nb_words)
 	{
 		info->words[j] = malloc(sizeof(t_parts));
 		if (!info->words[j])
-			return (-2);
+			return (MEMORY_ERROR_NB); // attention retour fonction, celui la est 1 + free ce qui a ete free
 		info->words[j]->string = get_part((char *)str, &i);
 		info->words[j]->token = get_token(info->words[j]->string);
 		j++;

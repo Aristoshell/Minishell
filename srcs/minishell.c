@@ -6,11 +6,21 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/19 17:37:31 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 18:57:27 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+
+int	error(int err_code)
+{
+	if (err_code == MEMORY_ERROR_NB)
+		ft_dprintf(STDERR_FILENO, "Problem with memory allocation\n");
+	return (0);
+}
+
+
 
 void	prompt()
 {
@@ -19,7 +29,7 @@ void	prompt()
 
 	info = malloc(sizeof(t_info));
 	if (!info)
-		ft_dprintf(STDERR_FILENO, "Problem with memory allocation\n");
+		return (error(MEMORY_ERROR_NB)); //besoin d'effacer qq chose aussi
 	info->words = NULL;
 	while (1)
 	{

@@ -1,18 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_lst_env_add_back.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 18:49:05 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	ft_lst_env_add_back(t_envlist **lst, t_envlist *new)
 {
-	ft_memset(s, 0, n);
+	t_envlist	*temp;
+
+	if (*lst != NULL)
+	{
+		temp = ft_lst_env_last(*lst);
+		temp->next = new;
+	}
+	else
+		*lst = new ;
 }

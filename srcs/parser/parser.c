@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/17 15:51:45 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 19:03:32 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,17 +98,17 @@ int	parser(t_info	*info)
 	//info->current = 0;
 	data = malloc(sizeof(t_data));
 	if (!data)
-		return (-1);
+		return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
 	ft_count_cmd(info, data);
 	//checker si 0 cmd
 	data->cmd = malloc(sizeof(t_cmd) * data->nb_command);
 	if (!data->cmd)
-		return (-1); //supp autre chose ?
+		return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
 	while (i < data->nb_command)
 	{
 		data->cmd[i] = malloc(sizeof(t_cmd));
 		if(!data->cmd[i])
-			return (-1); //supp autre chose
+			return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
 		init_cmd(data->cmd[i]);
 		//fill_cmd(data->cmd[i], info->words, data->current_cmd, info->current_word);
 		i++;

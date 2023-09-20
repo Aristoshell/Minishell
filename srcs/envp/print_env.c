@@ -1,18 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   print_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 18:39:05 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+void	print_env(t_envlist *env)
 {
-	ft_memset(s, 0, n);
+	while (env)
+	{
+		printf("%s=%s\n", env->key, env->val);
+		env = env->next;
+	}
 }

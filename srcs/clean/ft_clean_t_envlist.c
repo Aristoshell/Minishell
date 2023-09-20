@@ -1,18 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_clean_t_envlist.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 17:47:30 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+/*
+
+void	ft_lst_env_clear(t_envlist **lst)
 {
-	ft_memset(s, 0, n);
+	t_envlist	*p;
+
+	if (lst)
+	{
+		p = *lst;
+		while (*lst)
+		{
+			p = (*lst)->next;
+			ft_lst_env_delone(*lst);
+			*lst = p;
+		}
+	}
 }
+
+
+
+
+*/

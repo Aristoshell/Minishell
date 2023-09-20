@@ -1,37 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   clean_structs.c                                    :+:      :+:    :+:   */
+/*   get_key.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/19 17:45:06 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 18:58:37 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// il faut pas carrement free t_info ** ?
-void	ft_free_info(t_info *info)
+char	*get_key(char *line, int sep)
 {
-	int	i;
+	char	*key;
+	int		size;
 
-	i = 0;
-	while (i < info->nb_words)
-	{		
- 		ft_bzero(info->words[i]->string, ft_strlen(info->words[i]->string));
-		if (info->words[i]->string)
-			free(info->words[i]->string);
-		info->words[i]->string = NULL;
-		i++;
-	}
-	if (info->nb_words > 0)
-		free(info->words);
-	info->nb_words = -1;
-}
-
-void	ft_free_data(t_data *data)
-{
-	
+	if (sep < 0)
+		size = ft_strlen(line);
+	else
+		size = sep;
+	key = malloc((size + 1) * sizeof(char));
+	if (!key)
+		return (MEMORY_ERROR_PT);// attention a l'erreur renvoyee
+	ft_strlcpy(key, line, (size + 1));
+	return (key);
 }

@@ -1,18 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_bzero.c                                         :+:      :+:    :+:   */
+/*   ft_clean_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 23:51:11 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 15:49:17 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/20 12:18:42 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 18:35:04 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
 
-void	ft_bzero(void *s, size_t n)
+long unsigned	ft_strlen(const char *str)
 {
-	ft_memset(s, 0, n);
+	long unsigned	i;
+
+	i = 0;
+	while (str[i] != 0)
+		i++;
+	return (i);
+}
+
+void	ft_clean_string(char *str)
+{
+	if (!str)
+		return ;
+	free(str);
+	str = NULL;
 }

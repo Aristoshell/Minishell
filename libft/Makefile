@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/20 21:49:59 by madavid           #+#    #+#              #
-#    Updated: 2023/09/18 22:45:33 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/20 12:33:14 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -94,4 +94,4 @@ re : fclean
 	${MAKE}
 
 .PHONY : all clean fclean re
-.SILENT:
+#.SILENT:
