@@ -6,11 +6,21 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:56:33 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 11:26:20 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/20 15:37:30 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
+
+void	error_management(t_cmd *cmd, char *str, int exit_val)
+{
+	if (!cmd)
+		return ;
+	printf("%s\n",str);
+	//set la value de retour a exit_val
+	//free le plus de truc possible
+	exit(exit_val);
+}
 
 void	error_dup2(void)
 {

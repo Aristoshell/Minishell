@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:39:26 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 09:26:05 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:53:01 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,11 @@ char *get_args(char **argv)
 
 char **gen_first_cmd(char **argv)
 {
-	int i = 2;
+	int i = 3;
 	char *final;
 	char **ret;
 
-	final = ft_strdup(argv[1]);
+	final = ft_strdup(argv[2]);
 	final = ft_strcat(final, " ");
 	while(argv[i] && ft_strncmp(argv[i], "I", ft_strlen(argv[i])))
 	{

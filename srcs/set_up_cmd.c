@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:42:36 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 11:20:56 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:47:10 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,26 +17,26 @@ appellera le builtin voulu en fonction de la valeurs dans le champ cmd->type
 de la struct cmd
 */
 
-void	handle_builtins(t_cmd *cmd, t_pipe *pipes, char **envp)
+void	handle_builtins(t_cmd **cmd, char **envp, int i)
 {
-	if (!envp || !pipes)
+	if (!envp)
 		return ;
-	if (cmd->cmd_type == cmd_echo)
+	if (cmd[i]->cmd_type == cmd_echo)
 		printf("builtin echo");
-	if (cmd->cmd_type == cmd_echo_n)
+	if (cmd[i]->cmd_type == cmd_echo_n)
 		printf("builtin echo_n");
-	if (cmd->cmd_type == cmd_cd)
+	if (cmd[i]->cmd_type == cmd_cd)
 		printf("builtin cd");
-	if (cmd->cmd_type == cmd_pwd)
+	if (cmd[i]->cmd_type == cmd_pwd)
 		printf("builtin pwd");
-	if (cmd->cmd_type == cmd_export)
+	if (cmd[i]->cmd_type == cmd_export)
 		printf("builtin export");
-	if (cmd->cmd_type == cmd_unset)
+	if (cmd[i]->cmd_type == cmd_unset)
 		printf("builtin unset");
-	if (cmd->cmd_type == cmd_env)
+	if (cmd[i]->cmd_type == cmd_env)
 		printf("builtin env");
-	if (cmd->cmd_type == cmd_exit)
-		printf("builtin exit");
+	if (cmd[i]->cmd_type == cmd_exit)
+		bt_exit(cmd, i);
 }
 
 /*

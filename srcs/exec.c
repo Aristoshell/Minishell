@@ -6,20 +6,21 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 11:24:48 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/20 18:48:05 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../header/minishell.h"
 
-void	wait_childs(t_cmd *cmd[4])
+void	wait_childs(t_cmd **cmd)
 {
 	int	i;
 
 	i = 0;
 	while (cmd[i])
 	{
-		waitpid(cmd[i]->pid, 0, 0);
+		if (cmd[i]->pid != -1)
+			waitpid(cmd[i]->pid, 0, 0);
 		i++;
 	}
 }
@@ -32,14 +33,15 @@ on recup la variable d'env PATH que l'on vas split en fonction du char :
 on execute ensuite la commande voulue (sauf builtins)
 */
 
-void	child_process(t_cmd *cmd, t_pipe *pipes, char **envp)
+void	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
 {
 	char	*exec;
 	char	*path_temp;
+	t_cmd	*cmd;
 
+	cmd = tab_cmd[i];
 	pipes = handle_redirection(cmd, pipes);
-	if (cmd->cmd_type != no)
-		handle_builtins(cmd, pipes, envp);
+	handle_builtins(tab_cmd, envp, i);
 	path_temp = find_path(envp);
 	if (path_temp)
 		cmd->path_cmd = ft_split(path_temp, ':');
@@ -120,23 +122,33 @@ fonction gen_child qui vas modifier les fds dans les pipes puis fork
 et enfin appeler la fonction child process
 */
 
-t_pipe	*gen_child(t_cmd *cmd, t_pipe *pipes, char **envp, int i)
+t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i)
 {
 	pid_t	pid;
+	int		len_list;
 
-	if (i == 0)
+	len_list = strlen_list(cmd);
+	if (len_list > 1)
 	{
-		if (pipe(pipes->tube[1]) != 0)
-			error_pipe();
+		if (i == 0)
+		{
+			if (pipe(pipes->tube[1]) != 0)
+				error_pipe();
+		}
+		else
+			pipes = new_pipes(pipes, i);	
 	}
-	else
-		pipes = new_pipes(pipes, i);
+	if (cmd[i]->cmd_type != no && len_list == 1)
+	{
+		handle_builtins(cmd, envp, i);
+		return (pipes);
+	}
 	pid = fork();
 	if (pid == -1)
 		error_fork();
 	if (pid == 0)
-		child_process(cmd, pipes, envp);
-	cmd->pid = pid;
+		child_process(cmd, pipes, envp, i);
+	cmd[i]->pid = pid;
 	return (pipes);
 }
 
@@ -152,24 +164,30 @@ attente des childs
 free tout
 */
 
-void	cross_array_list(t_cmd *cmd[4], char **envp)
+void	cross_array_list(t_cmd **cmd, char **envp)
 {
 	int		i;
 	int		len_list;
 	t_pipe	*pipe;
 
 	i = 0;
-	pipe = malloc(sizeof(t_pipe));
-	if (!pipe)
-		error_malloc();
 	len_list = strlen_list(cmd);
+	if (len_list > 1)
+	{
+		pipe = malloc(sizeof(t_pipe));
+		if (!pipe)
+			error_malloc();
+	}
 	while (i < len_list)
 	{
-		pipe = gen_child(cmd[i], pipe, envp, i);
+		pipe = gen_child(cmd, pipe, envp, i);
 		i++;
 	}
-	close_pipes(pipe);
-	wait_childs(cmd);
+	if (len_list > 1)
+	{
+		close_pipes(pipe);
+		wait_childs(cmd);
+	}
 	close_list_args(cmd, len_list);
 	free_list_args(cmd, pipe, len_list);
 	return ;

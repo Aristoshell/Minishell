@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:53:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/18 11:26:40 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/20 16:30:29 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	close_pipes(t_pipe *pipes)
 	close(pipes->tube[1][1]);
 }
 
-void	close_list_args(t_cmd *cmd[4], int len_list)
+void	close_list_args(t_cmd **cmd, int len_list)
 {
 	int	i;
 
