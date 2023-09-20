@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   set_flag.c                                         :+:      :+:    :+:   */
+/*   ft_get_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:45:43 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 20:19:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	set_flag(int *flag, char *val)
+char	*ft_get_key(char *line, int sep)
 {
-	*flag = MASK_EXPORT;
-	if (val)
-		*flag |= MASK_SET;
+	char	*key;
+	int		size;
+
+	if (sep < 0)
+		size = ft_strlen(line);
+	else
+		size = sep;
+	key = malloc((size + 1) * sizeof(char));
+	if (!key)
+		return (MEMORY_ERROR_PT);// attention a l'erreur renvoyee
+	ft_strlcpy(key, line, (size + 1));
+	return (key);
 }

@@ -1,22 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_env.c                                        :+:      :+:    :+:   */
+/*   ft_set_flag.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:39:05 by madavid          ###   ########.fr       */
+/*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 20:19:32 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	print_env(t_envlist *env)
+void	ft_set_flag(int *flag, char *val)
 {
-	while (env)
-	{
-		printf("%s=%s\n", env->key, env->val);
-		env = env->next;
-	}
+	*flag = MASK_EXPORT;
+	if (val)
+		*flag |= MASK_SET;
 }

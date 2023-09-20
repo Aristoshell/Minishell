@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 19:03:32 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 20:36:54 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,16 +89,12 @@ boucle tant quon a fini le tableau
 
 */
 
-int	parser(t_info	*info)
+int	parser(t_info	*info, t_data *data)
 {
 	int		i;
-	t_data	*data;
 	
 	i = 0;
 	//info->current = 0;
-	data = malloc(sizeof(t_data));
-	if (!data)
-		return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
 	ft_count_cmd(info, data);
 	//checker si 0 cmd
 	data->cmd = malloc(sizeof(t_cmd) * data->nb_command);

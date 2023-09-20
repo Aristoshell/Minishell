@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 19:51:29 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 20:46:58 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 //defines
 // a mettre en majuscule
+# define ERR_ARG 			"Error : Please launch minishell with no additional argument"
 # define FUNCTION_SUCCES	0
 # define MEMORY_ERROR_NB	1
 # define MEMORY_ERROR_PT	NULL
@@ -145,9 +146,14 @@ char 	*close_quote(char quote);
 /* LEXER */
 int		ft_split_space(char const *str, t_info *info);
 
+/* PROMPT */
+void	prompt();
 
 /* PARSEUR */
 int	parser(t_info	*info);
+
+/* ERRORS */
+int	error(int err_code);
 
 /* BOOLS */
 bool		ft_is_space(char c);
@@ -164,12 +170,12 @@ bool		check_redir(char *str);
 bool		check_pipe(char *str);
 
 /* Envp  */
-char		*get_val(char *line);
+char		*ft_get_val(char *line);
 t_envlist	*ft_new_envvar(char *line);
-t_envlist	*get_envp(char **envp);
-char		*get_key(char *line, int sep);
-void		print_env(t_envlist *env);
-void		set_flag(int *flag, char *val);
+t_envlist	*ft_get_envp(char **envp);
+char		*ft_get_key(char *line, int sep);
+void		ft_print_env(t_envlist *env);
+void		ft_set_flag(int *flag, char *val);
 
 /* Lists  */
 void		ft_lst_env_add_back(t_envlist **lst, t_envlist *new);

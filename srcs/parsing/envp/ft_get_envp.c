@@ -1,29 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_key.c                                          :+:      :+:    :+:   */
+/*   get_envp.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:58:37 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 20:18:51 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_key(char *line, int sep)
+t_envlist	*ft_get_envp(char **envp)
 {
-	char	*key;
-	int		size;
+	int			i;
+	t_envlist	*list;
+	t_envlist	*new;
 
-	if (sep < 0)
-		size = ft_strlen(line);
-	else
-		size = sep;
-	key = malloc((size + 1) * sizeof(char));
-	if (!key)
-		return (MEMORY_ERROR_PT);// attention a l'erreur renvoyee
-	ft_strlcpy(key, line, (size + 1));
-	return (key);
+	i = 0;
+	list = NULL;
+	if (!envp[0])
+		return (NULL);
+	while (envp[i])
+	{
+		new = ft_new_envvar(envp[i]);
+		if (!new)
+			return (NULL);
+		if (!list)
+			list = new;
+		else
+			ft_lst_env_add_back(&list, new);
+		i++;
+	}
+	return (list);
 }

@@ -6,26 +6,27 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/20 19:52:03 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/20 20:19:58 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_FILES	= 	minishell.c \
+				prompt.c \
 				parsing/bools/ft_is_cmd_separator.c \
 				parsing/bools/ft_is_operator.c \
 				parsing/bools/ft_is_separator.c \
 				parsing/bools/ft_is_quote.c \
 				parsing/bools/ft_is_space.c \
-				parsing/checks/check_pipes.c \
-				parsing/checks/check_quotes.c \
-				parsing/checks/check_redir.c \
-				parsing/checks/check_syntax.c \
+				parsing/checks/ft_check_pipes.c \
+				parsing/checks/ft_check_quotes.c \
+				parsing/checks/ft_check_redir.c \
+				parsing/checks/ft_check_syntax.c \
 				parsing/envp/ft_get_val.c \
 				parsing/envp/ft_new_envvar.c \
-				parsing/envp/get_envp.c \
-				parsing/envp/get_key.c \
-				parsing/envp/print_env.c \
-				parsing/envp/set_flag \
+				parsing/envp/ft_get_envp.c \
+				parsing/envp/ft_get_key.c \
+				parsing/envp/ft_print_env.c \
+				parsing/envp/ft_set_flag \
 				parsing/lexer/ft_split_spaces.c \
 				parsing/parser/parser.c \
 				parsing/lists/ft_lst_env_add_back.c \
@@ -40,7 +41,8 @@ SRCS_FILES	= 	minishell.c \
 				clean/ft_clean_structs.c \
 				clean/ft_clean_2d_array \
 				clean/ft_clean_string.c \
-				clean/ft_clean_t_envlist.c
+				clean/ft_clean_t_envlist.c \
+				errors/errors.c
 
 PREFIX	= srcs
 

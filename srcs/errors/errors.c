@@ -1,37 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_envp.c                                         :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:46:46 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/20 20:13:20 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 20:13:31 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_envlist	*get_envp(char **envp)
+int	error(int err_code)
 {
-	int			i;
-	t_envlist	*list;
-	t_envlist	*new;
-
-	i = 0;
-	list = NULL;
-	if (!envp[0])
-		return (NULL);
-	while (envp[i])
-	{
-		new = ft_new_envvar(envp[i]);
-		if (!new)
-			return (NULL);
-		if (!list)
-			list = new;
-		else
-			ft_lst_env_add_back(&list, new);
-		i++;
-	}
-	return (list);
+	if (err_code == MEMORY_ERROR_NB)
+		ft_dprintf(STDERR_FILENO, "Problem with memory allocation\n");
+	return (0);
 }
+

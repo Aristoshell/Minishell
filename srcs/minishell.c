@@ -6,87 +6,36 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 18:57:27 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 20:50:10 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-
-int	error(int err_code)
+t_data	*init_data(t_data *data, char **envp)
 {
-	if (err_code == MEMORY_ERROR_NB)
-		ft_dprintf(STDERR_FILENO, "Problem with memory allocation\n");
-	return (0);
-}
-
-
-
-void	prompt()
-{
-	char	*input;
- 	t_info	*info;
-
-	info = malloc(sizeof(t_info));
-	if (!info)
-		return (error(MEMORY_ERROR_NB)); //besoin d'effacer qq chose aussi
-	info->words = NULL;
-	while (1)
-	{
-		// faire un wrapper, add input to history qui va check si l'input est pas vide pour pas add un !ligne a mon historique
-		input = readline(YELLOW"aristoshell$ "NC);
-		add_history(input);
-		if (!input || ft_strncmp(input, "exit", ft_strlen(input) + 1) == 0)// a changer, car ca doit faire partie de lexec
-		{
-			printf("exit\n");
-			free(input);
-			free(info);
-			clear_history();
-			return ;
-		}
-		if (input && input[0] != 0)
-		{
-			if (!check_syntax(input))
-			{
-				ft_dprintf(STDERR_FILENO, "aristoshell : syntax error\n"); //penser a mettre une fonction dprintf recoded + adapter le message derreur
-				free(input);
-				// penser a free les structures
-				return ;
-			}
-			else
-			{	
-				ft_split_space(input, info);
-				int i = 0;
-				while(i < info->nb_words)
-				{
-					printf("[%d] [%d]: %s\n", i, info->words[i]->token, info->words[i]->string);
-					i++;
-				}
-				parser(info); // ca va remplir la data
-			}
-		}
-		free(input);
-		// if (exec(t_data data) == exit)
-			// exit
-		if (info->words)
-			ft_free_info(info); // a integre dans le parser
-		// if (data.cmd) , free la cmd, mais cest louis qui va le faire
-	}
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (MEMORY_ERROR_PT);
+	data->cmd = NULL;
+	data->current_cmd = NULL;
+	data->nb_command = -1;
+	data->envp = ft_get_envp(envp);
+	if (!data->envp)
+		return (MEMORY_ERROR_PT); // attention, la il faudra effacer data
 }
 
 
 int	main(int argc, char **argv, char **envp)
 {
-	(void) argv;
-	t_envlist *parsed_env;
-	if (argc == 1)
-	{
-		//parsed_env = get_envp(envp);
-		(void) parsed_env;
-		prompt();
-		//display_env(parsed_env);
-		//ft_lst_env_clear(&parsed_env);// mettre autre part plus tard
-		return (0);
-	}
-	return (perror("Error : Please launch minishell with no additional argument"), -1);
+	t_data	*data;
+
+	if (argc != 1)
+		return (perror(ERR_ARG), 1);
+	data = init_data(data, envp);
+	if (!data)
+		return (MEMORY_ERROR_NB); //checker ce que je dois effacer
+	if (prompt(data) == MEMORY_ERROR_NB);
+		return (MEMORY_ERROR_NB); //checker ce que je dois effacer
+	return (0);
 }
