@@ -1,20 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bools.c                                            :+:      :+:    :+:   */
+/*   ft_is_separator.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:22:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 19:06:17 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 19:30:56 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_space(char c)
+bool	ft_is_separator(char c)
 {
-	if (c == 32 || c == 9)
+	if (ft_is_operator(c) || ft_is_space(c))
 		return (true);
 	return (false);
 }

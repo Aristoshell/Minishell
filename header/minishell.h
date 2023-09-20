@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 18:54:13 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 19:51:29 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,23 +143,25 @@ char 	check_open_quote(char *input);
 char 	*close_quote(char quote);
 
 /* LEXER */
-int	ft_split_space(char const *str, t_info *info);
+int		ft_split_space(char const *str, t_info *info);
 
 
 /* PARSEUR */
 int	parser(t_info	*info);
 
 /* BOOLS */
-bool		is_space(char c);
-char		is_quote(char c);
-bool		is_op(char c);
-bool		is_separator(char c);
-bool		is_cmd_separator(char c);
+bool		ft_is_space(char c);
+char		ft_is_quote(char c);
+bool		ft_is_pipe(char c);
+bool		ft_is_operator(char c);
+bool		ft_is_separator(char c);
+bool		ft_is_cmd_separator(char c);
 
 /* Check pre parsing*/
 bool		check_syntax(char	*str);
-void		pass_when_quote(char *str, int *i);
-int			check_pipe(char *str);
+char		check_open_quote(char *input);
+bool		check_redir(char *str);
+bool		check_pipe(char *str);
 
 /* Envp  */
 char		*get_val(char *line);

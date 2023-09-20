@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 00:09:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 19:01:07 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/20 19:30:56 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	count_word_manage_quote(char const *str, int *i)
 		while (str[*i] && str[*i] != quote)
 			*i += 1;
 		*i += 1;
-		if (is_space(str[*i]) == true)
+		if (ft_is_space(str[*i]) == true)
 			return ;
-		if (is_op(str[*i]) == true)
+		if (ft_is_operator(str[*i]) == true)
 			return ;
 		quote = str[*i];
 	}
@@ -45,12 +45,12 @@ static int	countword(char const *str)
 		return (0);
 	while (str[i])
 	{
-		while (str[i] && is_space(str[i]))
+		while (str[i] && ft_is_space(str[i]))
 			i++;
 		if (!str[i])
 			return (counter);
 		counter++;
-		if (is_op(str[i]))
+		if (ft_is_operator(str[i]))
 		{
 			if ((str[i] == '>' && str[i+1] == '>') || (str[i] == '<' && str[i+1] == '<'))
 				i++;
@@ -58,15 +58,15 @@ static int	countword(char const *str)
 		}	
 		else
 		{
-			while (str[i] && !is_space(str[i]) && !is_op(str[i]))
+			while (str[i] && !ft_is_space(str[i]) && !ft_is_operator(str[i]))
 			{
-				if (is_quote(str[i]))
+				if (ft_is_quote(str[i]))
 					count_word_manage_quote(str, &i);
 				else
 					i++;
 			}
 		}
-		while (str[i] && is_space(str[i]) == true)
+		while (str[i] && ft_is_space(str[i]) == true)
 			i++;
 	}
 	return (counter);
@@ -94,12 +94,12 @@ t_lexer_type	get_token(char *part)
 
 void	get_part_len_manage_quote(char c, bool	*in_quote, char *quote_type)
 {
-	if (is_quote(c) && c == *quote_type)
+	if (ft_is_quote(c) && c == *quote_type)
 	{
 		*in_quote = false;
 		*quote_type = 0;
 	}
-	else if (!(*in_quote) && is_quote(c))
+	else if (!(*in_quote) && ft_is_quote(c))
 	{
 		*in_quote = true;
 		*quote_type = c;
@@ -117,15 +117,15 @@ int	get_part_len(char *p, int *i)
 	quote_type = 0;
 	if (!p[*i])
 		return (*i += 1, 0);
-	while (p[*i] && is_space(p[*i]))
+	while (p[*i] && ft_is_space(p[*i]))
 		*i += 1;
-	if (is_op(p[*i]))
+	if (ft_is_operator(p[*i]))
 	{
 		if ((p[*i] == '>' && p[*i+1] == '>') || (p[*i] == '<' && p[*i+1] == '<'))
 			return (*i += 2, 2);
 		return (*i += 1, 1);
 	}
-	while (p[*i] && (in_quote || (!in_quote && !is_separator(p[*i]))))
+	while (p[*i] && (in_quote || (!in_quote && !ft_is_separator(p[*i]))))
 	{
 		get_part_len_manage_quote(p[*i], &in_quote, &quote_type);
 		*i += 1;

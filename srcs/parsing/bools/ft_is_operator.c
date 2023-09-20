@@ -1,49 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   bools.c                                            :+:      :+:    :+:   */
+/*   ft_is_operator.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/08 14:22:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/14 14:41:30 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/20 19:31:20 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/20 19:31:34 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	is_space(char c)
-{
-	if (c == 32 || c == 9)
-		return (true);
-	return (false);
-}
-
-char	is_quote(char c)
-{
-	if (c == '"')
-		return ('"');
-	if (c == '\'')
-		return ('\'');
-	return (0);
-}
-
-bool	is_op(char c)
+bool	ft_is_operator(char c)
 {
 	if (c == '>' || c == '<' || c == '|') // || (c == '>' && next == '>')|| (c == '<' && next == '<'))
-		return (true);
-	return (false);
-}
-
-bool	is_separator(char c)
-{
-	if (is_op(c) || is_space(c))
-		return (true);
-	return (false);
-}
-bool	is_cmd_separator(char c)
-{
-	if (c == '|' || c == ';' || c == '&')
 		return (true);
 	return (false);
 }
