@@ -1,21 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   errors.c                                           :+:      :+:    :+:   */
+/*   ft_display_lexer.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/20 20:13:20 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 20:13:31 by madavid          ###   ########.fr       */
+/*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
+/*   Updated: 2023/09/21 14:44:53 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	error(int err_code)
+void	ft_display_lexer(t_info info)
 {
-	if (err_code == MEMORY_ERROR_NB)
-		ft_dprintf(STDERR_FILENO, "Problem with memory allocation\n");
-	return (0);
+	int i = 0;
+	while(i < info.nb_words)
+	{
+		dprintf(STDERR_FILENO, "[%d] [%d]: %s\n", i, info.words[i]->token, info.words[i]->string);
+		i++;
+	}
 }
-

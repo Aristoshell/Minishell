@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clean_t_data.c                                  :+:      :+:    :+:   */
+/*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:37:40 by madavid          ###   ########.fr       */
+/*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
+/*   Updated: 2023/09/21 14:53:26 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_free_data(t_data *data)
+int	parsing(t_data *data, t_info *info)
 {
-	*(data->current_cmd) = 0; //checker si jai bien modif la valeur
-	data->nb_command = 0;
-	//ft_clean_2d_array(data->cmd, fonction clean t_cmd);
-	//ft_clean_2d_array(data->envp, fonction clean t_envlist);
+	if (!check_syntax(data->input))
+			return (SYNTAX_ERROR);
+	else
+	{	
+		ft_split_space(data->input, info); //lexer, attention, on va avoir une verif a faire
+		display_lexer(info);
+		parser(info); //lexer, attention, on va avoir une verif a faire
+	}
+	return (FUNCTION_SUCCESS);
 }
