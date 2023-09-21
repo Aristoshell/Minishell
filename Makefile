@@ -3,47 +3,68 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: marine <marine@student.42.fr>              +#+  +:+       +#+         #
+#    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/21 01:59:56 by marine           ###   ########.fr        #
+#    Updated: 2023/09/21 18:51:45 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRCS_FILES	= 	minishell.c \
-				init/init_t_data.c \
-				prompt.c \
+SRCS_FILES	= 	builtins/cd.c \
+				builtins/echo.c \
+				builtins/env.c \
+				builtins/export.c \
+				builtins/pwd.c \
+				builtins/unset.c \
+				
+				clean/ft_clean_2d_array.c \
+				clean/ft_clean_string.c \
+				clean/ft_clean_t_data.c \
+				clean/ft_clean_t_envlist_node.c \
+				clean/ft_clean_t_envlist.c \
+				clean/ft_clean_t_info.c \
+				clean/ft_clean_t_token.c \
+				errors/ft_errors.c \
+				
 				parsing/bools/ft_is_cmd_separator.c \
 				parsing/bools/ft_is_operator.c \
-				parsing/bools/ft_is_separator.c \
+				parsing/bools/ft_is_pipe.c \
 				parsing/bools/ft_is_quote.c \
+				parsing/bools/ft_is_separator.c \
 				parsing/bools/ft_is_space.c \
+				
 				parsing/checks/ft_check_pipes.c \
 				parsing/checks/ft_check_quotes.c \
 				parsing/checks/ft_check_redir.c \
 				parsing/checks/ft_check_syntax.c \
-				parsing/envp/ft_get_val.c \
-				parsing/envp/ft_new_envvar.c \
+
 				parsing/envp/ft_get_envp.c \
 				parsing/envp/ft_get_key.c \
+				parsing/envp/ft_get_val.c \
+				parsing/envp/ft_new_envvar.c \
 				parsing/envp/ft_print_env.c \
-				parsing/envp/ft_set_flag \
-				parsing/lexer/ft_split_spaces.c \
-				parsing/parser/parser.c \
+				parsing/envp/ft_set_flag.c \
+				
+				parsing/lexer/ft_lexers.c \
+				parsing/lexer/ft_lexer_count_tokens.c \
+				parsing/lexer/ft_lexer_get_token_val.c \
+				parsing/lexer/ft_display_lexer.c \
+				
 				parsing/lists/ft_lst_env_add_back.c \
 				parsing/lists/ft_lst_env_add_front.c \
 				parsing/lists/ft_lst_env_last.c \
 				parsing/lists/ft_lst_env_new.c \
 				parsing/lists/ft_lst_env_pop.c \
-				builtins/env.c \
-				builtins/export.c \
-				builtins/unset.c \
-				clean/ft_clean_str \
-				clean/ft_clean_structs.c \
-				clean/ft_clean_2d_array \
-				clean/ft_clean_string.c \
-				clean/ft_clean_t_envlist.c \
-				errors/errors.c
+				
+				parsing/parser/parser.c \
+				
+				parsing/set_structures/set_t_data.c \
+				parsing/set_structures/set_t_info.c \
+				
+				parsing/parsing.c \
+				
+				minishell.c \
+				prompt.c 
 
 PREFIX	= srcs
 

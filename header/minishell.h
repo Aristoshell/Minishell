@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/21 02:15:57 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/21 18:51:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 
 //defines
 // a mettre en majuscule
-# define ERR_ARG 			"Error : Please launch minishell with no additional argument"
-# define ERR_ENV 			"Error : Please launch minishell with env"
-# define FUNCTION_SUCCES	0
-# define MEMORY_ERROR_NB	1
+# define ERR_ARG "Error : Please launch minishell with no additional argument"
+# define ERR_ENV "Error : Please launch minishell with env"
+# define FUNCTION_SUCCESS	0
+# define EXIT				1
+# define MEMORY_ERROR_NB	2
 # define MEMORY_ERROR_PT	NULL
+# define SYNTAX_ERROR		3
 # define DOUBLE_QUOTE 		34
 # define SIMPLE_QUOTE 		39
 # define MASK_SET			0x10
@@ -42,7 +44,6 @@
 
 typedef int	t_flag;
 
-
 /* Lexer */
 
 typedef enum e_open_quote
@@ -54,27 +55,27 @@ typedef enum e_open_quote
 
 typedef enum e_lexer_type
 {
-	token_default,
-	token_pipe,
-	token_word,
-	token_in,
-	token_out,
-	token_heredoc,
-	token_append
-}			t_lexer_type;
+	type_default,
+	type_pipe,
+	type_word,
+	type_in,
+	type_out,
+	type_heredoc,
+	type_append
+}			t_token_type;
 
-// romann : token = struct avec une valeur et un type donc changer les noms
-typedef struct s_parts
+// romann : type = struct avec une valeur et un type donc changer les noms
+typedef struct s_token
 {
 	char			*string;
-	t_lexer_type	token;
-}			t_parts;
+	t_token_type	type;
+}			t_token;
 
 typedef struct s_info
 {
-	int	nb_words;
-	int	*current_word;
-	t_parts	**words;
+	int		nb_tokens;
+	int		*current_word;
+	t_token	**tokens;
 }			t_info;
 
 /* Fin lexer */
@@ -86,7 +87,6 @@ typedef enum e_builtin
 {
 	no,
 	cmd_echo,
-	cmd_echo_n,
 	cmd_cd,
 	cmd_pwd,
 	cmd_export,
@@ -132,33 +132,41 @@ typedef struct s_data
 {
 	int			*current_cmd; // a sup apres louis
 	int			nb_command; // a sup apres louis
+	char		*input; //pour marine
 	t_cmd		**cmd; // a sup apres louis
 	t_envlist	*envp; // a garder
 }			t_data;
 
- //fonctions
+//fonctions
 
 /* GENERAL */
-int		prompt(t_data *data);
-char 	*manage_quote(char *input);
-char 	check_open_quote(char *input);
-char 	*close_quote(char quote);
+int			prompt(t_data *data);
+int			parsing(t_data *data, t_info *info);
+char		*manage_quote(char *input);
+char		check_open_quote(char *input);
+char		*close_quote(char quote);
 
-/* Init */
+/* Create and Init */
 
-t_data	*init_data(t_data *data, char **envp);
+t_data		*create_data(t_data *data, char **envp);
+void		init_data(t_data *data);
+t_data		*create_info(t_info *info);
+void		init_info(t_info *info);
 
 /* LEXER */
-int		ft_split_space(char const *str, t_info *info);
+int				lexer(char const *str, t_info *info);
+char			*get_token_val(char *str, int *i);
+t_token_type	get_token_type(char *token);
+void			ft_display_lexer(t_info info);
 
 /* PROMPT */
-int	prompt(t_data *data);
+int				prompt(t_data *data);
 
 /* PARSEUR */
-int	parser(t_info	*info);
+int				parser(t_info	*info);
 
 /* ERRORS */
-int	error(int err_code);
+int				ft_error(int err_code, t_data *data, t_info *info);
 
 /* BOOLS */
 bool		ft_is_space(char c);
@@ -192,7 +200,7 @@ void		ft_lst_env_pop(t_envlist **lst, char *key);
 /* Clean*/
 void		ft_clean_2d_array(void **array, void (*clean_data)(void *));
 void		ft_clean_string(char *str);
-void		ft_clean_t_parts(t_parts *part);
+void		ft_clean_t_tokens(t_token *token);
 
 /* Built-in */
 void		display_env(t_envlist *env);
