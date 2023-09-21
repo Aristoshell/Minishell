@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 20:46:58 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/21 02:15:57 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 //defines
 // a mettre en majuscule
 # define ERR_ARG 			"Error : Please launch minishell with no additional argument"
+# define ERR_ENV 			"Error : Please launch minishell with env"
 # define FUNCTION_SUCCES	0
 # define MEMORY_ERROR_NB	1
 # define MEMORY_ERROR_PT	NULL
@@ -138,16 +139,20 @@ typedef struct s_data
  //fonctions
 
 /* GENERAL */
-void	prompt(void);
+int		prompt(t_data *data);
 char 	*manage_quote(char *input);
 char 	check_open_quote(char *input);
 char 	*close_quote(char quote);
+
+/* Init */
+
+t_data	*init_data(t_data *data, char **envp);
 
 /* LEXER */
 int		ft_split_space(char const *str, t_info *info);
 
 /* PROMPT */
-void	prompt();
+int	prompt(t_data *data);
 
 /* PARSEUR */
 int	parser(t_info	*info);

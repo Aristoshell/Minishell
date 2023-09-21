@@ -1,21 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clean_t_parts.c                                 :+:      :+:    :+:   */
+/*   init_t_data.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/21 02:14:29 by marine           ###   ########.fr       */
+/*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
+/*   Updated: 2023/09/21 01:59:27 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_clean_t_parts(t_parts *part)
+t_data	*init_data(t_data *data, char **envp)
 {
-	if (!part)
-		return ;
-	ft_clean_string(part->string);
-	part->token = token_default;
+	data = malloc(sizeof(t_data));
+	if (!data)
+		return (MEMORY_ERROR_PT);
+	data->cmd = NULL;
+	data->current_cmd = NULL;
+	data->nb_command = -1;
+	data->envp = ft_get_envp(envp);
+	if (!data->envp)
+		return (MEMORY_ERROR_PT); // attention, la il faudra effacer data // pb differencier err malloc et pas denv
 }

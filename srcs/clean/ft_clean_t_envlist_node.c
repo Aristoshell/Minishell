@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean_t_envlist_node.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 17:47:48 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/21 02:12:45 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	ft_clean_t_envlist_node(t_envlist *env)
 {
+	if (!env)
+		return ;
 	ft_clean_string(env->key);
 	ft_clean_string(env->val);
 	env->flag = 0;
