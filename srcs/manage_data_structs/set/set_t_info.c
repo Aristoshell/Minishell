@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_t_info.c                                    :+:      :+:    :+:   */
+/*   set_t_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/21 13:29:44 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/21 18:10:00 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	init_info(t_info *info)
 {
-	info->nb_words = -1;
+	info->nb_tokens = -1;
 	info->(*current_word) = 0;
-	info->words = NULL;
+	info->tokens = NULL;
 }
 
 t_info	*create_info(t_info *info)

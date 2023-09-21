@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 20:36:54 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/21 18:10:00 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ void	ft_count_cmd(t_info *info, t_data *data)
 
 	data->nb_command = 1;
 	i = 0;
-	while (i < info->nb_words)
+	while (i < info->nb_tokens)
 	{
-		if (info->words[i]->token <= 2)
+		if (info->tokens[i]->type <= 2)
 			data->nb_command++;
 		i++;
 	}
@@ -41,16 +41,16 @@ void	init_cmd(t_cmd	*cmd)
 
 // penser a initialiser les currents
 
-// void	check_redirect_in(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
+// void	check_redirect_in(t_cmd	*cmd, t_tokens **tokens, int *curr_cmd, int *curr_word)
 // {
 // 	if (word[0])
 // }
 
-// void	fill_cmd(t_cmd	*cmd, t_parts **words, int *curr_cmd, int *curr_word)
+// void	fill_cmd(t_cmd	*cmd, t_tokens **tokens, int *curr_cmd, int *curr_word)
 // {
-// 	while (words[*curr_word]->token > token_pipe)
+// 	while (tokens[*curr_word]->type > type_pipe)
 // 	{
-// 		check_redirect_in(cmd, words, curr_cmd, curr_word);
+// 		check_redirect_in(cmd, tokens, curr_cmd, curr_word);
 // 	}	
 // }
 
@@ -83,10 +83,6 @@ boucle tant quon a fini le tableau
 			si | pipe, pipe
 
 	quand est ce que je check les ./ ???
-		
-		
-		
-
 */
 
 int	parser(t_info	*info, t_data *data)
@@ -106,7 +102,7 @@ int	parser(t_info	*info, t_data *data)
 		if(!data->cmd[i])
 			return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
 		init_cmd(data->cmd[i]);
-		//fill_cmd(data->cmd[i], info->words, data->current_cmd, info->current_word);
+		//fill_cmd(data->cmd[i], info->tokens, data->current_cmd, info->current_word);
 		i++;
 	}
 	(void) i;
