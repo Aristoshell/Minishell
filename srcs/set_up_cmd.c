@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:42:36 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/20 18:47:10 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:43:28 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ void	handle_builtins(t_cmd **cmd, char **envp, int i)
 	if (!envp)
 		return ;
 	if (cmd[i]->cmd_type == cmd_echo)
-		printf("builtin echo");
-	if (cmd[i]->cmd_type == cmd_echo_n)
-		printf("builtin echo_n");
+		bt_echo(cmd, i);
 	if (cmd[i]->cmd_type == cmd_cd)
 		printf("builtin cd");
 	if (cmd[i]->cmd_type == cmd_pwd)

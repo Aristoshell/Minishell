@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/20 18:48:05 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:43:18 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i)
 	}
 	if (cmd[i]->cmd_type != no && len_list == 1)
 	{
+		pipes = handle_redirection(cmd[i], pipes);
 		handle_builtins(cmd, envp, i);
 		return (pipes);
 	}

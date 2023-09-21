@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:48:33 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/20 18:58:31 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/21 13:12:03 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,7 @@ void	bt_exit(t_cmd **cmd, int i)
 			printf("exit: too many arguments\n");
 			return ;
 		}
-		exit_val = ft_atoi(built_cmd->cmd_args[1]);
-		if (exit_val > 255 || exit_val < 0)
-			exit_val = 255;
+		exit_val = ft_atoi(built_cmd->cmd_args[1]) % 256;
 	}
 	else
 		error_management(built_cmd, "exit: numeric argument required", 2);

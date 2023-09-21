@@ -31,9 +31,31 @@ Fait lundi :
 - free + close tout les pipes et fd dans le cas ou tout est ok
 
 - norme
+Fait mardi :
+
+-	Point parsing et exec
+
+Fait mercredi :
+
+-	Code du builtin exit (quelques details a regler) 
+
+-	Modification des fonctions d'executions pour acceuillir les builtins
+
+-	Preparation d'un nouveau Main qui permet de passer une deux ou trois commande
+
+Fait Jeudi :
+
+-	terminer exit (ajouter le modulo 256 a la valeur passer en 
+parametre)
+
+-	terminer le main (fonction de recup des commandes)
 
 A faire :
 
+- coder echo
+- coder pwd
+	trouver un moyen de faire cela sans envp car en cas de unset PWD fonctionne quand meme
+- coder cd
 - free + close tout les pipes et fd dans les cas d'erreur
 - retour du $?
 - signaux ?

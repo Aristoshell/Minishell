@@ -10,6 +10,7 @@ SRCS_FILES		:= set_up_cmd.c\
 				redir.c\
 				usefull.c\
 				builtins/exit.c\
+				builtins/echo.c\
 
 
 SRCS_FILE = srcs/

@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/20 18:51:16 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/21 14:18:54 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,24 +44,24 @@ int	main(int argc, char **argv, char **envp)
 	{
 		cmd[0]->pid = -1;
 		cmd[0]->cmd_args = gen_first_cmd(argv);
-		cmd[0]->cmd_type = cmd_exit;
+		cmd[0]->cmd_type = cmd_echo;
 		cmd[0]->input = file_;
 		cmd[0]->output = file_;
 		cmd[0]->heredoc_name = NULL;
 		cmd[0]->heredoc_sep = NULL;
 		cmd[0]->fd_in = 0;
-		cmd[0]->fd_out = 1;
+		cmd[0]->fd_out = open("out", O_CREAT | O_TRUNC | O_RDWR, 0777);
 	}
 	else if (ft_atoi(argv[1]) == 2)
 	{
 		cmd[0]->pid = -1;
 		cmd[0]->cmd_args = gen_first_cmd(argv);
-		cmd[0]->cmd_type = cmd_exit;
+		cmd[0]->cmd_type = cmd_echo;
 		cmd[0]->input = file_;
 		cmd[0]->output = pipe_;
 		cmd[0]->heredoc_name = NULL;
 		cmd[0]->heredoc_sep = NULL;
-		cmd[0]->fd_in = open("in", O_RDONLY);
+		cmd[0]->fd_in = 0;
 		cmd[0]->fd_out = -2;
 		
 		cmd[1]->pid = -1;
