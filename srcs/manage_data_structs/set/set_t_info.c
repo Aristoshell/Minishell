@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   set_t_info.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/22 19:18:14 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/23 01:43:37 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	ft_reinit_info(t_info *info)
 	if (info->tokens)
 	{
 		printf("TEST\n");
-		ft_clean_2d_array_struct((void ***)info->tokens, (void *)ft_clean_t_token);
+		ft_clean_2d_array_struct((void ***)&info->tokens, (void *)ft_clean_t_token);
 	}
 }
 

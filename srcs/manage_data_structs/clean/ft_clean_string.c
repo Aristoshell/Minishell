@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean_string.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 12:18:42 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:35:04 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/23 01:09:21 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@ long unsigned	ft_strlen(const char *str)
 	return (i);
 }
 
-void	ft_clean_string(char *str)
+void	ft_clean_string(char **str)
 {
-	if (!str)
+	if (!str || !*str)
 		return ;
-	free(str);
+	free(*str);
 	str = NULL;
 }

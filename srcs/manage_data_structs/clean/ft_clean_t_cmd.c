@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean_t_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/22 18:18:06 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/23 01:10:50 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@ void	ft_clean_t_cmd(t_cmd *cmd)
 	cmd->input = none;
 	cmd->output = none;
 	if (cmd->heredoc_name)
-		ft_clean_string(cmd->heredoc_name);
+		ft_clean_string(&cmd->heredoc_name);
 	if (cmd->heredoc_sep)
-		ft_clean_string(cmd->heredoc_sep);
+		ft_clean_string(&cmd->heredoc_sep);
 	cmd->fd_in = 0;
 	cmd->fd_out = 0;
 	free(cmd);

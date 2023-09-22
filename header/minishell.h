@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/22 19:12:47 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/23 01:17:23 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ typedef struct s_data
 
 /* GENERAL */
 int			prompt(t_data *data);
-int			parsing(t_data *data, t_info *info);
+int			parsing(t_data *data, t_info *info, char *input);
 char		*manage_quote(char *input);
 char		check_open_quote(char *input);
 char		*close_quote(char quote);
@@ -156,7 +156,7 @@ void		ft_reinit_data(t_data *data);
 void		ft_reinit_info(t_info *info);
 
 /* ERROR */
-int	ft_error(int err_code, t_data *data, t_info *info);
+int			ft_error(int err_code, t_data *data, t_info *info);
 
 /* LEXER */
 int				ft_lexer(char const *str, t_info *info);
@@ -205,10 +205,10 @@ t_envlist	*ft_lst_env_new(const char *key, char *val);
 void		ft_lst_env_pop(t_envlist **lst, char *key);
 
 /* Clean*/
-void		ft_clean_string(char *str);
+void		ft_clean_string(char **str);
 void		ft_clean_2d_array(void **array, void (*clean_data)(void *));
 void		ft_clean_2d_array_struct(void ***array, void (*clean_data)(void *));
-void		ft_clean_t_token(t_token *token);
+void		ft_clean_t_token(t_token **token);
 void		ft_clean_t_info(t_info *info);
 void		ft_clean_t_cmd(t_cmd *cmd);
 void		ft_clean_t_data(t_data *data);

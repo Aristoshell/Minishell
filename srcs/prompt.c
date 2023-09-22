@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/22 19:02:40 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/23 01:00:53 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	prompt(t_data *data)
 {
  	t_info	*info;
 	int		function_return;
+	char	*input;
 
 	info = NULL;
 	info = create_info(info);
@@ -38,19 +39,19 @@ int	prompt(t_data *data)
 		return (ft_error(MEMORY_ERROR_NB, data, info)); //besoin d'effacer qq chose aussi
 	while (1)
 	{
-		data->input = readline(YELLOW"aristoshell$ "NC);
-		if (data->input && data->input[0] != 0)
+		input = readline(YELLOW"aristoshell$ "NC);
+		if (input && input[0] != 0)
 		{
-			if (check_exit(data->input, info)) // utilise seulement ici pour quitter proprement mais on nen naura plus besoin apres
+			if (check_exit(input, info)) // utilise seulement ici pour quitter proprement mais on nen naura plus besoin apres
 				return (EXIT); //penser a bien tout free
-			add_history(data->input); //il faudra bien le free
-			function_return = parsing(data, info);
+			add_history(input); //il faudra bien le free
+			function_return = parsing(data, info, input);
+			free(input);
 			if (function_return != FUNCTION_SUCCESS)
 				ft_error(function_return, data, info);
 			// if(execution(data) == EXIT)
 			// 	return (EXIT);
-			ft_reinit_info(info);
-			ft_reinit_data(data);
+			//ft_reinit_data(data);
 		}
 	}
 }
