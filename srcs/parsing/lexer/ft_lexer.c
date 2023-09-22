@@ -35,13 +35,13 @@ int	ft_lexer(char const *str, t_info *info)
 {
 	if (!str)
 		return (-1);
-	info->nb_tokens = ft_countword(str);
+	info->nb_tokens = ft_count_token((const char*)str);
 	if (info->nb_tokens < 1)
 		return (0); //voir ce quil se passe si je retourne ca, normalement cest pas censee, mais si je retourne un val je dois bien gerer dans la fonction davant
 	info->tokens = malloc(sizeof(t_token *) * info->nb_tokens);
 	if (!info->tokens)
 		return (MEMORY_ERROR_NB); // +free ce qui a ete free
-	if (ft_fill_token_table(str, info->tokens) == MEMORY_ERROR_NB);
+	if (ft_fill_token_table(str, info) == MEMORY_ERROR_NB)
 		return (MEMORY_ERROR_NB); //attention a bien free ce quil faut
 	return (FUNCTION_SUCCESS);
 }
@@ -53,7 +53,7 @@ int	main(void)
 	char *str = ">grrrr omg<jpppp ohlala |< > 'putain|de|merde hihi cest encore la meme quote'\"encore la aussi\"|mais plus maintenant hihi |'grr'> <";
 	int	nb_tokens;
 
-	nb_tokens = ft_countword(str);
+	nb_tokens = ft_count_token(str);
 	printf("nb tokens : %d\n", nb_tokens);
 	int i = 0;
 	int size = -1;

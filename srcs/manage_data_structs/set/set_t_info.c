@@ -6,24 +6,33 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/21 18:10:00 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 19:18:14 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	init_info(t_info *info)
+void	ft_init_info(t_info *info)
 {
-	info->nb_tokens = -1;
-	info->(*current_word) = 0;
-	info->tokens = NULL;
+	info->nb_tokens = 0;
+	info->current_word = 0;
 }
+void	ft_reinit_info(t_info *info)
+{
+	ft_init_info(info);
+	if (info->tokens)
+	{
+		printf("TEST\n");
+		ft_clean_2d_array_struct((void ***)info->tokens, (void *)ft_clean_t_token);
+	}
+}
+
 
 t_info	*create_info(t_info *info)
 {
-	info = malloc(sizeof(t_data));
+	info = malloc(sizeof(t_info));
 	if (!info)
 		return (MEMORY_ERROR_PT); // la il faudra supprimer data
-	init_info(info);
+	ft_init_info(info);
 	return (info);
 }

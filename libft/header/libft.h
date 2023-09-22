@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 01:57:16 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 18:21:32 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 12:41:47 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@
 
 /*GNL*/
 
-# define BUFFER_SIZE 42ft_lst_env_new
+# define BUFFER_SIZE 42
 
 /*Dprintf*/
 # define HEXA_VAL "0123456789ABCDEF"

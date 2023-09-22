@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/22 22:56:57 by marine            #+#    #+#             */
-/*   Updated: 2023/08/01 16:57:14 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 17:08:46 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	echo(char **argv, int n)
 		ft_printf(1, "\n");
 }
 
-int	main(int argc, char **argv)
-{
-	(void) argc;
-	//echo(argv, 1);
-	echo(argv, 0);
-	return (0);
-}
+// int	main(int argc, char **argv)
+// {
+// 	(void) argc;
+// 	//echo(argv, 1);
+// 	echo(argv, 0);
+// 	return (0);
+// }

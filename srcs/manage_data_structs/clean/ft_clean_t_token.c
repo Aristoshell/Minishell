@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_clean_t_parts.c                                 :+:      :+:    :+:   */
+/*   ft_clean_t_tokem.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/21 18:13:55 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 17:28:30 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_clean_t_tokens(t_tokens *token)
+void	ft_clean_t_token(t_token *token)
 {
 	if (!token)
 		return ;

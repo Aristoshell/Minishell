@@ -6,13 +6,13 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 14:22:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/20 19:31:38 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 17:09:27 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	is_quote(char c)
+char	ft_is_quote(char c)
 {
 	if (c == '"')
 		return ('"');

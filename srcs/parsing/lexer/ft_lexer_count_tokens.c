@@ -46,14 +46,14 @@ void	check_kind(char *str, int *i)
 		while (str[*i] && !ft_is_space(str[*i]) && !ft_is_operator(str[*i]))
 		{
 			if (ft_is_quote(str[*i]))
-				count_word_manage_quote(str, &i);
+				count_word_manage_quote(str, i);
 			else
 				*i += 1;
 		}
 	}
 }
 
-static int	ft_countword(char const *str)
+int	ft_count_token(char const *str)
 {
 	int		counter;
 	int		i;
@@ -69,7 +69,7 @@ static int	ft_countword(char const *str)
 		if (!str[i])
 			return (counter);
 		counter++;
-		check_kind(str, &i);
+		check_kind((char *)str, &i);
 		while (str[i] && ft_is_space(str[i]) == true)
 			i++;
 	}

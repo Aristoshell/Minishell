@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/15 12:08:58 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 22:25:02 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 13:00:33 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_envlist	*ft_new_envvar(char *line)
 {
 	const int	sep = ft_strchr_int(line, '=');
-	const char	*key = get_key(line, sep);
+	const char	*key = ft_get_key(line, sep);
 	char		*val;
 	t_envlist	*node;
 
@@ -26,7 +26,7 @@ t_envlist	*ft_new_envvar(char *line)
 		val = NULL;
 	else
 	{
-		val = get_val(&line[sep + 1]);
+		val = ft_get_val(&line[sep + 1]);
 		if (!val)
 			return (NULL);
 	}

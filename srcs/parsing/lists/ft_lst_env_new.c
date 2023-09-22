@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 23:35:36 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 19:01:40 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 13:26:26 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_envlist	*ft_lst_env_new(const char *key, char *val)
 	else
 		newlist->val = NULL;
 	newlist->flag = 0;
-	set_flag(&newlist->flag, val);
+	ft_set_flag(&newlist->flag, val);
 	newlist->next = NULL;
 	return (newlist);
 }

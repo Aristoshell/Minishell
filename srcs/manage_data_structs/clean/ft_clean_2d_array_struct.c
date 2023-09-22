@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pwd.c                                              :+:      :+:    :+:   */
+/*   ft_clean_2d_array_struct.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/22 23:33:01 by marine            #+#    #+#             */
-/*   Updated: 2023/09/22 17:09:03 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/20 16:13:08 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/22 19:12:10 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "minishell.h"
 
-void	pwd(void)
+void	ft_clean_2d_array_struct(void ***array, void (*clean_data)(void *))
 {
-	char	*working_dir;
+	const unsigned long int	size = sizeof(array);
+	unsigned long int		i;
 
-	working_dir = NULL;
-	getcwd(working_dir, 1024);
-	if (working_dir == NULL)
-		printf("grrrr\n");
-	else
-		printf("pwd : %s\n", working_dir);
+	i = 0;
+	if (!*array)
+		return ;
+	while (i < size)
+	{
+		if (*array[i])
+			clean_data(*array[i]);
+		i++;
+	}
+	free(*array);
+	*array = NULL;
 }
-

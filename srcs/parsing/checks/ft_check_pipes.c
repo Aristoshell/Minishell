@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_pipes.c                                      :+:      :+:    :+:   */
+/*   ft_check_pipes.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:42:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 19:49:26 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 12:58:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,6 @@ void	change_data_check_pipe(char c, bool	*check, bool *wrd)
 		*check = false;
 	if (!*wrd)
 		*wrd = true;
-}
-
-void	pass_when_quote(char *str, int *i)
-{
-	char	quote;
-
-	while (str[*i])
-	{
-		quote = str[*i];
-			*i += 1;
-		while (str[*i] != quote)
-			*i += 1;
-		*i += 1;
-		if (!ft_is_quote(str[*i]))
-			return ;
-	}
 }
 
 bool	check(char c, bool pipe, bool word)
@@ -68,7 +52,7 @@ bool	check_pipe(char *str)
 		if (!check(str[i], pipe, wrd))
 			return (true);
 		if (ft_is_quote(str[i]))
-			pass_when_quote(str, &i);
+			ft_pass_when_quote(str, &i);
 		if (str[i])
 			change_data_check_pipe(str[i], &pipe, &wrd);
 	}

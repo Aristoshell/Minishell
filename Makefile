@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/21 20:36:51 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/22 19:11:16 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,15 @@ SRCS_FILES	= 	minishell.c \
 				builtins/unset.c \
 				builtins/pwd.c \
 				errors/ft_errors.c \
-				manage_data_structs/clean/ft_clean_2d_array.c \
 				manage_data_structs/clean/ft_clean_string.c \
 				manage_data_structs/clean/ft_clean_t_data.c \
-				manage_data_structs/clean/ft_clean_t_envlist.c \
 				manage_data_structs/clean/ft_clean_t_envlist_node.c \
+				manage_data_structs/clean/ft_clean_t_envlist.c \
 				manage_data_structs/clean/ft_clean_t_info.c \
-				manage_data_structs/clean/ft_clean_t_parts.c \
+				manage_data_structs/clean/ft_clean_t_token.c \
+				manage_data_structs/clean/ft_clean_t_cmd.c \
+				manage_data_structs/clean/ft_clean_2d_array.c \
+				manage_data_structs/clean/ft_clean_2d_array_struct.c \
 				manage_data_structs/set/set_t_data.c \
 				manage_data_structs/set/set_t_info.c \
 				parsing/bools/ft_is_cmd_separator.c \
@@ -38,6 +40,7 @@ SRCS_FILES	= 	minishell.c \
 				parsing/checks/ft_check_quotes.c \
 				parsing/checks/ft_check_syntax.c \
 				parsing/checks/ft_check_redir.c \
+				parsing/checks/ft_pass_when_quote.c \
 				parsing/envp/ft_get_envp.c \
 				parsing/envp/ft_get_val.c \
 				parsing/envp/ft_new_envvar.c \
@@ -70,7 +73,7 @@ INCLUDE	= -Ilibft -Iheader -Ireadline
 
 CC    = cc
 
-CFLAGS  = -Wall -Wextra -Werror -g3 -fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror -g3 #-fsanitize=address
 
 NAME    = minishell
 

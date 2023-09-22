@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/21 18:51:09 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/22 19:12:47 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_token
 typedef struct s_info
 {
 	int		nb_tokens;
-	int		*current_word;
+	int		current_word;
 	t_token	**tokens;
 }			t_info;
 
@@ -130,7 +130,7 @@ typedef struct s_envlist
 
 typedef struct s_data
 {
-	int			*current_cmd; // a sup apres louis
+	int			current_cmd; // a sup apres louis
 	int			nb_command; // a sup apres louis
 	char		*input; //pour marine
 	t_cmd		**cmd; // a sup apres louis
@@ -148,16 +148,22 @@ char		*close_quote(char quote);
 
 /* Create and Init */
 
-t_data		*create_data(t_data *data, char **envp);
-void		init_data(t_data *data);
-t_data		*create_info(t_info *info);
-void		init_info(t_info *info);
+t_data		*ft_create_data(t_data *data, char **envp);
+void		ft_init_data(t_data *data);
+t_info		*create_info(t_info *info);
+void		ft_init_info(t_info *info);
+void		ft_reinit_data(t_data *data);
+void		ft_reinit_info(t_info *info);
+
+/* ERROR */
+int	ft_error(int err_code, t_data *data, t_info *info);
 
 /* LEXER */
-int				lexer(char const *str, t_info *info);
+int				ft_lexer(char const *str, t_info *info);
 char			*get_token_val(char *str, int *i);
 t_token_type	get_token_type(char *token);
 void			ft_display_lexer(t_info info);
+int				ft_count_token(char const *str);
 
 /* PROMPT */
 int				prompt(t_data *data);
@@ -181,6 +187,7 @@ bool		check_syntax(char	*str);
 char		check_open_quote(char *input);
 bool		check_redir(char *str);
 bool		check_pipe(char *str);
+void		ft_pass_when_quote(char *str, int *i);
 
 /* Envp  */
 char		*ft_get_val(char *line);
@@ -198,9 +205,15 @@ t_envlist	*ft_lst_env_new(const char *key, char *val);
 void		ft_lst_env_pop(t_envlist **lst, char *key);
 
 /* Clean*/
-void		ft_clean_2d_array(void **array, void (*clean_data)(void *));
 void		ft_clean_string(char *str);
-void		ft_clean_t_tokens(t_token *token);
+void		ft_clean_2d_array(void **array, void (*clean_data)(void *));
+void		ft_clean_2d_array_struct(void ***array, void (*clean_data)(void *));
+void		ft_clean_t_token(t_token *token);
+void		ft_clean_t_info(t_info *info);
+void		ft_clean_t_cmd(t_cmd *cmd);
+void		ft_clean_t_data(t_data *data);
+void		ft_lst_env_delone(t_envlist *lst);
+void		ft_lst_env_clear(t_envlist **lst);
 
 /* Built-in */
 void		display_env(t_envlist *env);
