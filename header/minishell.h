@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 17:44:52 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 19:26:34 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -201,7 +201,7 @@ bool		ft_check_syntax_with_tokens(t_info info);
 
 
 /* Expand */
-bool		word_has_expand(const char *token_val, t_envlist *env);
+bool		word_has_expand(const char *token_val);
 
 /* Envp  */
 char		*ft_get_val(char *line);
