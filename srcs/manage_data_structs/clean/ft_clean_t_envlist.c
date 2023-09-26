@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/22 17:22:03 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 12:37:33 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,4 +26,5 @@ void	ft_lst_env_clear(t_envlist **lst)
 			*lst = p;
 		}
 	}
+	printf("Env cleaned\n");
 }

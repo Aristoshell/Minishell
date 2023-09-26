@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/22 18:45:02 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 12:37:29 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,4 +23,5 @@ void	ft_clean_t_data(t_data *data)
 		ft_lst_env_clear(&data->envp);
 	free(data);
 	data = NULL;
+	printf("t_data cleaned\n");
 }

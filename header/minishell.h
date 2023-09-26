@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 11:32:29 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 14:38:52 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@
 # define GREEN				"\033[1;32m"
 # define ORANGE				"\033[1;33m"
 # define YELLOW				"\033[1;33m"
+# define PROMPT_COLOUR		"\001\033[1;33m\002"
+# define PROMPT_RESET		"\001\033[0m\002"
 # define BLUE				"\033[1;36m"
 # define NC					"\033[0m"
 

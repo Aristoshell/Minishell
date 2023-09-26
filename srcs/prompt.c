@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 11:24:56 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 14:39:12 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,13 @@ int	prompt(t_data *data)
 
 	while (1)
 	{
-		input = readline(YELLOW"aristoshell$ "NC);
+		input = readline(PROMPT_COLOUR"aristoshell$ "PROMPT_RESET);
 		if (input && input[0] != 0)
 		{
 			if (check_exit(input)) // utilise seulement ici pour quitter proprement mais on nen naura plus besoin apres
 			{
 				free((void *)input);
+				rl_clear_history();
 				return (EXIT); //penser a bien tout free
 			}
 			add_history(input); //il faudra bien le free
@@ -48,4 +49,6 @@ int	prompt(t_data *data)
 			//ft_reinit_data(data);
 		}
 	}
+	rl_clear_history();
+	return(FUNCTION_SUCCESS);
 }
