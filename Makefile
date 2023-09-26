@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/26 14:50:50 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/26 16:49:36 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,12 +30,14 @@ SRCS_FILES	= 	minishell.c \
 				manage_data_structs/clean/ft_clean_2d_array_struct.c \
 				manage_data_structs/set/set_t_data.c \
 				manage_data_structs/set/set_t_info.c \
+				parsing/expand/ft_manage_expand.c \
 				parsing/bools/ft_is_cmd_separator.c \
 				parsing/bools/ft_is_operator.c \
 				parsing/bools/ft_is_pipe.c \
 				parsing/bools/ft_is_quote.c \
 				parsing/bools/ft_is_separator.c \
 				parsing/bools/ft_is_space.c \
+				parsing/bools/ft_is_dollar.c \
 				parsing/checks/ft_check_pipes.c \
 				parsing/checks/ft_check_quotes.c \
 				parsing/checks/ft_check_syntax.c \

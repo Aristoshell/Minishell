@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 15:26:35 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 17:44:52 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,11 +182,14 @@ int				ft_error(int err_code);
 
 /* BOOLS */
 bool		ft_is_space(char c);
+bool		ft_is_simple_quote(char c);
+bool		ft_is_double_quote(char c);
 char		ft_is_quote(char c);
 bool		ft_is_pipe(char c);
 bool		ft_is_operator(char c);
 bool		ft_is_separator(char c);
 bool		ft_is_cmd_separator(char c);
+bool		ft_is_dollar(char c);
 
 /* Check pre parsing*/
 bool		check_syntax(const char *str);
@@ -195,6 +198,10 @@ bool		check_redir(const char *str);
 bool		check_pipe(const char *str);
 void		ft_pass_when_quote(const char *str, int *i);
 bool		ft_check_syntax_with_tokens(t_info info);
+
+
+/* Expand */
+bool		word_has_expand(const char *token_val, t_envlist *env);
 
 /* Envp  */
 char		*ft_get_val(char *line);
