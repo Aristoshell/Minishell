@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:42:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/22 12:58:09 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 11:52:05 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ bool	check(char c, bool pipe, bool word)
 	return (true);
 }
 
-bool	check_pipe(char *str)
+bool	check_pipe(const char *str)
 {
 	int		i;
 	bool	pipe;
@@ -45,7 +45,7 @@ bool	check_pipe(char *str)
 	i = -1;
 	pipe = false;
 	wrd = false;
-	while (str[++i])
+	while (str[++i]) //pb ici
 	{
 		while (str[i] && ft_is_space(str[i]) == 1)
 			i++;

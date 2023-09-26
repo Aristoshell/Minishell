@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/23 01:17:23 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/26 11:32:29 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,10 +141,7 @@ typedef struct s_data
 
 /* GENERAL */
 int			prompt(t_data *data);
-int			parsing(t_data *data, t_info *info, char *input);
-char		*manage_quote(char *input);
-char		check_open_quote(char *input);
-char		*close_quote(char quote);
+int			parsing(t_data *data, const char *input);
 
 /* Create and Init */
 
@@ -154,14 +151,18 @@ t_info		*create_info(t_info *info);
 void		ft_init_info(t_info *info);
 void		ft_reinit_data(t_data *data);
 void		ft_reinit_info(t_info *info);
+/* news*/
+void		ft_clean_info_bis(t_info **info);
+
+
 
 /* ERROR */
-int			ft_error(int err_code, t_data *data, t_info *info);
+int			ft_error(int err_code);
 
 /* LEXER */
-int				ft_lexer(char const *str, t_info *info);
-char			*get_token_val(char *str, int *i);
-t_token_type	get_token_type(char *token);
+int				ft_lexer(const char *input, t_info *info);
+char			*get_token_val(const char *str, int *i);
+t_token_type	get_token_type(const char *token);
 void			ft_display_lexer(t_info info);
 int				ft_count_token(char const *str);
 
@@ -172,7 +173,7 @@ int				prompt(t_data *data);
 int				parser(t_info	*info);
 
 /* ERRORS */
-int				ft_error(int err_code, t_data *data, t_info *info);
+int				ft_error(int err_code);
 
 /* BOOLS */
 bool		ft_is_space(char c);
@@ -183,11 +184,11 @@ bool		ft_is_separator(char c);
 bool		ft_is_cmd_separator(char c);
 
 /* Check pre parsing*/
-bool		check_syntax(char	*str);
-char		check_open_quote(char *input);
-bool		check_redir(char *str);
-bool		check_pipe(char *str);
-void		ft_pass_when_quote(char *str, int *i);
+bool		check_syntax(const char *str);
+char		check_open_quote(const char *input);
+bool		check_redir(const char *str);
+bool		check_pipe(const char *str);
+void		ft_pass_when_quote(const char *str, int *i);
 
 /* Envp  */
 char		*ft_get_val(char *line);

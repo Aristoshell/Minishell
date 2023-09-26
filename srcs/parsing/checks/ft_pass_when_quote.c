@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	ft_pass_when_quote(char *str, int *i)
+void	ft_pass_when_quote(const char *str, int *i)
 {
 	char	quote;
 

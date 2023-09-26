@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-t_token_type	get_token_type(char *token)
+t_token_type	get_token_type(const char *token)
 {
 	int	i;
 

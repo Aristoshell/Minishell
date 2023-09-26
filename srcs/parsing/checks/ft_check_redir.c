@@ -6,13 +6,13 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/11 19:42:19 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/22 12:58:09 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 11:03:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-bool	check_start(char *str, int *i)
+bool	check_start(const char *str, int *i)
 {
 	while (str[*i] && ft_is_space(str[*i]))
 		*i += 1;
@@ -23,7 +23,7 @@ bool	check_start(char *str, int *i)
 	return (true);
 }
 
-bool	check_redir_to(char *str, int *i)
+bool	check_redir_to(const char *str, int *i)
 {
 	*i += 1;
 	if (str[*i] == '>')
@@ -39,7 +39,7 @@ bool	check_redir_to(char *str, int *i)
 	return (true);
 }
 
-bool	check_redir_from(char *str, int *i)
+bool	check_redir_from(const char *str, int *i)
 {
 	*i += 1;
 	if (str[*i] == '<')
@@ -55,7 +55,7 @@ bool	check_redir_from(char *str, int *i)
 	return (true);
 }
 
-bool	check_redir(char *str)
+bool	check_redir(const char *str)
 {
 	int	i;
 

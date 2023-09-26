@@ -26,7 +26,7 @@ void	ft_get_token_val_len_manage_quote(char c, bool	*in_quote, char *quote_type)
 	}
 }
 
-int	ft_get_token_val_len(char *p, int *i)
+int		ft_get_token_val_len(const char *p, int *i)
 {
 	bool		in_quote;
 	char		quote_type;
@@ -54,7 +54,7 @@ int	ft_get_token_val_len(char *p, int *i)
 	return (len);
 }
 
-void	ft_fill_token_val(char	*buffer, char *str, int size, int i)
+void	ft_fill_token_val(char	*buffer, const char *str, int size, int i)
 {
 	int	position;
 	int	j;
@@ -70,17 +70,17 @@ void	ft_fill_token_val(char	*buffer, char *str, int size, int i)
 	buffer[j] = 0;
 }
 
-char	*get_token_val(char *str, int *i)
+char	*get_token_val(const char *input, int *i)
 {
 	char	*word;
 	int		size;
 
-	size = ft_get_token_val_len(str, i);
+	size = ft_get_token_val_len(input, i);
 	if (size == 0)
 		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));
 	if (!word)
 		return (MEMORY_ERROR_PT); // penser a free ce qui a ete malloc avant aussi
-	ft_fill_token_val(word, str, size, *i);
+	ft_fill_token_val(word, input, size, *i);
 	return (word);
 }

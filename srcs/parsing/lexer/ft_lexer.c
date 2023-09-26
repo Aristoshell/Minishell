@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	ft_fill_token_table(char const *str, t_info *info)
+int	ft_fill_token_table(const char *input, t_info *info)
 {
 	int		i;
 	int		j;
@@ -24,24 +24,24 @@ int	ft_fill_token_table(char const *str, t_info *info)
 		info->tokens[j] = malloc(sizeof(t_token));
 		if (!info->tokens[j])
 			return (MEMORY_ERROR_NB); // + free ce qui a ete free
-		info->tokens[j]->string = get_token_val((char *)str, &i);
+		info->tokens[j]->string = get_token_val(input, &i);
 		info->tokens[j]->type = get_token_type(info->tokens[j]->string);
 		j++;
 	}
 	return (FUNCTION_SUCCESS);
 }
 
-int	ft_lexer(char const *str, t_info *info)
+int	ft_lexer(const char *input, t_info *info)
 {
-	if (!str)
+	if (!input)
 		return (-1);
-	info->nb_tokens = ft_count_token((const char*)str);
+	info->nb_tokens = ft_count_token(input);
 	if (info->nb_tokens < 1)
 		return (0); //voir ce quil se passe si je retourne ca, normalement cest pas censee, mais si je retourne un val je dois bien gerer dans la fonction davant
 	info->tokens = malloc(sizeof(t_token *) * info->nb_tokens);
 	if (!info->tokens)
 		return (MEMORY_ERROR_NB); // +free ce qui a ete free
-	if (ft_fill_token_table(str, info) == MEMORY_ERROR_NB)
+	if (ft_fill_token_table(input, info) == MEMORY_ERROR_NB)
 		return (MEMORY_ERROR_NB); //attention a bien free ce quil faut
 	return (FUNCTION_SUCCESS);
 }
