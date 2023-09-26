@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/22 18:51:23 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:26:14 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argv ;
 	if (argc != 1)
-		return (perror(ERR_ARG), 1);
+		return (perror(DIS_ERR_ARG), 1);
 	if (!envp)
-		return (perror(ERR_ENV), 1);
+		return (perror(DIS_ERR_ENV), 1);
 	data = NULL;
 	data = ft_create_data(data, envp);
 	if (!data)

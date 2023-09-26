@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/22 19:11:16 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/26 14:50:50 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ SRCS_FILES	= 	minishell.c \
 				parsing/checks/ft_check_syntax.c \
 				parsing/checks/ft_check_redir.c \
 				parsing/checks/ft_pass_when_quote.c \
+				parsing/checks/ft_check_syntax_with_tokens.c \
 				parsing/envp/ft_get_envp.c \
 				parsing/envp/ft_get_val.c \
 				parsing/envp/ft_new_envvar.c \

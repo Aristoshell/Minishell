@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 14:38:52 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/26 15:26:35 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,16 @@
 
 //defines
 // a mettre en majuscule
-# define ERR_ARG "Error : Please launch minishell with no additional argument"
-# define ERR_ENV "Error : Please launch minishell with env"
+# define DIS_ERR_ARG "Error : Please launch minishell with no additional argument\n"
+# define DIS_ERR_ENV "Error : Please launch minishell with env\n"
+# define DIS_ERR_SYNTAX_QUOTE "Error : unclosed quote\n" // a adapter en fonction de quel token
+# define DIS_ERR_SYNTAX_TOKEN "Error : syntax error near unexpected token\n" // a adapter en fonction de quel token
 # define FUNCTION_SUCCESS	0
 # define EXIT				1
 # define MEMORY_ERROR_NB	2
 # define MEMORY_ERROR_PT	NULL
-# define SYNTAX_ERROR		3
+# define SYNTAX_QUOTE_ERROR	3
+# define SYNTAX_TOKEN_ERROR	4
 # define DOUBLE_QUOTE 		34
 # define SIMPLE_QUOTE 		39
 # define MASK_SET			0x10
@@ -55,7 +58,7 @@ typedef enum e_open_quote
 	double_q
 }			t_open_quote;
 
-typedef enum e_lexer_type
+typedef enum e_token_type
 {
 	type_default,
 	type_pipe,
@@ -191,6 +194,7 @@ char		check_open_quote(const char *input);
 bool		check_redir(const char *str);
 bool		check_pipe(const char *str);
 void		ft_pass_when_quote(const char *str, int *i);
+bool		ft_check_syntax_with_tokens(t_info info);
 
 /* Envp  */
 char		*ft_get_val(char *line);
