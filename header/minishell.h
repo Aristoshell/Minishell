@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:39:47 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 14:43:46 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:59:04 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # include<stdlib.h>
 # include<unistd.h>
 # include<string.h>
+# include<limits.h>
 # include<readline/readline.h>
 # include<readline/history.h>
 # include <errno.h>
@@ -95,7 +96,8 @@ int		strlen_list(t_cmd **cmd);
 int		ft_isnumber(char *str);
 void	bt_exit(t_cmd **cmd, int i);
 
-int	bt_echo(t_cmd **cmd_tab, int to_do);
+int		bt_echo(t_cmd **cmd_tab, int to_do);
+int		bt_pwd(void);
 
 void	error_management(t_cmd *cmd, char *str, int exit_val);
 void	error_pipe(void);

@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 14:43:18 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/21 17:16:46 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,11 @@ void	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
 
 	cmd = tab_cmd[i];
 	pipes = handle_redirection(cmd, pipes);
-	handle_builtins(tab_cmd, envp, i);
+	if (cmd->cmd_type != no)
+	{
+		handle_builtins(tab_cmd, envp, i);
+		exit(0);
+	}
 	path_temp = find_path(envp);
 	if (path_temp)
 		cmd->path_cmd = ft_split(path_temp, ':');

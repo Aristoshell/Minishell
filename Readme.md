@@ -50,12 +50,14 @@ parametre)
 
 -	terminer le main (fonction de recup des commandes)
 
+-	correction d'une erreur dans l'exec qui faisait qu'on executais deux 	fois les builtins lorsqu'il y avais des pipes
+
+-	coder echo
+
+-	coder pwd
+
 A faire :
 
-- coder echo
-- coder pwd
-	trouver un moyen de faire cela sans envp car en cas de unset PWD fonctionne quand meme
 - coder cd
 - free + close tout les pipes et fd dans les cas d'erreur
-- retour du $?
 - signaux ?

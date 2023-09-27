@@ -11,6 +11,7 @@ SRCS_FILES		:= set_up_cmd.c\
 				usefull.c\
 				builtins/exit.c\
 				builtins/echo.c\
+				builtins/pwd.c\
 
 
 SRCS_FILE = srcs/
