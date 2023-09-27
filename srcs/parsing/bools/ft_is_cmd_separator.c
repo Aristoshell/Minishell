@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 19:31:13 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/20 19:31:15 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/27 15:58:44 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 bool	ft_is_cmd_separator(char c)
 {
-	if (c == '|' || c == ';' || c == '&')
+	if (c == '|')
 		return (true);
 	return (false);
 }
