@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 12:38:42 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:49:58 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	ft_init_info(t_info *info)
 {
 	info->nb_tokens = 0;
-	info->current_word = 0;
+	info->current_token = 0;
 }
 void	ft_reinit_info(t_info *info)
 {
@@ -59,7 +59,7 @@ void	ft_clean_info_bis(t_info **info)
 	{
 		ft_clean_info_tokens(*info);
 		(*info)->nb_tokens = 0;
-		(*info)->current_word = 0;
+		(*info)->current_token = 0;
 		free((*info));
 		*info = NULL;
 	}

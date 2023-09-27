@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 14:39:12 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:43:05 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	prompt(t_data *data)
 	while (1)
 	{
 		input = readline(PROMPT_COLOUR"aristoshell$ "PROMPT_RESET);
+		//expand
 		if (input && input[0] != 0)
 		{
 			if (check_exit(input)) // utilise seulement ici pour quitter proprement mais on nen naura plus besoin apres

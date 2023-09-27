@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/26 19:26:34 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/27 18:49:58 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ typedef struct s_token
 typedef struct s_info
 {
 	int		nb_tokens;
-	int		current_word;
+	int		current_token;
 	t_token	**tokens;
 }			t_info;
 
