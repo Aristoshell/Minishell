@@ -56,8 +56,23 @@ parametre)
 
 -	coder pwd
 
-A faire :
+Vendredi + WE
+	- cd work in progress
 
-- coder cd
-- free + close tout les pipes et fd dans les cas d'erreur
-- signaux ?
+
+Mercredi :
+
+-	definition des endroits ou il faut free close et modif le int de $? (dans le child)
+
+-	point avec Marine
+
+-	ajout du int pour $?
+
+-	comprehension sur les signaux 
+
+A fair
+
+- terminer cd (3/4h)
+
+- coder les 4 types de signaux possible et les tester (1/2h)
+

@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:39:47 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 17:59:04 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:14:03 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ char	**gen_third_cmd(char **argv, int argc);
 int		strlen_list(t_cmd **cmd);
 
 void	cross_array_list(t_cmd *cmd[4], char **envp);
-t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i);
+t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i, int *status);
 t_pipe	*new_pipes(t_pipe *pipes, int i);
 void	wait_childs(t_cmd **cmd);
-void	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i);
+int		child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i);
 
 t_pipe	*handle_redirection(t_cmd *cmd, t_pipe *pipes);
 void	handle_builtins(t_cmd **cmd, char **envp, int i);

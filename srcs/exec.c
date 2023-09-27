@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 17:16:46 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:16:00 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,12 @@ on recup la variable d'env PATH que l'on vas split en fonction du char :
 on execute ensuite la commande voulue (sauf builtins)
 */
 
-void	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
+int	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
 {
 	char	*exec;
 	char	*path_temp;
 	t_cmd	*cmd;
+	int		status;
 
 	cmd = tab_cmd[i];
 	pipes = handle_redirection(cmd, pipes);
@@ -54,10 +55,15 @@ void	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
 	if (!cmd->cmd_args)
 	{
 		//si la commande est mauvais il faut free et close
-		return ;
+		status = -1;
+		//recup la vraie val (ernno) ?
+		return (status);
 	}
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
+	status = -1;
+	//recup la vraie val (ernno) ?
+	return (status);
 	//si execve fail il faut free et close
 }
 
@@ -126,18 +132,21 @@ fonction gen_child qui vas modifier les fds dans les pipes puis fork
 et enfin appeler la fonction child process
 */
 
-t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i)
+t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i, int *status)
 {
 	pid_t	pid;
 	int		len_list;
 
 	len_list = strlen_list(cmd);
+	/*if (len_list == -1)
+		error(free_data)*/
 	if (len_list > 1)
 	{
 		if (i == 0)
 		{
 			if (pipe(pipes->tube[1]) != 0)
 				error_pipe();
+				//error(free_data)
 		}
 		else
 			pipes = new_pipes(pipes, i);	
@@ -152,7 +161,7 @@ t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i)
 	if (pid == -1)
 		error_fork();
 	if (pid == 0)
-		child_process(cmd, pipes, envp, i);
+		*status = child_process(cmd, pipes, envp, i);
 	cmd[i]->pid = pid;
 	return (pipes);
 }
@@ -173,9 +182,11 @@ void	cross_array_list(t_cmd **cmd, char **envp)
 {
 	int		i;
 	int		len_list;
+	int		status;
 	t_pipe	*pipe;
 
 	i = 0;
+	status = 0;
 	len_list = strlen_list(cmd);
 	if (len_list > 1)
 	{
@@ -185,7 +196,7 @@ void	cross_array_list(t_cmd **cmd, char **envp)
 	}
 	while (i < len_list)
 	{
-		pipe = gen_child(cmd, pipe, envp, i);
+		pipe = gen_child(cmd, pipe, envp, i, &status);
 		i++;
 	}
 	if (len_list > 1)

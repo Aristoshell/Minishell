@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:59:05 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/20 16:28:58 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/27 18:03:47 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ int	strlen_list(t_cmd **cmd)
 	int	i;
 
 	i = 0;
+	if (!cmd || !*cmd)
+		return (-1);
 	while (cmd[i])
 		i++;
 	return (i);

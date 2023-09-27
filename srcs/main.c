@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 17:59:52 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/27 19:43:46 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,33 @@
 creation des arguments des listes qu'on vas utiliser
 */
 
+static void    sighandler_heredoc(int signum)
+{
+	if (!signum)
+	printf("\n");
+	exit(0);
+}
+
+void	heredoc_signals_test()
+{
+	char buf[1];
+	signal(SIGINT, &sighandler_heredoc); //CTRL + d
+    signal(SIGQUIT, SIG_IGN);			//CTRL + \*/
+	while (buf[0] != '\n')
+	{
+		if (read(0, buf, 1) == 0 || read(0, buf, 1) == 0)
+		{
+			printf("oui\n");			//CTRL + d
+			exit(0);
+		}
+	}
+}
+
 int	main(int argc, char **argv, char **envp)
 {
 	t_cmd	**cmd;
+
+	//heredoc_signals_test();
 	int i = 0;
 	if (!argv || !argc || !envp)
 		printf("no arg");
@@ -44,13 +68,13 @@ int	main(int argc, char **argv, char **envp)
 	{
 		cmd[0]->pid = -1;
 		cmd[0]->cmd_args = gen_first_cmd(argv);
-		cmd[0]->cmd_type = cmd_pwd;
+		cmd[0]->cmd_type = no;
 		cmd[0]->input = file_;
 		cmd[0]->output = file_;
 		cmd[0]->heredoc_name = NULL;
 		cmd[0]->heredoc_sep = NULL;
 		cmd[0]->fd_in = 0;
-		cmd[0]->fd_out = open("out", O_CREAT | O_TRUNC | O_RDWR, 0777);
+		cmd[0]->fd_out = 1;
 	}
 	else if (ft_atoi(argv[1]) == 2)
 	{
