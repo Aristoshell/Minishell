@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/27 18:49:58 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 13:33:35 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,10 +144,6 @@ typedef struct s_data
 
 //fonctions
 
-/* GENERAL */
-int			prompt(t_data *data);
-int			parsing(t_data *data, const char *input);
-
 /* Create and Init */
 
 t_data		*ft_create_data(t_data *data, char **envp);
@@ -159,10 +155,14 @@ void		ft_reinit_info(t_info *info);
 /* news*/
 void		ft_clean_info_bis(t_info **info);
 
-
-
 /* ERROR */
 int			ft_error(int err_code);
+
+/* PROMPT */
+int				prompt(t_data *data);
+
+/* PARSING */
+int			parsing(t_data *data, const char *input);
 
 /* LEXER */
 int				ft_lexer(const char *input, t_info *info);
@@ -171,11 +171,10 @@ t_token_type	get_token_type(const char *token);
 void			ft_display_lexer(t_info info);
 int				ft_count_token(char const *str);
 
-/* PROMPT */
-int				prompt(t_data *data);
-
 /* PARSEUR */
-int				parser(t_info	*info);
+int		ft_parser(t_info *info, t_data *data);
+void	ft_count_cmd(t_info info, t_data *data);
+int		ft_init_tab_cmd(t_data *data);
 
 /* ERRORS */
 int				ft_error(int err_code);

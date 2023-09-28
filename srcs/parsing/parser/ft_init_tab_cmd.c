@@ -1,28 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_display_lexer.c                                 :+:      :+:    :+:   */
+/*   ft_init_tab_cmd.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 12:55:47 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/28 13:13:25 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/28 13:33:26 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_display_lexer(t_info info)
+int	ft_init_tab_cmd(t_data *data)
 {
-	int i = 0;
-	while(i < info.nb_tokens)
-	{
-
-		dprintf(STDERR_FILENO, "[%d] [%d]: %s\n", i, info.tokens[i]->type, info.tokens[i]->string);
-		//if (word_has_expand((const char*)info.tokens[i]->string))
-		//	dprintf(STDERR_FILENO, GREEN"has expand\n"NC);
-		//else
-		//	dprintf(STDERR_FILENO, RED"has no expand\n"NC);
-		i++;
-	}
+	data->cmd = malloc(sizeof(t_cmd) * data->nb_command);
+	if (!data->cmd)
+		return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
+	return (FUNCTION_SUCCESS);
 }

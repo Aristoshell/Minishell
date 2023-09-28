@@ -1,28 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_display_lexer.c                                 :+:      :+:    :+:   */
+/*   ft_count_cmd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 12:55:47 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/28 13:13:25 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/28 13:22:57 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_display_lexer(t_info info)
+void	ft_count_cmd(t_info info, t_data *data)
 {
-	int i = 0;
-	while(i < info.nb_tokens)
-	{
+	int		i;
 
-		dprintf(STDERR_FILENO, "[%d] [%d]: %s\n", i, info.tokens[i]->type, info.tokens[i]->string);
-		//if (word_has_expand((const char*)info.tokens[i]->string))
-		//	dprintf(STDERR_FILENO, GREEN"has expand\n"NC);
-		//else
-		//	dprintf(STDERR_FILENO, RED"has no expand\n"NC);
+	i = 0;
+	data->nb_command = 1;
+	while (i < info.nb_tokens)
+	{
+		if (info.tokens[i]->type == type_pipe)
+			data->nb_command++;
 		i++;
 	}
+	printf("nb cmd : %d\n", data->nb_command);
 }

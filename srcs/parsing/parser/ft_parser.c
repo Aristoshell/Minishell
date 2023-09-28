@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parser.c                                           :+:      :+:    :+:   */
+/*   ft_parser.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/27 20:46:33 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 13:34:36 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,22 +20,8 @@
 - entre quotes
 
 */
-void	ft_count_cmd(t_info *info, t_data *data)
-{
-	int		i;
 
-	data->nb_command = 1;
-	i = 0;
-	while (i < info->nb_tokens)
-	{
-		if (info->tokens[i]->type <= 2)
-			data->nb_command++;
-		i++;
-	}
-	printf("nb commandes : %d\n", data->nb_command++);
-}
-
-void	init_cmd(t_cmd	*cmd)
+void	init_cmd(t_cmd *cmd)
 {
 	cmd->pid = -1;
 	cmd->cmd_args = NULL;
@@ -96,7 +82,7 @@ boucle tant quon a fini le tableau
 int	count_args(t_info info)
 {
 	int nb_agrs = 0;
-	while (info.current_token <= info.nb_tokens || info.tokens[info.current_token]->type != pipe) //ie. dernier token ou pipe
+	while (info.current_token <= info.nb_tokens || info.tokens[info.current_token]->type != type_pipe) //ie. dernier token ou pipe
 	{
 		nb_agrs++;
 		info.current_token++;
@@ -125,10 +111,10 @@ int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info)
 	int	nb_args;
 
 	//test pipe infile
-	if (out_prev && out_prev == pipe_)
-		cmd->fd_in = pipe;
+	if (out_prev && out_prev == type_pipe)
+		cmd->fd_in = type_pipe;
 	nb_args = count_args(*info); //compter nb de args dans ma command
-	if (create_cmd_args_tab == MEMORY_ERROR_NB) // creer le tableau d'args de la command
+	if (create_cmd_args_tab(nb_args, cmd) == MEMORY_ERROR_NB) // creer le tableau d'args de la command
 		return (MEMORY_ERROR_NB);
 	// le remplir avec ce que jai dans chaque token.val
 	int i = 0;
@@ -139,7 +125,7 @@ int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info)
 			cmd->cmd_args[i] = malloc(sizeof(char) * 1);	
 			if (!cmd->cmd_args[i])
 				return (MEMORY_ERROR_NB); // GRRRRR
-			cmd->cmd_args[i][0] = NULL;
+			cmd->cmd_args[i][0] = '\0';
 		}
 		else
 		{//creer les autres
@@ -152,22 +138,24 @@ int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info)
 	}
 	// test pipe outfile
 	if (info->tokens[info->current_token]->type == type_pipe)
-		cmd->fd_out = pipe_;
+		cmd->fd_out = type_pipe;
 	return (FUNCTION_SUCCESS);
 }
 
-int	parser(t_info	*info, t_data *data)
+
+int	ft_parser(t_info	*info, t_data *data)
 {
 	int		i;
 	
 	i = 0;
 	//info->current = 0;
-	ft_count_cmd(info, data);
-	//checker si 0 cmd
-	data->cmd = malloc(sizeof(t_cmd) * data->nb_command);
-	if (!data->cmd)
-		return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
-	while (i < data->nb_command)
+	ft_count_cmd(*info, data);
+	//checker si 0 cmd, normalement ce sera deja fait car 1) ligne vide renvoi juste le parseur, mais 2) attention avec envoi de just ""
+	if (ft_init_tab_cmd(data) !=  FUNCTION_SUCCESS)
+		return (MEMORY_ERROR_NB);
+	// remplir le tableau
+	/*
+		while (i < data->nb_command)
 	{
 		data->cmd[i] = malloc(sizeof(t_cmd));
 		if(!data->cmd[i])
@@ -177,7 +165,7 @@ int	parser(t_info	*info, t_data *data)
 		i++;
 	}
 	(void) i;
-	free(data);
+	*/
 	return (0);
 }
 
