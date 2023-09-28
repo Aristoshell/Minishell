@@ -6,7 +6,7 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/28 14:07:22 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/28 16:59:07 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,9 @@ SRCS_FILES	= 	minishell.c \
 				parsing/parser/ft_init_tab_cmd.c \
 				parsing/parser/ft_init_cmd.c \
 				parsing/parser/ft_fill_cmd_test_infile.c \
+				parsing/parser/ft_fill_cmd_count_args.c \
+				parsing/parser/ft_fill_cmd_init_tab_args.c \
+				parsing/parser/ft_fill_cmd_fill_tab_args.c \
 				parsing/expand/ft_manage_expand.c \
 				parsing/bools/ft_is_cmd_separator.c \
 				parsing/bools/ft_is_operator.c \
