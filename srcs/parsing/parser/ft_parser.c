@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 19:17:00 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 20:10:01 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,50 +27,37 @@
 // 	}	
 // }
 
-
-
-int	create_cmd_arg(int nb_args, t_cmd *cmd)
+int	ft_fill_tab_cmd(t_data *data, t_info *info)
 {
-	cmd->cmd_args = malloc(sizeof(char *) * (nb_args + 1));
-	if (!cmd->cmd_args)
-		return (MEMORY_ERROR_NB);
-	return (FUNCTION_SUCCESS);
-}
+	int	i;
 
-int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info, bool first)
-{
-	int	nb_args;
-
-	ft_fill_cmd_test_in(cmd, info, out_prev, first);
-	nb_args = ft_fill_cmd_count_args(info);
-	if (ft_fill_cmd_init_tab_args(nb_args, cmd) == MEMORY_ERROR_NB) // creer le tableau d'args de la command
-		return (MEMORY_ERROR_NB);
-	if (ft_fill_cmd_fill_tab_args(cmd, info, nb_args) != FUNCTION_SUCCESS)
-		return (MEMORY_ERROR_NB);
-	ft_fill_cmd_test_out(cmd, info);
-	return (FUNCTION_SUCCESS);
-}
-
-int	ft_parser(t_info	*info, t_data *data)
-{
-	int		i;
-	
 	i = 0;
-	//info->current = 0;
-	ft_count_cmd(*info, data);
-	//checker si 0 cmd, normalement ce sera deja fait car 1) ligne vide renvoi juste le parseur, mais 2) attention avec envoi de just ""
-	if (ft_init_tab_cmd(data) !=  FUNCTION_SUCCESS)
-		return (MEMORY_ERROR_NB);
-	// partie en train detre testee : remplir le tableau
 	while (i < data->nb_command)
 	{
 		ft_init_cmd(data, i);
 		if (i == 0)
-			fill_cmd(data->cmd[i], data->cmd[i]->fd_out, info, true);//vraiment a changer car degueu
+		{
+			if (ft_fill_cmd(data->cmd[i], data->cmd[i]->fd_out, info, true) != FUNCTION_SUCCESS)//vraiment a changer car degueu
+				return (MEMORY_ERROR_NB);
+		}
 		else
-			fill_cmd(data->cmd[i], data->cmd[i-1]->fd_out, info, false);
+		{
+			if (ft_fill_cmd(data->cmd[i], data->cmd[i-1]->fd_out, info, false)!= FUNCTION_SUCCESS)
+				return (MEMORY_ERROR_NB);
+		}
 		i++;
 	}
-	//fin test
+	return (FUNCTION_SUCCESS);
+}
+
+
+int	ft_parser(t_info	*info, t_data *data)
+{
+	ft_count_cmd(*info, data);
+	//checker si 0 cmd, normalement ce sera deja fait car 1) ligne vide renvoi juste le parseur, mais 2) attention avec envoi de just ""
+	if (ft_init_tab_cmd(data) !=  FUNCTION_SUCCESS)
+		return (MEMORY_ERROR_NB);
+	ft_fill_tab_cmd(data, info);
+	ft_display_tab_cmd(*data);
 	return (0);
 }

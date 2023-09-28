@@ -28,6 +28,5 @@ int	ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_info *info, int nb_args)
 	if (!cmd->cmd_args[i])
 		return (MEMORY_ERROR_NB); // GRRRRR
 	cmd->cmd_args[i][0] = '\0';
-
 	return (FUNCTION_SUCCESS);
 }
