@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 20:09:43 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/28 20:10:06 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 20:14:22 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	ft_display_tab_cmd(t_data data)
 			printf("cmd[%d] arg[%d] : %s\n", i, j, data.cmd[i]->cmd_args[j]);
 			j++;
 		}
+		printf("in : %d, out : %d\n", data.cmd[i]->input, data.cmd[i]->output);
+		printf("\n");
 		i++;
 	}
 }

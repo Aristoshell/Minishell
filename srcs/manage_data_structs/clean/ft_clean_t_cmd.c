@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean_t_cmd.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/23 01:10:50 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/28 20:16:01 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ void	ft_clean_t_cmd(t_cmd *cmd)
 	if (cmd->path_cmd)
 		ft_clean_2d_array((void **)cmd->path_cmd, (void *)ft_clean_string);
 	cmd->path_cmd = NULL;
-	cmd->input = none;
-	cmd->output = none;
 	if (cmd->heredoc_name)
 		ft_clean_string(&cmd->heredoc_name);
 	if (cmd->heredoc_sep)
