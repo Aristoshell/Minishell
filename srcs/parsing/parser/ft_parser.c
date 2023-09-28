@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 20:10:01 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 20:28:27 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,5 +59,6 @@ int	ft_parser(t_info	*info, t_data *data)
 		return (MEMORY_ERROR_NB);
 	ft_fill_tab_cmd(data, info);
 	ft_display_tab_cmd(*data);
+	ft_reinit_data(data);
 	return (0);
 }

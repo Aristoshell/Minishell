@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 19:18:38 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 20:30:30 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	ft_clean_info_bis(t_info **info)
 	//printf("t_info cleaned\n");
 }
 
-/* Find */
+/* Fin */
 
 t_info	*create_info(t_info *info)
 {

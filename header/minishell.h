@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 20:14:53 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 20:35:39 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,6 @@ typedef struct s_data
 {
 	int			current_cmd; // a sup apres louis
 	int			nb_command; // a sup apres louis
-	char		*input; //pour marine
 	t_cmd		**cmd; // a sup apres louis
 	t_envlist	*envp; // a garder
 }			t_data;
@@ -151,6 +150,7 @@ t_info		*create_info(t_info *info);
 void		ft_init_info(t_info *info);
 void		ft_reinit_data(t_data *data);
 void		ft_reinit_info(t_info *info);
+
 /* news*/
 void		ft_clean_info_bis(t_info **info);
 
