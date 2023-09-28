@@ -6,32 +6,11 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 13:34:36 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 14:08:38 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-
-/* Pas encore gere :
-
-- redirections
-- expand
-- entre quotes
-
-*/
-
-void	init_cmd(t_cmd *cmd)
-{
-	cmd->pid = -1;
-	cmd->cmd_args = NULL;
-	cmd->cmd_type = no;
-	cmd->path_cmd = NULL;
-	cmd->input = stdin_;
-	cmd->output = stdout_;
-	cmd->fd_in = -1;
-	cmd->fd_out = -1;
-}
 
 // penser a initialiser les currents
 
@@ -48,44 +27,14 @@ void	init_cmd(t_cmd *cmd)
 // 	}	
 // }
 
-/*
-Composition commande
 
-boucle tant quon a fini le tableau
-
-	boucle jusqua ce quon n'ai pas de pipe
-	
-	1) Checker si redirection d'intfile
-		si pas premier bout + ce que celui davant est une pipe
-			--> redirection in pipe
-		sinon si j'ai <<
-			--> redirection heredoc avec separator = tab[+1]
-		sinon si j'ai <
-			--> redirection fichier de tab[+1]
-		sinon
-			--> no redirect
-		attention ! bien verifier quon a un tab[+1], sinon renvoyer erreur i guess ?
-	
-	2) le truc actuel est une commande
-		- checker si tab[i] est un built in ou pas
-		tant qu'on na pas > ou >> ou | (faire bool opearateur redirection)
-			- mettre dans **cmd_args les mots de tab[current]
-	3) checker redirection out
-		si > ou >> ou |
-			si > open le suivant en mode edition, puis tant quon na pas de pipe on avance
-			si >> open le suivant en mode append, puis tant quon na pas de pipe on avance
-			si | pipe, pipe
-
-	quand est ce que je check les ./ ???
-*/
-
-int	count_args(t_info info)
+int	count_args(t_info *info)
 {
 	int nb_agrs = 0;
-	while (info.current_token <= info.nb_tokens || info.tokens[info.current_token]->type != type_pipe) //ie. dernier token ou pipe
+	while (info->current_token <= info->nb_tokens || info->tokens[info->current_token]->type != type_pipe) //ie. dernier token ou pipe
 	{
 		nb_agrs++;
-		info.current_token++;
+		info->current_token++;
 	}
 	return (nb_agrs);
 }
@@ -106,14 +55,16 @@ int	create_cmd_arg(int nb_args, t_cmd *cmd)
 	return (FUNCTION_SUCCESS);
 }
 
-int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info)
+int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info, bool first)
 {
 	int	nb_args;
 
 	//test pipe infile
-	if (out_prev && out_prev == type_pipe)
-		cmd->fd_in = type_pipe;
-	nb_args = count_args(*info); //compter nb de args dans ma command
+	ft_fill_cmd_test_infile(cmd, info, out_prev, first);
+	
+	nb_args = count_args(info); //compter nb de args dans ma command
+	printf("nb args : %d\n", nb_args);
+	/*
 	if (create_cmd_args_tab(nb_args, cmd) == MEMORY_ERROR_NB) // creer le tableau d'args de la command
 		return (MEMORY_ERROR_NB);
 	// le remplir avec ce que jai dans chaque token.val
@@ -139,9 +90,9 @@ int	fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info)
 	// test pipe outfile
 	if (info->tokens[info->current_token]->type == type_pipe)
 		cmd->fd_out = type_pipe;
+	*/
 	return (FUNCTION_SUCCESS);
 }
-
 
 int	ft_parser(t_info	*info, t_data *data)
 {
@@ -153,44 +104,16 @@ int	ft_parser(t_info	*info, t_data *data)
 	//checker si 0 cmd, normalement ce sera deja fait car 1) ligne vide renvoi juste le parseur, mais 2) attention avec envoi de just ""
 	if (ft_init_tab_cmd(data) !=  FUNCTION_SUCCESS)
 		return (MEMORY_ERROR_NB);
-	// remplir le tableau
-	/*
-		while (i < data->nb_command)
+	// partie en train detre testee : remplir le tableau
+	while (i < data->nb_command)
 	{
-		data->cmd[i] = malloc(sizeof(t_cmd));
-		if(!data->cmd[i])
-			return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
-		init_cmd(data->cmd[i]);
-		fill_cmd(data->cmd[i], data->cmd[i-1]->fd_out, info);
+		ft_init_cmd(data, i);
+		if (i == 0)
+			fill_cmd(data->cmd[i], data->cmd[i]->fd_out, info, true);//vraiment a changer car degueu
+		else
+			fill_cmd(data->cmd[i], data->cmd[i-1]->fd_out, info, false);
 		i++;
 	}
-	(void) i;
-	*/
+	//fin test
 	return (0);
 }
-
-/* 
-on reçoit une struct info avec
-	- nb de mots
-	- tableau de partitions avec les mots
-on veut : une struct data avec
-	- nb de commandes
-	- un tableau de commandes avec le nom de la commande, ses CFLAGS et arguments, entrée et sortie standard
-
-
-exemple :
-
-je reçois
-
-ls -la > hihi ; cat hihi > bruh ; ls -la | wc -l
-
-
-- Etape 1 : compter le nombre de cmd
-	- tant qu'on n'a pas de separateur de commandes 
-- Etape 2 : une fois qu'on a le nb de commande
-	- on va malloc le tableau de commande
-	- dans une boucle on va un a un
-		- malloc la struct cmd
-		- innit cette struct cmd
-		- remplir cette struct cmd à partir de info
-*/
