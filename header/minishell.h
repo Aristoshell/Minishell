@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 18:12:36 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 19:16:01 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,7 +185,8 @@ int		ft_parser(t_info *info, t_data *data);
 void	ft_count_cmd(t_info info, t_data *data);
 int		ft_init_tab_cmd(t_data *data);
 int		ft_init_cmd(t_data *data, int i);
-void	ft_fill_cmd_test_infile(t_cmd *cmd, t_info *info, t_in_out out_prev, bool first);
+void	ft_fill_cmd_test_in(t_cmd *cmd, t_info *info, t_in_out out_prev, bool first);
+void	ft_fill_cmd_test_out(t_cmd *cmd, t_info *info);
 int		ft_fill_cmd_count_args(t_info *info);
 int		ft_fill_cmd_init_tab_args(int nb_args, t_cmd *cmd);
 int		ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_info *info, int nb_args);

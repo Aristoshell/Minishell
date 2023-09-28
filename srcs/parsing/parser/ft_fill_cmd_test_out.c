@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_fill_cmd_test_infile.c                          :+:      :+:    :+:   */
+/*   ft_fill_cmd_test_in.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,11 +12,8 @@
 
 #include "minishell.h"
 
-void	ft_fill_cmd_test_infile(t_cmd *cmd, t_info *info, t_in_out out_prev, bool first)
+void	ft_fill_cmd_test_out(t_cmd *cmd, t_info *info)
 {
-	if (!first && out_prev == type_pipe) 
-	{
-		cmd->fd_in = type_pipe; // ca ca sera a change car si on a des redir, la pipe marche plus, ou alors, je laisserai Louis le changer
-		info->current_token++;
-	}
+	if (info->current_token < info->nb_tokens && info->tokens[info->current_token]->type == type_pipe)
+		cmd->fd_out = type_pipe;
 }

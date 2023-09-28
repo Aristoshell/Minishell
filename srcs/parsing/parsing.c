@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 13:15:41 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/28 19:18:02 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	parsing(t_data *data, const char *input)
 			ft_error(SYNTAX_TOKEN_ERROR);
 		else
 		{
-			ft_display_lexer(*info);
+			//ft_display_lexer(*info);
 			function_return = ft_parser(info, data); // attention, on va avoir une verif a faire
 			//if (function_return != FUNCTION_SUCCESS)
 			//	return (ft_error(function_return, data, info));

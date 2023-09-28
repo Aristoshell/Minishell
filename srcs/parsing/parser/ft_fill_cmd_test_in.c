@@ -1,27 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_count_cmd.c                                     :+:      :+:    :+:   */
+/*   ft_fill_cmd_test_in.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/28 13:13:25 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/28 19:17:32 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/28 14:03:38 by madavid           #+#    #+#             */
+/*   Updated: 2023/09/28 14:06:16 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	ft_count_cmd(t_info info, t_data *data)
+void	ft_fill_cmd_test_in(t_cmd *cmd, t_info *info, t_in_out out_prev, bool first)
 {
-	int		i;
-
-	i = 0;
-	data->nb_command = 1;
-	while (i < info.nb_tokens)
+	if (!first && out_prev == type_pipe) 
 	{
-		if (info.tokens[i]->type == type_pipe)
-			data->nb_command++;
-		i++;
+		cmd->fd_in = type_pipe; // ca ca sera a change car si on a des redir, la pipe marche plus, ou alors, je laisserai Louis le changer
+		info->current_token++;
 	}
 }
