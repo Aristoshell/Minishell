@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean_t_token.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 17:36:44 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/23 01:39:38 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_clean_t_token(t_token **token)
 {

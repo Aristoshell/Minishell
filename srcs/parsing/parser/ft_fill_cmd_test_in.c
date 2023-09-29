@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_fill_cmd_test_in(t_cmd *cmd, t_info *info, t_in_out out_prev, bool first)
 {

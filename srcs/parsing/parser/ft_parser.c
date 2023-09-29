@@ -6,11 +6,12 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/08 13:59:34 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 20:28:27 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 // penser a initialiser les currents
 

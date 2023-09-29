@@ -6,11 +6,12 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/14 19:03:25 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/21 13:22:58 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 // la fonction va pas car je dois checker si la variable existe pas deja et aussi changer ses settings, 
 // si "export OMG" mais que omg existe deja et quon lui reassigne aucune valeur, on necrase pas sa valeur

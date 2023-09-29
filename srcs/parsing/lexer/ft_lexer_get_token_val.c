@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_get_token_val_len_manage_quote(char c, bool	*in_quote, char *quote_type)
 {

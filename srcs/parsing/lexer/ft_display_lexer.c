@@ -6,11 +6,12 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/27 16:29:29 by marine            #+#    #+#             */
-/*   Updated: 2023/09/29 12:21:06 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_display_lexer(t_info info)
 {

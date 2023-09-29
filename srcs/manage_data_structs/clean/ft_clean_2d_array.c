@@ -6,11 +6,12 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:13:08 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/22 19:15:32 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_clean_2d_array(void **array, void (*clean_data)(void *))
 {

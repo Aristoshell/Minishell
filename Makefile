@@ -6,18 +6,19 @@
 #    By: madavid <madavid@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/01 17:16:40 by marine            #+#    #+#              #
-#    Updated: 2023/09/28 20:10:35 by madavid          ###   ########.fr        #
+#    Updated: 2023/09/29 16:03:51 by madavid          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS_FILES	= 	minishell.c \
 				prompt.c \
 				builtins/cd.c \
-				builtins/echo.c \
 				builtins/env.c \
 				builtins/export.c \
 				builtins/unset.c \
-				builtins/pwd.c \
+				builtins/exit.c\
+				builtins/echo.c\
+				builtins/pwd.c\
 				errors/ft_errors.c \
 				manage_data_structs/clean/ft_clean_string.c \
 				manage_data_structs/clean/ft_clean_t_data.c \
@@ -71,7 +72,14 @@ SRCS_FILES	= 	minishell.c \
 				parsing/lists/ft_lst_env_last.c \
 				parsing/lists/ft_lst_env_new.c \
 				parsing/lists/ft_lst_env_pop.c \
-				parsing/parsing.c
+				parsing/parsing.c \
+				exec/set_up_cmd.c\
+				exec/exec.c\
+				exec/close.c\
+				exec/error.c\
+				exec/free.c\
+				exec/redir.c\
+				exec/usefull.c
 				
 PREFIX	= srcs
 

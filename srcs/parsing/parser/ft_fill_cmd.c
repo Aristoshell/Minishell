@@ -6,11 +6,12 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/28 19:44:27 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/28 19:44:50 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 int	ft_fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info, bool first)
 {

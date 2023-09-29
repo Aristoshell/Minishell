@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_pass_when_quote(const char *str, int *i)
 {

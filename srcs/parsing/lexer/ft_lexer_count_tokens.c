@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 /* compte le nb de mots*/
 

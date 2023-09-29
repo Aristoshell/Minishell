@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   unset.c                                            :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/14 19:03:25 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
+/*   Created: 2023/09/19 16:48:36 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/09/29 16:03:03 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
-int	unset(t_envlist **env, char *key)
+int	bt_pwd(void)
 {
-	ft_lst_env_pop(env, key);
-	return (0);
+	char cwd[PATH_MAX];
+	
+	if (getcwd(cwd, PATH_MAX))
+	{
+		ft_putendl_fd(cwd, 1);
+		return (0);
+	}
+	return (1);
 }

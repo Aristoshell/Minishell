@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_clean_2d_array_struct.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/20 16:13:08 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/23 01:44:49 by marine           ###   ########.fr       */
+/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "minishell_louis.h"
 
 void	ft_clean_2d_array_struct(void ***array, void (*clean_data)(void *))
 {
