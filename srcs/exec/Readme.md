@@ -70,7 +70,16 @@ Mercredi :
 
 -	comprehension sur les signaux 
 
-A fair
+Jeudi :
+
+-	continuer cd stop car chose a modif apres merge
+
+Vendredi 
+
+-	Merge
+
+
+A faire
 
 - terminer cd (3/4h)
 	- Pourquoi les statics 
