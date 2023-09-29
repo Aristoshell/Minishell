@@ -1,2 +1,0 @@
-# Minishell
-test test test
