@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/29 16:37:39 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 17:48:20 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ typedef struct s_data
 }			t_data;
 
 //fonctions
-
+//hihi
 /* Create and Init */
 
 t_data		*ft_create_data(t_data *data, char **envp);
