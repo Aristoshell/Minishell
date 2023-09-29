@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:48:29 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 14:45:44 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:10:31 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "../header/minishell_louis.h"
+
 
 int	bt_echo(t_cmd **cmd_tab, int to_do)
 {

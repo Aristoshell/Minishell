@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   set_up_cmd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:42:36 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 17:58:39 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:10:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../header/minishell_louis.h"
+
 
 /*
 appellera le builtin voulu en fonction de la valeurs dans le champ cmd->type

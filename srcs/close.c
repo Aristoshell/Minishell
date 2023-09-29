@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   close.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:53:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/20 16:30:29 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:10:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../header/minishell_louis.h"
+
 
 void	close_pipes(t_pipe *pipes)
 {

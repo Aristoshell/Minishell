@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/10 10:36:51 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/27 19:43:46 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:10:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../header/minishell_louis.h"
+
 
 /*
 creation des arguments des listes qu'on vas utiliser

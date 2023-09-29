@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   usefull.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:59:05 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/27 18:03:47 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:10:09 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header/minishell.h"
+#include "../header/minishell_louis.h"
+
 
 /*
 retourne la taille du tableau de liste

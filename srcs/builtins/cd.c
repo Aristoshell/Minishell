@@ -3,28 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/19 16:47:22 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/21 18:03:34 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/09/29 15:10:31 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/minishell.h"
+#include "../header/minishell_louis.h"
 
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   cd.c                                               :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/19 16:47:22 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/19 16:48:23 by lmarchai         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
-#include "../../header/minishell.h"
 
 /*
 fonction get_env a modif un fois les deux codes link 
