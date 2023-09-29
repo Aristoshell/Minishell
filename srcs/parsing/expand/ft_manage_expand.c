@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:36:40 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/29 12:50:47 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 14:07:58 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,22 +81,26 @@ int	pass_dollar(const char *input, int *count, int *i, t_envlist *env)
 		*i +=1 ;
 	}
 	var_name = ft_substr(input, (unsigned int)tmp_start, (size_t)len_key);
-	printf("%s\n", var_name);
 	if (!var_name)
 		return (MEMORY_ERROR_NB);
 	if (!env)
 		return (FUNCTION_SUCCESS);//penser a free varname
 	else
 	{
-		printf("|%s| (%d), |%s| (%d)\n", var_name, (int)ft_strlen(var_name), env->val, (int)ft_strlen(env->val));
-		while (env->next && ft_strncmp((const char*)var_name, (const char*)env->val, ft_strlen(env->val)))
+		while (env && ft_strncmp((const char*)var_name, (const char*)env->key, ft_strlen(env->key)))
+		{
+			printf(GREEN"%s\n"NC, env->key);
+			printf("|%s| (%d), |%s| (%d)\n", var_name, (int)ft_strlen(var_name), env->key, (int)ft_strlen(env->key));
+			printf("env : %p\n", env->next);
+			printf("res comp : %d\n", ft_strncmp((const char*)var_name, (const char*)env->key, ft_strlen(env->key)));
 			env = env->next;
-		if (!env->next)
+		}
+		if (!env)
 			return(FUNCTION_SUCCESS);//penser a free varname
 		else
 		{
 			printf(BLUE"BONSOUAR PARIS\n"NC);
-			count += ft_strlen(env->val);
+			*count += ft_strlen(env->val);
 		}
 	}
 	
@@ -105,7 +109,7 @@ int	pass_dollar(const char *input, int *count, int *i, t_envlist *env)
 		// sinon on najoute rien
 	env = tmp_start_env;
 	free(var_name);
-	return (FUNCTION_SUCCESS);
+	return (*count);
 }
 
 int	count_exp_input_size(const char *input, t_envlist *env)
