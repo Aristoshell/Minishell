@@ -1,3 +1,9 @@
+**Pas encore gere, mais a faire ensuite**
+
+- redirections
+- expand
+- entre quotes
+
 
 **Composition commande**
 
@@ -28,10 +34,4 @@ boucle tant quon a fini le tableau
 
 	quand est ce que je check les ./ ???
 
-
-**Pas encore gere, mais a faire ensuite**
-
-- redirections
-- expand
-- entre quotes
 

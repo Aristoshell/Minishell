@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 20:35:39 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 12:28:19 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,7 @@ bool		ft_is_cmd_separator(char c);
 bool		ft_is_dollar(char c);
 
 /* Expand */
-bool		word_has_expand(const char *token_val);
+void		ft_manage_expand(const char *input, t_envlist *env);
 
 /* Envp  */
 char		*ft_get_val(char *line);

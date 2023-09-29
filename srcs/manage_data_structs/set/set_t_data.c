@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/28 20:37:52 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 12:29:25 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,43 +28,43 @@ void	ft_reinit_data(t_data *data)
 
 /* nouvelles fonction */
 
-void	ft_clean_data_tokens_tab(t_data *data)
-{
-	int	i;
-	t_cmd **tab;
+// void	ft_clean_data_tokens_tab(t_data *data)
+// {
+// 	int	i;
+// 	t_cmd **tab;
 
-	i = 0;
-	tab = data->cmd;
-	while (i < data->nb_command)
-	{
-		if (tab[i])
-		{
-			if (tab[i]->string)
-			{
-				free(tab[i]->string);
-				tab[i]->string = NULL;
-			}
-			tab[i]->type = type_default;
-			free((void*)tab[i]);
-			tab[i] = NULL;
-			i++;
-		}
-	}
-	free(tab);
-	tab = NULL;
-} //pas du tout fini mais flemme 
+// 	i = 0;
+// 	tab = data->cmd;
+// 	while (i < data->nb_command)
+// 	{
+// 		if (tab[i])
+// 		{
+// 			if (tab[i]->string)
+// 			{
+// 				free(tab[i]->string);
+// 				tab[i]->string = NULL;
+// 			}
+// 			tab[i]->type = type_default;
+// 			free((void*)tab[i]);
+// 			tab[i] = NULL;
+// 			i++;
+// 		}
+// 	}
+// 	free(tab);
+// 	tab = NULL;
+// } //pas du tout fini mais flemme 
 
 
-void	ft_clean_data_bis(t_data *data)
-{
-	if ((data))
-	{
-		data->current_cmd = 0;
-		data->nb_command = 0;
-		ft_clean_data_tokens_tab(data);
-	}
-	printf("t_data reset\n");
-}
+// void	ft_clean_data_bis(t_data *data)
+// {
+// 	if ((data))
+// 	{
+// 		data->current_cmd = 0;
+// 		data->nb_command = 0;
+// 		ft_clean_data_tokens_tab(data);
+// 	}
+// 	printf("t_data reset\n");
+// }
 
 /* fin*/
 
