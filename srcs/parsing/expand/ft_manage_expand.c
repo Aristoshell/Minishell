@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:36:40 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/29 14:22:33 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 17:51:15 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@
 bool	word_has_expand(const char *token_val)
 {
 	int		i;
-
+	int a =0;
+	(void)a;
 	i = 0;
 	while (token_val[i])
 	{
