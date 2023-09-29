@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/29 16:44:19 by madavid          ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
@@ -134,15 +123,11 @@ fonction gen_child qui vas modifier les fds dans les pipes puis fork
 et enfin appeler la fonction child process
 */
 
-t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i, int *status)
+t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
-	int		len_list;
 
-	len_list = strlen_list(cmd);
-	/*if (len_list == -1)
-		error(free_data)*/
-	if (len_list > 1)
+	if (data->nb_command > 1)
 	{
 		if (i == 0)
 		{
@@ -151,9 +136,9 @@ t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i, int *status)
 				//error(free_data)
 		}
 		else
-			pipes = new_pipes(pipes, i);	
+			pipes = new_pipes(pipes, data->current_cmd);	
 	}
-	if (cmd[i]->cmd_type != no && len_list == 1)
+	if (data->cmd[data->current_cmd]->cmd_type != no && len_list == 1)
 	{
 		pipes = handle_redirection(cmd[i], pipes);
 		handle_builtins(cmd, envp, i);
@@ -184,29 +169,26 @@ int	cross_array_list(t_data *data)
 {
 	int		i; //data->current_cmd
 	int		len_list; //data->nb_cmd
-	int		status; //data->exec_val
 	t_pipe	*pipe;
 
-	i = 0;
-	status = 0;
-	len_list = strlen_list(cmd);
-	if (len_list > 1)
+	data->current_cmd = 0;
+	if (data->nb_cmd > 1)
 	{
 		pipe = malloc(sizeof(t_pipe));
 		if (!pipe)
 			error_malloc();
 	}
-	while (i < len_list)
+	while (data->current_cmd < data->nb_cmd)
 	{
-		pipe = gen_child(cmd, pipe, envp, i, &status);
-		i++;
+		pipe = gen_child(data, pipe);
+		data->current_cmd++;
 	}
-	if (len_list > 1)
+	if (data->nb_cmd > 1)
 	{
 		close_pipes(pipe);
-		wait_childs(cmd);
+		wait_childs(data);
 	}
-	close_list_args(cmd, len_list);
-	free_list_args(cmd, pipe, len_list);
+	close_list_args(data);
+	free_list_args(data, pipe);
 	return ;
 }
