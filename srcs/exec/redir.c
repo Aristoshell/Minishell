@@ -56,8 +56,11 @@ t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 	return (pipes);
 }
 
-t_pipe	*handle_redirection(t_cmd *cmd, t_pipe *pipes)
+t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 {
+	t_cmd	*cmd;
+
+	cmd = data->cmd[data->current_cmd];
 	if (cmd->input == pipe_ || cmd->output == pipe_)
 	{
 		if (cmd->input == pipe_ && cmd->output != pipe_)

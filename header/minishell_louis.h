@@ -29,10 +29,10 @@ int		cross_array_list(t_data *data);
 t_pipe	*gen_child(t_data *data, t_pipe *pipes);
 t_pipe	*new_pipes(t_pipe *pipes, int i);
 void	wait_childs(t_cmd **cmd);
-int		child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i);
+int		child_process(t_data *data, t_pipe *pipes);
 
-t_pipe	*handle_redirection(t_cmd *cmd, t_pipe *pipes);
-void	handle_builtins(t_cmd **cmd, char **envp, int i);
+t_pipe	*handle_redirection(t_data *data, t_pipe *pipes);
+void	handle_builtins(t_data *data);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
 void	close_list_args(t_cmd **cmd, int len_list);

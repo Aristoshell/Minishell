@@ -24,18 +24,20 @@ on recup la variable d'env PATH que l'on vas split en fonction du char :
 on execute ensuite la commande voulue (sauf builtins)
 */
 
-int	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
+int	child_process(t_data *data, t_pipe *pipes)
 {
 	char	*exec;
 	char	*path_temp;
 	t_cmd	*cmd;
-	int		status;
+	char	**envp;
 
-	cmd = tab_cmd[i];
-	pipes = handle_redirection(cmd, pipes);
+	envp = NULL;
+	//envp = from_linked_list_to_array(data->envp);
+	cmd = data->cmd[data->current_cmd];
+	pipes = handle_redirection(data, pipes);
 	if (cmd->cmd_type != no)
 	{
-		handle_builtins(tab_cmd, envp, i);
+		handle_builtins(data);
 		exit(0);
 	}
 	path_temp = find_path(envp);
@@ -46,15 +48,15 @@ int	child_process(t_cmd **tab_cmd, t_pipe *pipes, char **envp, int i)
 	if (!cmd->cmd_args)
 	{
 		//si la commande est mauvais il faut free et close
-		status = -1;
+		data->exec_val = -1;
 		//recup la vraie val (ernno) ?
-		return (status);
+		return (data->exec_val);
 	}
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
-	status = -1;
+	data->exec_val = -1;
 	//recup la vraie val (ernno) ?
-	return (status);
+	return (data->exec_val);
 	//si execve fail il faut free et close
 }
 
@@ -129,7 +131,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 
 	if (data->nb_command > 1)
 	{
-		if (i == 0)
+		if (data->current_cmd == 0)
 		{
 			if (pipe(pipes->tube[1]) != 0)
 				error_pipe();
@@ -138,18 +140,18 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 		else
 			pipes = new_pipes(pipes, data->current_cmd);	
 	}
-	if (data->cmd[data->current_cmd]->cmd_type != no && len_list == 1)
+	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
-		pipes = handle_redirection(cmd[i], pipes);
-		handle_builtins(cmd, envp, i);
+		pipes = handle_redirection(data, pipes);
+		handle_builtins(data);
 		return (pipes);
 	}
 	pid = fork();
 	if (pid == -1)
 		error_fork();
 	if (pid == 0)
-		*status = child_process(cmd, pipes, envp, i);
-	cmd[i]->pid = pid;
+		data->exec_val = child_process(data, pipes);
+	data->cmd[data->current_cmd]->pid = pid;
 	return (pipes);
 }
 
@@ -167,28 +169,26 @@ free tout
 
 int	cross_array_list(t_data *data)
 {
-	int		i; //data->current_cmd
-	int		len_list; //data->nb_cmd
 	t_pipe	*pipe;
 
 	data->current_cmd = 0;
-	if (data->nb_cmd > 1)
+	if (data->nb_command > 1)
 	{
 		pipe = malloc(sizeof(t_pipe));
 		if (!pipe)
 			error_malloc();
 	}
-	while (data->current_cmd < data->nb_cmd)
+	while (data->current_cmd < data->nb_command)
 	{
 		pipe = gen_child(data, pipe);
 		data->current_cmd++;
 	}
-	if (data->nb_cmd > 1)
+	if (data->nb_command > 1)
 	{
 		close_pipes(pipe);
-		wait_childs(data);
+		wait_childs(data->cmd);
 	}
-	close_list_args(data);
-	free_list_args(data, pipe);
-	return ;
+	close_list_args(data->cmd, data->nb_command);
+	free_list_args(data->cmd, pipe, data->nb_command);
+	return (0);
 }

@@ -8,24 +8,25 @@ appellera le builtin voulu en fonction de la valeurs dans le champ cmd->type
 de la struct cmd
 */
 
-void	handle_builtins(t_cmd **cmd, char **envp, int i)
+void	handle_builtins(t_data *data)
 {
-	if (!envp)
-		return ;
-	if (cmd[i]->cmd_type == cmd_echo)
-		bt_echo(cmd, i);
-	if (cmd[i]->cmd_type == cmd_cd)
+	t_cmd	**cmd;
+
+	cmd = data->cmd;
+	if (cmd[data->current_cmd]->cmd_type == cmd_echo)
+		bt_echo(cmd, data->current_cmd);
+	if (cmd[data->current_cmd]->cmd_type == cmd_cd)
 		printf("builtin cd");
-	if (cmd[i]->cmd_type == cmd_pwd)
+	if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
 		bt_pwd();
-	if (cmd[i]->cmd_type == cmd_export)
+	if (cmd[data->current_cmd]->cmd_type == cmd_export)
 		printf("builtin export");
-	if (cmd[i]->cmd_type == cmd_unset)
+	if (cmd[data->current_cmd]->cmd_type == cmd_unset)
 		printf("builtin unset");
-	if (cmd[i]->cmd_type == cmd_env)
+	if (cmd[data->current_cmd]->cmd_type == cmd_env)
 		printf("builtin env");
-	if (cmd[i]->cmd_type == cmd_exit)
-		bt_exit(cmd, i);
+	if (cmd[data->current_cmd]->cmd_type == cmd_exit)
+		bt_exit(cmd, data->current_cmd);
 }
 
 /*
