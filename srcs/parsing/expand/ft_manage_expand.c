@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/26 16:36:40 by madavid           #+#    #+#             */
-/*   Updated: 2023/09/29 14:07:58 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 14:22:33 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,43 +70,26 @@ int	pass_dollar(const char *input, int *count, int *i, t_envlist *env)
 	int			tmp_start;
 	t_envlist	*tmp_start_env = env;
 	
+	if (!env)
+		return (FUNCTION_SUCCESS);//penser a free varname
 	//identifier le nom de la variable (en gros, tant quon na pas despace ou de $);//pendant ce temps la on i++ mais pas count
 	*i += 1;
 	tmp_start = *i;
 	len_key = 0;
 	while (input[*i] && !ft_is_dollar(input[*i]) && !ft_is_operator(input[*i]))
 	{
-		//printf("%c", input[*i]);
 		len_key++;
 		*i +=1 ;
 	}
 	var_name = ft_substr(input, (unsigned int)tmp_start, (size_t)len_key);
 	if (!var_name)
 		return (MEMORY_ERROR_NB);
+	// chercher la correspondance 
+	while (env && ft_strncmp((const char*)var_name, (const char*)env->key, ft_strlen(env->key)))
+		env = env->next;
 	if (!env)
-		return (FUNCTION_SUCCESS);//penser a free varname
-	else
-	{
-		while (env && ft_strncmp((const char*)var_name, (const char*)env->key, ft_strlen(env->key)))
-		{
-			printf(GREEN"%s\n"NC, env->key);
-			printf("|%s| (%d), |%s| (%d)\n", var_name, (int)ft_strlen(var_name), env->key, (int)ft_strlen(env->key));
-			printf("env : %p\n", env->next);
-			printf("res comp : %d\n", ft_strncmp((const char*)var_name, (const char*)env->key, ft_strlen(env->key)));
-			env = env->next;
-		}
-		if (!env)
-			return(FUNCTION_SUCCESS);//penser a free varname
-		else
-		{
-			printf(BLUE"BONSOUAR PARIS\n"NC);
-			*count += ft_strlen(env->val);
-		}
-	}
-	
-	//chercher dans la liste chainee env si on trouve la correspondance
-		// si oui, on ajoute la len de cette valeur a count
-		// sinon on najoute rien
+		return(FUNCTION_SUCCESS);//penser a free varname
+	*count += ft_strlen(env->val);
 	env = tmp_start_env;
 	free(var_name);
 	return (*count);
@@ -141,6 +124,6 @@ void	ft_manage_expand(const char *input, t_envlist *env)
 
 	input_size = ft_strlen(input);
 	expanded_input_size = count_exp_input_size(input, env);
-	printf("Taille normal : %d\n", input_size);
+	printf("Taille normal : %d |%s|\n", input_size, input);
 	printf("Taille expanded : %d\n", expanded_input_size);
 }
