@@ -15,8 +15,6 @@
 # include<unistd.h>
 # include<string.h>
 # include<limits.h>
-# include<readline/readline.h>
-# include<readline/history.h>
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -77,7 +75,7 @@ char	**gen_third_cmd(char **argv, int argc);
 
 int		strlen_list(t_cmd **cmd);
 
-void	cross_array_list(t_cmd *cmd[4], char **envp);
+void	cross_array_list(t_cmd **cmd, char **envp);
 t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i, int *status);
 t_pipe	*new_pipes(t_pipe *pipes, int i);
 void	wait_childs(t_cmd **cmd);

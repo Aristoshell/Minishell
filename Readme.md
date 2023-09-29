@@ -73,6 +73,9 @@ Mercredi :
 A fair
 
 - terminer cd (3/4h)
+	- Pourquoi les statics 
+	- gestion erreur
+	- 
 
 - coder les 4 types de signaux possible et les tester (1/2h)
 
