@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/21 01:58:51 by marine            #+#    #+#             */
-/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 16:14:07 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	ft_init_data(t_data *data)
 {
 	data->current_cmd = 0;
 	data->nb_command = 0;
+	data->exec_val = 0;
 }
 
 void	ft_reinit_data(t_data *data)

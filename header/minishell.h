@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/01 17:30:55 by marine            #+#    #+#             */
-/*   Updated: 2023/09/29 12:28:19 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 16:37:39 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct s_data
 	int			nb_command; // a sup apres louis
 	t_cmd		**cmd; // a sup apres louis
 	t_envlist	*envp; // a garder
+	int			exec_val;
 }			t_data;
 
 //fonctions

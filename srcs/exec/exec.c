@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/18 09:49:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/29 15:57:48 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 16:44:19 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,11 @@ attente des childs
 free tout
 */
 
-void	cross_array_list(t_cmd **cmd, char **envp)
+int	cross_array_list(t_data *data)
 {
-	int		i;
-	int		len_list;
-	int		status;
+	int		i; //data->current_cmd
+	int		len_list; //data->nb_cmd
+	int		status; //data->exec_val
 	t_pipe	*pipe;
 
 	i = 0;

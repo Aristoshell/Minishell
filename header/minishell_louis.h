@@ -6,7 +6,7 @@
 /*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/30 14:39:47 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/09/29 16:00:20 by madavid          ###   ########.fr       */
+/*   Updated: 2023/09/29 16:44:28 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ char	**gen_third_cmd(char **argv, int argc);
 
 int		strlen_list(t_cmd **cmd);
 
-void	cross_array_list(t_cmd **cmd, char **envp);
+int		cross_array_list(t_data *data);
 t_pipe	*gen_child(t_cmd **cmd, t_pipe *pipes, char **envp, int i, int *status);
 t_pipe	*new_pipes(t_pipe *pipes, int i);
 void	wait_childs(t_cmd **cmd);
