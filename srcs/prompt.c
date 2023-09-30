@@ -42,6 +42,6 @@ int	prompt(t_data *data)
 			//ft_reinit_data(data);
 		}
 	}
-	rl_clear_history();
+	clear_history();
 	return(FUNCTION_SUCCESS);
 }

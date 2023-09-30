@@ -194,7 +194,7 @@ bool		ft_is_cmd_separator(char c);
 bool		ft_is_dollar(char c);
 
 /* Expand */
-void		ft_manage_expand(const char *input, t_envlist *env);
+char	*ft_manage_expand(const char *input, t_envlist *env);
 
 /* Envp  */
 char		*ft_get_val(char *line);

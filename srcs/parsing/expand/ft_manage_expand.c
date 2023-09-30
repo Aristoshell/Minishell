@@ -57,6 +57,7 @@ int	ft_pass_dollar(const char *input, int *count, int *i, t_envlist *env)
 {
 	char		*var_name;
 	
+	var_name = NULL;
 	if (!env)
 		return (FUNCTION_SUCCESS);//penser a free varname
 	if (ft_get_expand_key(input, i, var_name) != FUNCTION_SUCCESS)
@@ -81,7 +82,7 @@ int	ft_count_exp_input_size(const char *input, t_envlist *env)
 		{
 			if (ft_is_dollar(input[i]) && !ft_is_space(input[i + 1]))
 			{
-				if (ft_pass_dollar(input, &count, &i, env) != FUNCTION_SUCCESS); // attention ici il faudra mettre data env a la place de NULL
+				if (ft_pass_dollar(input, &count, &i, env) != FUNCTION_SUCCESS) // attention ici il faudra mettre data env a la place de NULL
 					return (MEMORY_ERROR_NB);
 			}
 			else
@@ -91,13 +92,16 @@ int	ft_count_exp_input_size(const char *input, t_envlist *env)
 	return (count);
 }
 
-char	ft_manage_expand(const char *input, t_envlist *env) // a changer dans le .h
+char	*ft_manage_expand(const char *input, t_envlist *env) // a changer dans le .h
 {
 	int	input_size;
 	int	expanded_input_size;
 	char	*expanded; // a malloc
+
+	expanded = NULL;
 	input_size = ft_strlen(input);
 	expanded_input_size = ft_count_exp_input_size(input, env);
 	printf("Taille normal : %d |%s|\n", input_size, input);
 	printf("Taille expanded : %d\n", expanded_input_size);
+	return (expanded);
 }
