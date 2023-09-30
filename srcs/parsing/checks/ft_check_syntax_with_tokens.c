@@ -22,8 +22,6 @@ bool	ft_check_syntax_with_tokens(t_info info)
 				return (false);
 			else if ((prev == type_in || prev == type_out || prev == type_append || prev == type_heredoc) && curr == type_pipe)
 				return (false);
-			else
-				;
 		}
 		prev = curr;
 		i++;
