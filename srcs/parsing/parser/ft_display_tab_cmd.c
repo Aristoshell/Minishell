@@ -8,7 +8,7 @@ void	ft_display_tab_cmd(t_data data)
 	int	j;
 
 	i = 0;
-	while (i < data.nb_command)
+	while (i < data.nb_command + 1)
 	{
 		printf(BLUE"cmd %d\n"NC, i);
 		j = 0;

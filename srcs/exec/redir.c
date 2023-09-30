@@ -18,13 +18,16 @@ l'entree standard dans tout les cas possible
 grace a dup2 exactement comme on le fait dans split
 */
 
-t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
+t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes, int nbr_cmd)
 {
-	if (dup2(cmd->fd_in, 0) == -1 \
-		|| dup2(cmd->fd_out, 1) == -1)
+	if (dup2(cmd->input, 0) == -1 \
+		|| dup2(cmd->output, 1) == -1)
 		error_dup2();
-	close (pipes->tube[0][1]);
-	close (pipes->tube[1][0]);
+	if (nbr_cmd > 0)
+	{
+		close (pipes->tube[0][1]);
+		close (pipes->tube[1][0]);
+	}
 	return (pipes);
 }
 
@@ -41,7 +44,7 @@ t_pipe	*redir_pipe_to_pipe(t_pipe *pipes)
 t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 {
 	if (dup2(pipes->tube[0][0], 0) == -1 \
-		|| dup2(cmd->fd_out, 1) == -1)
+		|| dup2(cmd->output, 1) == -1)
 		error_dup2();
 	close(pipes->tube[0][1]);
 	return (pipes);
@@ -50,7 +53,7 @@ t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 {
 	if (dup2(pipes->tube[1][1], 1) == -1 \
-		|| dup2(cmd->fd_in, 0) == -1)
+		|| dup2(cmd->input, 0) == -1)
 		error_dup2();
 	close(pipes->tube[1][0]);
 	return (pipes);
@@ -69,5 +72,5 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 			return (redir_fd_to_pipe(cmd, pipes));
 		return (redir_pipe_to_pipe(pipes));
 	}
-	return (redir_fd_to_fd(cmd, pipes));
+	return (redir_fd_to_fd(cmd, pipes, data->current_cmd));
 }

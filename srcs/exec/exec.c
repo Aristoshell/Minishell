@@ -24,6 +24,65 @@ on recup la variable d'env PATH que l'on vas split en fonction du char :
 on execute ensuite la commande voulue (sauf builtins)
 */
 
+int	ft_envlstsize(t_envlist *lst)
+{
+	int	i;
+
+	i = 0;
+	while (lst != NULL)
+	{
+		lst = lst->next;
+		i++;
+	}
+	return (i);
+}
+
+char	*join_lign_env(t_envlist *list)
+{
+	size_t		i;
+	size_t		j;
+	char	*ret;
+
+	ret = malloc(sizeof(char) * ft_strlen(list->key) + ft_strlen(list->val) + 2);
+	i = 0;
+	j = 0;
+	while (i < ft_strlen(list->key))
+	{
+		ret[i] = list->key[i];
+		i++;
+	}
+	ret[i] = '=';
+	i++;
+	while (j < ft_strlen(list->val))
+	{
+		ret[i + j] = list->val[j];
+		j++;
+	}
+	ret[i + j] = '\0';
+	return (ret);
+}
+
+char	**list_to_array(t_envlist *list)
+{
+	int	i;
+	int j;
+	char **ret;
+
+	i = ft_envlstsize(list);
+	ret = ft_calloc(i + 1, sizeof(char *));
+	if (!ret)
+		return (NULL);
+	j = 0;
+	while(j < i)
+	{
+		ret[j] = join_lign_env(list);
+		list = list->next;
+		j++;
+	}
+	ret[j] = NULL;
+	return (ret);
+}
+
 int	child_process(t_data *data, t_pipe *pipes)
 {
 	char	*exec;
@@ -31,8 +90,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 	char	**envp;
 
-	envp = NULL;
-	//envp = from_linked_list_to_array(data->envp);
+	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
 	if (cmd->cmd_type != no)
@@ -52,6 +110,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 		//recup la vraie val (ernno) ?
 		return (data->exec_val);
 	}
+	ft_display_tab_cmd(*data);
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
 	data->exec_val = -1;
@@ -189,6 +248,6 @@ int	cross_array_list(t_data *data)
 		wait_childs(data->cmd);
 	}
 	close_list_args(data->cmd, data->nb_command);
-	free_list_args(data->cmd, pipe, data->nb_command);
+	//free_list_args(data->cmd, pipe, data->nb_command);
 	return (0);
 }
