@@ -164,7 +164,7 @@ bool		ft_check_syntax_with_tokens(t_info info);
 /* LEXER */
 int				ft_lexer(const char *input, t_info *info);
 char			*get_token_val(const char *str, int *i);
-t_token_type	get_token_type(const char *token);t
+t_token_type	get_token_type(const char *token);
 
 /* PARSEUR */
 int		ft_parser(t_info *info, t_data *data);
