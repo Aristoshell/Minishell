@@ -18,12 +18,8 @@ void	close_list_args(t_cmd **cmd, int len_list)
 	i = 0;
 	while (i < len_list)
 	{
-		if (cmd[i]->input == append_ || cmd[i]->input == file_
-			|| cmd[i]->input == heredoc_)
-			close(cmd[i]->fd_in);
-		if (cmd[i]->output == append_ || cmd[i]->output == file_
-			|| cmd[i]->output == heredoc_)
-			close(cmd[i]->fd_out);
+		close(cmd[i]->input);
+		close(cmd[i]->output);
 		i++;
 	}
 }
