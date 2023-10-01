@@ -110,7 +110,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 		//recup la vraie val (ernno) ?
 		return (data->exec_val);
 	}
-	ft_display_tab_cmd(*data);
+	//ft_display_tab_cmd(*data);
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
 	data->exec_val = -1;
