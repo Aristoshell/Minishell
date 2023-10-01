@@ -3,15 +3,15 @@
 #include "minishell_louis.h"
 
 
-void	wait_childs(t_cmd **cmd)
+void	wait_childs(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (cmd[i])
+	while (i < data->nb_command)
 	{
-		if (cmd[i]->pid != -1)
-			waitpid(cmd[i]->pid, 0, 0);
+		if (data->cmd[i]->pid != -1)
+			waitpid(data->cmd[i]->pid, 0, 0);
 		i++;
 	}
 }
@@ -229,7 +229,11 @@ free tout
 int	cross_array_list(t_data *data)
 {
 	t_pipe	*pipe;
+	int		temp_stdin;
+	int		temp_stdout;
 
+	temp_stdin = dup(0);
+	temp_stdout = dup(1);
 	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
@@ -243,11 +247,9 @@ int	cross_array_list(t_data *data)
 		data->current_cmd++;
 	}
 	if (data->nb_command > 1)
-	{
 		close_pipes(pipe);
-		wait_childs(data->cmd);
-	}
-	close_list_args(data->cmd, data->nb_command);
+	wait_childs(data);
+	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	//free_list_args(data->cmd, pipe, data->nb_command);
 	return (0);
 }
