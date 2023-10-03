@@ -15,7 +15,7 @@ void	error_management(t_cmd *cmd, char *str, int exit_val)
 
 void	error_dup2(void)
 {
-	printf("error dup2");
+	printf("erno : %sn",strerror(errno));
 	exit(1);
 }
 

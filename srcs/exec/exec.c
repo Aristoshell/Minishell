@@ -90,6 +90,8 @@ int	child_process(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 	char	**envp;
 
+	//printf("%d 0 - %d %d\n",data->current_cmd, pipes->tube[0][0], pipes->tube[0][1]);
+	//printf("%d 1 - %d %d\n",data->current_cmd, pipes->tube[1][0], pipes->tube[1][1]);
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
@@ -105,14 +107,15 @@ int	child_process(t_data *data, t_pipe *pipes)
 		cmd->path_cmd = NULL;
 	if (!cmd->cmd_args)
 	{
+		printf("errorcmd\n");
 		//si la commande est mauvais il faut free et close
 		data->exec_val = -1;
 		//recup la vraie val (ernno) ?
 		return (data->exec_val);
 	}
-	//ft_display_tab_cmd(*data);
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
+	printf("errorcmd\n");
 	data->exec_val = -1;
 	//recup la vraie val (ernno) ?
 	return (data->exec_val);
@@ -167,7 +170,7 @@ apres appel :
 
 t_pipe	*new_pipes(t_pipe *pipes, int i)
 {
-	if (i != 1)
+	if (i > 1)
 	{
 		close(pipes->tube[0][0]);
 		close(pipes->tube[0][1]);
@@ -188,23 +191,18 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
 
-	if (data->nb_command > 1)
-	{
-		if (data->current_cmd == 0)
-		{
-			if (pipe(pipes->tube[1]) != 0)
-				error_pipe();
-				//error(free_data)
-		}
-		else
-			pipes = new_pipes(pipes, data->current_cmd);	
-	}
+	if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 1))
+		data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
+	//if (data->current_cmd == 2)
+		// ft_display_tab_cmd(*data);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
 		handle_builtins(data);
 		return (pipes);
 	}
+	if (data->nb_command > 2 && data->current_cmd >= 1)
+		pipes = new_pipes(pipes, data->current_cmd);
 	pid = fork();
 	if (pid == -1)
 		error_fork();
@@ -228,28 +226,32 @@ free tout
 
 int	cross_array_list(t_data *data)
 {
-	t_pipe	*pipe;
+	t_pipe	*pipe_;
 	int		temp_stdin;
 	int		temp_stdout;
 
 	temp_stdin = dup(0);
 	temp_stdout = dup(1);
-	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
-		pipe = malloc(sizeof(t_pipe));
-		if (!pipe)
+		pipe_ = malloc(sizeof(t_pipe));
+		if (!pipe_)
 			error_malloc();
+
+		if (pipe(pipe_->tube[1]) != 0)
+			error_pipe();
+			//error(free_data)
 	}
 	while (data->current_cmd < data->nb_command)
 	{
-		pipe = gen_child(data, pipe);
+		pipe_ = gen_child(data, pipe_);
 		data->current_cmd++;
 	}
-	if (data->nb_command > 1)
-		close_pipes(pipe);
+	if(data->nb_command > 1)
+		close_pipes(data, pipe_);
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
-	//free_list_args(data->cmd, pipe, data->nb_command);
+	close(temp_stdin);
+	close(temp_stdout);
 	return (0);
 }

@@ -18,21 +18,24 @@ l'entree standard dans tout les cas possible
 grace a dup2 exactement comme on le fait dans split
 */
 
-t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes, int nbr_cmd)
+t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
 {
-	if (dup2(cmd->input, 0) == -1 \
-		|| dup2(cmd->output, 1) == -1)
-		error_dup2();
-	if (nbr_cmd > 0)
+	if (cmd->input != stdin_)
 	{
-		close (pipes->tube[0][1]);
-		close (pipes->tube[1][0]);
+		if (dup2(cmd->fd_in, 0) == -1)
+			error_dup2();
+	}
+	if (cmd->output != stdout_)
+	{
+		if (dup2(cmd->fd_out, 1) == -1)
+			error_dup2();
 	}
 	return (pipes);
 }
 
 t_pipe	*redir_pipe_to_pipe(t_pipe *pipes)
 {
+
 	if (dup2(pipes->tube[0][0], 0) == -1 \
 		|| dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();
@@ -43,8 +46,12 @@ t_pipe	*redir_pipe_to_pipe(t_pipe *pipes)
 
 t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 {
-	if (dup2(pipes->tube[0][0], 0) == -1 \
-		|| dup2(cmd->output, 1) == -1)
+	if (cmd->output != stdout_)
+	{
+		if (dup2(cmd->fd_out, 1) == -1)
+			error_dup2();
+	}
+	if (dup2(pipes->tube[0][0], 0) == -1)
 		error_dup2();
 	close(pipes->tube[0][1]);
 	return (pipes);
@@ -52,8 +59,12 @@ t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 
 t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 {
-	if (dup2(pipes->tube[1][1], 1) == -1 \
-		|| dup2(cmd->input, 0) == -1)
+	if (cmd->input != stdin_)
+	{
+		if (dup2(cmd->fd_in, 0) == -1)
+			error_dup2();
+	}
+	if (dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();
 	close(pipes->tube[1][0]);
 	return (pipes);
@@ -64,6 +75,12 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 
 	cmd = data->cmd[data->current_cmd];
+	if(cmd->input == stdin_ && cmd->output == stdout_)
+		return (pipes);
+	else if (cmd->input == file_ || cmd->output == file_)
+		printf("open file\n");
+	else if (cmd->input == file_)
+		printf("open heredoc\n");
 	if (cmd->input == pipe_ || cmd->output == pipe_)
 	{
 		if (cmd->input == pipe_ && cmd->output != pipe_)
@@ -72,5 +89,5 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 			return (redir_fd_to_pipe(cmd, pipes));
 		return (redir_pipe_to_pipe(pipes));
 	}
-	return (redir_fd_to_fd(cmd, pipes, data->current_cmd));
+	return (redir_fd_to_fd(cmd, pipes));
 }
