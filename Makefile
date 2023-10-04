@@ -69,6 +69,7 @@ SRCS_FILES	= 	minishell.c \
 				exec/redir.c\
 				exec/usefull.c\
 				exec/heredoc.c\
+				exec/signals.c
 				
 PREFIX	= srcs
 
@@ -129,6 +130,7 @@ clean:
 	${MAKE} -sC ${LIBFT_DIR} clean
 	${RM} ${OBJS}
 	${RM} ${DEPS}
+	${RM} *.seed ${RM} */*.seed
 	echo "${GREEN}Done 💅${NC}"
 
 

@@ -52,3 +52,6 @@ void	error_pipe(void);
 void	error_dup2(void);
 void	error_malloc(void);
 void	error_fork(void);
+
+__sighandler_t		handle_signals_heredoc(void);
+int		heredoc(char *limiter, t_data *data);

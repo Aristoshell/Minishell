@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/04 21:29:44 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/04 23:11:56 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,22 @@ int	heredoc2(char *limiter, int fd)
 {
 	char	buf[1];
 	char	*lign;
+	long	sig;
 
 	buf[0] = 0;
 	while (1)
 	{
+		sig = 0;
+		sig = (long)handle_signals_heredoc();
 		lign = "";
 		write(1, "heredoc> ", 10);
-		while (buf[0] != '\n')
+		while (buf[0] != '\n' && sig != 0)
 		{
 			read(0, buf, 1);
 			lign = add_char(lign, buf[0]);
 		}
-		if (ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
-			&& lign[ft_strlen(limiter)] == '\n')
+		if ((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
+			&& lign[ft_strlen(limiter)] == '\n') || sig != 0)
 			return (free(lign), fd);
 		else
 		{
