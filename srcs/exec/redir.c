@@ -22,6 +22,7 @@ t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
 {
 	if (cmd->input != stdin_)
 	{
+		printf("%d\n",cmd->fd_in);
 		if (dup2(cmd->fd_in, 0) == -1)
 			error_dup2();
 	}
@@ -79,8 +80,6 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 		return (pipes);
 	else if (cmd->input == file_ || cmd->output == file_)
 		printf("open file\n");
-	else if (cmd->input == file_)
-		printf("open heredoc\n");
 	if (cmd->input == pipe_ || cmd->output == pipe_)
 	{
 		if (cmd->input == pipe_ && cmd->output != pipe_)

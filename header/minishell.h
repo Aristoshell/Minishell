@@ -230,4 +230,6 @@ int			unset(t_envlist **env, char *key);
 int			export(t_envlist **env, char *line);
 void		display_export(t_envlist *env);
 
+int			heredoc(char *limiter, t_data *data);
+
 #endif

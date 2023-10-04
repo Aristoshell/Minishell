@@ -191,8 +191,13 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
 
-	if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 1))
-		data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
+	data->cmd[0]->input = heredoc_;
+	if (data->cmd[data->current_cmd]->input == heredoc_)
+	{
+		data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
+	}
+	//if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
+		//data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
 	//if (data->current_cmd == 2)
 		// ft_display_tab_cmd(*data);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)

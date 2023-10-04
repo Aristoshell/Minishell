@@ -67,7 +67,8 @@ SRCS_FILES	= 	minishell.c \
 				exec/error.c\
 				exec/free.c\
 				exec/redir.c\
-				exec/usefull.c
+				exec/usefull.c\
+				exec/heredoc.c\
 				
 PREFIX	= srcs
 
@@ -140,5 +141,8 @@ fclean: clean
 re : fclean
 	${MAKE}
 
-.PHONY: re fclean all
+seed :
+	${RM} *.seed ${RM} */*.seed
+
+.PHONY: re fclean all seed
 .SILENT:
