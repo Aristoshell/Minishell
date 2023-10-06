@@ -2,19 +2,23 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
+int glb = 0;
 
 void	wait_childs(t_data *data)
 {
 	int	i;
+	int status;
 
 	i = 0;
 	while (i < data->nb_command)
 	{
 		if (data->cmd[i]->pid != -1)
-			waitpid(data->cmd[i]->pid, 0, 0);
+			waitpid(data->cmd[i]->pid, &status, 0);
 		i++;
 	}
-}
+	data->exec_val = WEXITSTATUS(status);
+	printf("$? ->%d\n",data->exec_val);
+} 
 
 /*
 process du child une fois fork
@@ -92,6 +96,10 @@ int	child_process(t_data *data, t_pipe *pipes)
 
 	//printf("%d 0 - %d %d\n",data->current_cmd, pipes->tube[0][0], pipes->tube[0][1]);
 	//printf("%d 1 - %d %d\n",data->current_cmd, pipes->tube[1][0], pipes->tube[1][1]);
+	if (data->cmd[data->current_cmd]->input == heredoc_)
+		data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
+	if (data->cmd[data->current_cmd]->fd_in == -1)
+		exit(130);
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
@@ -107,19 +115,13 @@ int	child_process(t_data *data, t_pipe *pipes)
 		cmd->path_cmd = NULL;
 	if (!cmd->cmd_args)
 	{
-		printf("errorcmd\n");
-		//si la commande est mauvais il faut free et close
-		data->exec_val = -1;
-		//recup la vraie val (ernno) ?
-		return (data->exec_val);
+		printf("error_cmd\n");
+		exit(1);
 	}
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
 	printf("errorcmd\n");
-	data->exec_val = -1;
-	//recup la vraie val (ernno) ?
-	return (data->exec_val);
-	//si execve fail il faut free et close
+	exit(1);
 }
 
 /*
@@ -134,7 +136,7 @@ envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];ore a leur valeur d'initialisation
 tandis que les fd du tube [1] sont eux a des valeurs reel car on les a utilises
 dans le first child
-
+fd_in
 apres appel :
 [0][0] --> 5
 [0][1] --> 6
@@ -165,8 +167,12 @@ apres appel :
 
 t_pipe	*new_pipes(t_pipe *pipes, int i)
 {
-	if (i > 1)envp = list_to_array(data->envp);
-	cmd = data->cmd[data->current_cmd];[0];
+	if (i > 1)
+	{
+		close(pipes->tube[0][0]);
+		close(pipes->tube[0][1]);
+	}
+	pipes->tube[0][0] = pipes->tube[1][0];
 	pipes->tube[0][1] = pipes->tube[1][1];
 	if (pipe(pipes->tube[1]) != 0)
 		error_pipe();
@@ -183,20 +189,17 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	pid_t	pid;
 
 	data->cmd[0]->input = heredoc_;
-	if (data->cmd[data->current_cmd]->input == heredoc_)
-		data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
-	//if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
-		//data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
-	//if (data->current_cmd == 2)
-		// ft_display_tab_cmd(*data);
+	if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
+		data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
+	if (data->current_cmd == 1)
+		ft_display_tab_cmd(*data);
+	if (data->nb_command > 1 && data->current_cmd >= 1)
+		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
 		handle_builtins(data);
-		return (pipes);
 	}
-	if (data->nb_command > 2 && data->current_cmd >= 1)
-		pipes = new_pipes(pipes, data->current_cmd);
 	pid = fork();
 	if (pid == -1)
 		error_fork();
@@ -211,9 +214,8 @@ ma partie commence vraiment ici (fonction que tu appelera)
 cmd est un t_cmd** (pour les tests je me suis limite a 3 commandes)
 il faudras quil se termine par un /0
 
-declaration des deux pipes qui nous serviront ensuite
-on parcours le tableau de liste et on apelle la fonction gen child
-close les pipes
+declaration des deux pipes qu2
+1
 attente des childs
 free tout
 */
@@ -239,6 +241,8 @@ int	cross_array_list(t_data *data)
 	while (data->current_cmd < data->nb_command)
 	{
 		pipe_ = gen_child(data, pipe_);
+		if (pipe_ == NULL)
+			return (0);
 		data->current_cmd++;
 	}
 	if(data->nb_command > 1)

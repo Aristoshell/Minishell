@@ -102,7 +102,7 @@ typedef struct s_cmd
 {
 	pid_t				pid;
 	char				**cmd_args;
-	t_builtin			cmd_type;
+	t_builtin			cmd_type;MINISHELL_H
 	char				**path_cmd;
 	t_in_out			input;
 	t_in_out			output;

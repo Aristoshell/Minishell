@@ -1,3 +1,6 @@
+#ifndef MINISHELL_LOUIS_H
+# define MINISHELL_LOUIS_H
+
 # include<stdio.h>
 # include<stdlib.h>
 # include<unistd.h>
@@ -9,6 +12,8 @@
 # include <fcntl.h>
 # include <sys/wait.h>
 # include <stddef.h>
+
+extern int glb;
 
 typedef struct s_pipe
 {
@@ -53,5 +58,6 @@ void	error_dup2(void);
 void	error_malloc(void);
 void	error_fork(void);
 
-__sighandler_t		handle_signals_heredoc(void);
+void    handle_signals_heredoc();
 int		heredoc(char *limiter, t_data *data);
+#endif

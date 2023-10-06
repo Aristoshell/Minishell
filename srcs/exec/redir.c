@@ -52,7 +52,10 @@ t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 			error_dup2();
 	}
 	if (dup2(pipes->tube[0][0], 0) == -1)
+	{
+		printf("1\n");
 		error_dup2();
+	}
 	close(pipes->tube[0][1]);
 	return (pipes);
 }
@@ -65,7 +68,10 @@ t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 			error_dup2();
 	}
 	if (dup2(pipes->tube[1][1], 1) == -1)
+	{
+		printf("1\n");
 		error_dup2();
+	}
 	close(pipes->tube[1][0]);
 	return (pipes);
 }

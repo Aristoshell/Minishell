@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/06 11:27:35 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/06 21:49:35 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,13 +115,12 @@ int	heredoc2(char *limiter, int fd)
 	char	*lign;
 
 	buf[0] = 0;
+	handle_signals_heredoc();
 	write(1, "heredoc> ", 10);
 	while (1)
 	{
-		handle_signals_heredoc();
 		lign = "";
-		
-		while (buf[0] != '\n')
+		while (buf[0] != '\n' && glb != 130)
 		{
 			read(0, buf, 1);
 			lign = add_char(lign, buf[0]);
@@ -131,9 +130,11 @@ int	heredoc2(char *limiter, int fd)
 				printf("warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
 				break ;
 			}
+			if (glb == 130)
+				return (-1);
 		}
 		if (((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
-			&& lign[ft_strlen(limiter)] == '\n') || buf[0] == '\0'))
+			&& lign[ft_strlen(limiter)] == '\n') /*|| buf[0] == '\0'*/))
 		{
 			return (free(lign), fd);
 		}
@@ -163,7 +164,8 @@ int	heredoc(char *limiter, t_data *data)
 	if (!lign)
 		return (free(lign), -1);
 	fd = open(lign, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	heredoc2(limiter, fd);
+	if (heredoc2(limiter, fd) == -1)
+		return (-1);
 	close(fd);
 	fd = open(lign, O_RDWR);
 	return (free(lign), fd);
