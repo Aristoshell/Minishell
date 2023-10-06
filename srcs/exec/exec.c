@@ -130,13 +130,8 @@ Exemple 1 cas du premier mid child :
 
 les fd sont initialiser a -2
 avant appel de la fonction new_pipe :
-
-[0][0] --> -2
-[0][1] --> -2
-[1][0] -->  5
-[1][1] -->  6
-
-On voit que les fd du tube [0] sont encore a leur valeur d'initialisation
+envp = list_to_array(data->envp);
+	cmd = data->cmd[data->current_cmd];ore a leur valeur d'initialisation
 tandis que les fd du tube [1] sont eux a des valeurs reel car on les a utilises
 dans le first child
 
@@ -170,12 +165,8 @@ apres appel :
 
 t_pipe	*new_pipes(t_pipe *pipes, int i)
 {
-	if (i > 1)
-	{
-		close(pipes->tube[0][0]);
-		close(pipes->tube[0][1]);
-	}
-	pipes->tube[0][0] = pipes->tube[1][0];
+	if (i > 1)envp = list_to_array(data->envp);
+	cmd = data->cmd[data->current_cmd];[0];
 	pipes->tube[0][1] = pipes->tube[1][1];
 	if (pipe(pipes->tube[1]) != 0)
 		error_pipe();
@@ -193,9 +184,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 
 	data->cmd[0]->input = heredoc_;
 	if (data->cmd[data->current_cmd]->input == heredoc_)
-	{
 		data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
-	}
 	//if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
 		//data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
 	//if (data->current_cmd == 2)

@@ -22,7 +22,6 @@ t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
 {
 	if (cmd->input != stdin_)
 	{
-		printf("%d\n",cmd->fd_in);
 		if (dup2(cmd->fd_in, 0) == -1)
 			error_dup2();
 	}

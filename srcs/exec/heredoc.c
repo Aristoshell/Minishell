@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/04 23:11:56 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/06 11:27:35 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,29 +113,37 @@ int	heredoc2(char *limiter, int fd)
 {
 	char	buf[1];
 	char	*lign;
-	long	sig;
 
 	buf[0] = 0;
+	write(1, "heredoc> ", 10);
 	while (1)
 	{
-		sig = 0;
-		sig = (long)handle_signals_heredoc();
+		handle_signals_heredoc();
 		lign = "";
-		write(1, "heredoc> ", 10);
-		while (buf[0] != '\n' && sig != 0)
+		
+		while (buf[0] != '\n')
 		{
 			read(0, buf, 1);
 			lign = add_char(lign, buf[0]);
+			if (buf[0] == '\0')
+			{
+				printf("\n");
+				printf("warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
+				break ;
+			}
 		}
-		if ((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
-			&& lign[ft_strlen(limiter)] == '\n') || sig != 0)
+		if (((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
+			&& lign[ft_strlen(limiter)] == '\n') || buf[0] == '\0'))
+		{
 			return (free(lign), fd);
+		}
 		else
 		{
 			write(fd, lign, ft_strlen(lign));
 			buf[0] = '\0';
 		}
 		free(lign);
+		write(1, "heredoc> ", 10);
 	}
 	return (free(lign), fd);
 }
@@ -158,6 +166,5 @@ int	heredoc(char *limiter, t_data *data)
 	heredoc2(limiter, fd);
 	close(fd);
 	fd = open(lign, O_RDWR);
-	printf("%d\n",fd);
 	return (free(lign), fd);
 }
