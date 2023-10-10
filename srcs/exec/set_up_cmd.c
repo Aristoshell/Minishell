@@ -16,7 +16,7 @@ void	handle_builtins(t_data *data)
 	if (cmd[data->current_cmd]->cmd_type == cmd_echo)
 		bt_echo(cmd, data->current_cmd);
 	if (cmd[data->current_cmd]->cmd_type == cmd_cd)
-		printf("builtin cd");
+		bt_cd(data);
 	if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
 		bt_pwd();
 	if (cmd[data->current_cmd]->cmd_type == cmd_export)

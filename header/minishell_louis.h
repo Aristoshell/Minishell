@@ -51,6 +51,7 @@ void	bt_exit(t_cmd **cmd, int i);
 
 int		bt_echo(t_cmd **cmd_tab, int to_do);
 int		bt_pwd(void);
+int		bt_cd(t_data *data);
 
 void	error_management(t_cmd *cmd, char *str, int exit_val);
 void	error_pipe(void);
@@ -60,4 +61,7 @@ void	error_fork(void);
 
 void    handle_signals_heredoc();
 int		heredoc(char *limiter, t_data *data);
+
+int		ft_envlstsize(t_envlist *lst);
+char	**list_to_array(t_envlist *list);
 #endif

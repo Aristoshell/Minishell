@@ -94,12 +94,10 @@ int	child_process(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 	char	**envp;
 
-	//printf("%d 0 - %d %d\n",data->current_cmd, pipes->tube[0][0], pipes->tube[0][1]);
-	//printf("%d 1 - %d %d\n",data->current_cmd, pipes->tube[1][0], pipes->tube[1][1]);
-	if (data->cmd[data->current_cmd]->input == heredoc_)
-		data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
-	if (data->cmd[data->current_cmd]->fd_in == -1)
-		exit(130);
+	//if (data->cmd[data->current_cmd]->input == heredoc_)
+	//	data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
+	//if (data->cmd[data->current_cmd]->fd_in == -1)
+	//	exit(130);
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
@@ -188,17 +186,19 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
 
-	data->cmd[0]->input = heredoc_;
-	if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
-		data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
-	if (data->current_cmd == 1)
-		ft_display_tab_cmd(*data);
+	//data->cmd[0]->input = heredoc_;
+	//if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
+	//	data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
+	//if (data->current_cmd == 1)
+	// ft_display_tab_cmd(*data);
+	data->cmd[data->current_cmd]->cmd_type = 2;
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
 		handle_builtins(data);
+		return (pipes);
 	}
 	pid = fork();
 	if (pid == -1)
