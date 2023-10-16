@@ -2,8 +2,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
-
 int	ft_isnumber(char *str)
 {
 	int i;
@@ -22,12 +20,12 @@ int	ft_isnumber(char *str)
 	return (1);
 }
 
-void	bt_exit(t_cmd **cmd, int i)
+void	bt_exit(t_data *data, int i)
 {
 	int	exit_val;
 	t_cmd *built_cmd;
 
-	built_cmd = cmd[i];
+	built_cmd = data->cmd[i];
 	exit_val = 0;
 	if (!built_cmd->cmd_args[1])
 	{
@@ -38,7 +36,7 @@ void	bt_exit(t_cmd **cmd, int i)
 	{
 		if (built_cmd->cmd_args[2] != NULL)
 		{
-			//set la value de retour a 1
+			exit_val = 1;
 			printf("exit: too many arguments\n");
 			return ;
 		}

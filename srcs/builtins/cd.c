@@ -45,7 +45,16 @@ int update_env(t_envlist *envp, char *old_pwd)
     getcwd(pwd, PATH_MAX);
     while(i < j)
     {
-        //if (strncmp())
+        if (ft_strncmp(envp->key, "OLDPWD", 7) == 0)
+        {
+            free(envp->val);
+            envp->val = ft_strdup(pwd);
+        }
+        if (ft_strncmp(envp->key, "PWD", 4) == 0)
+        {
+            free(envp->val);
+            envp->val = ft_strdup(pwd);
+        }
         envp = envp->next;
         i++;
     }
@@ -72,6 +81,7 @@ int    go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
         update_env(envp, cwd);
         return (1);
     }
+    update_env(envp, cwd);
     return (0);
 }
 

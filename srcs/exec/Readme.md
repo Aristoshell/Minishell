@@ -88,3 +88,75 @@ A faire
 
 - coder les 4 types de signaux possible et les tester (1/2h)
 
+Bien sûr, voici le code précédent traduit en pseudo-code :
+
+```plaintext
+Structure t_envlist:
+    Clé (key)
+    Valeur (val)
+    Drapeau (flag)
+    Indice (index)
+    Pointeur vers le prochain élément (next)
+
+Fonction de comparaison compareNodes(node1, node2):
+    Si node1.key < node2.key OU (node1.key == node2.key ET node1.val < node2.val) Alors
+        Retourner un nombre négatif
+    Sinon Si node1.key == node2.key ET node1.val == node2.val Alors
+        Retourner 0
+    Sinon
+        Retourner un nombre positif
+
+Fonction de tri sortLinkedList(head):
+    Si head est NULL OU head.next est NULL Alors
+        Retourner head  # La liste est déjà triée
+    Fin Si
+
+    middle = head
+    fast = head.next
+    Tant que fast n'est pas NULL Faire
+        fast = fast.next
+        Si fast n'est pas NULL Alors
+            fast = fast.next
+            middle = middle.next
+        Fin Si
+    Fin Tant Que
+
+    secondHalf = middle.next
+    middle.next = NULL
+
+    sortedFirstHalf = sortLinkedList(head)
+    sortedSecondHalf = sortLinkedList(secondHalf)
+
+    Retourner merge(sortedFirstHalf, sortedSecondHalf)
+
+Fonction de fusion merge(list1, list2):
+    Si list1 est NULL Alors
+        Retourner list2
+    Sinon Si list2 est NULL Alors
+        Retourner list1
+    Sinon Si compareNodes(list1, list2) <= 0 Alors
+        list1.next = merge(list1.next, list2)
+        Retourner list1
+    Sinon
+        list2.next = merge(list1, list2.next)
+        Retourner list2
+    Fin Si
+
+Fonction d'affichage printList(head):
+    Tant que head n'est pas NULL Faire
+        Afficher "Index: ", head.index, ", Key: ", head.key, ", Val: ", head.val, ", Flag: ", head.flag
+        head = head.next
+    Fin Tant Que
+
+Fonction principale main():
+    # Créez et peuplez votre liste chaînée ici...
+
+    # Triez la liste
+    sortedList = sortLinkedList(head)
+
+    printList(sortedList)
+
+    # N'oubliez pas de libérer la mémoire de la liste triée si nécessaire
+```
+
+Ce pseudo-code reflète l'algorithme précédent en utilisant des termes généraux, mais il conserve la structure et la logique de tri de la liste chaînée en fonction des critères clé et valeur, tout en attribuant des indices pour correspondre à la position finale dans la liste triée.

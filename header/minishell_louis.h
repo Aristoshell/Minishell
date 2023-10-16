@@ -47,11 +47,12 @@ void	close_pipes(t_data *data, t_pipe *pipes);
 int		strlen_list(t_cmd **cmd);
 
 int		ft_isnumber(char *str);
-void	bt_exit(t_cmd **cmd, int i);
+void	bt_exit(t_data *data, int i);
 
-int		bt_echo(t_cmd **cmd_tab, int to_do);
+int		bt_echo(t_data *data, int to_do);
 int		bt_pwd(void);
 int		bt_cd(t_data *data);
+void	display_export(t_envlist *env);
 
 void	error_management(t_cmd *cmd, char *str, int exit_val);
 void	error_pipe(void);

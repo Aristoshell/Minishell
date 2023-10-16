@@ -191,7 +191,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	//	data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
 	//if (data->current_cmd == 1)
 	// ft_display_tab_cmd(*data);
-	data->cmd[data->current_cmd]->cmd_type = 2;
+	data->cmd[data->current_cmd]->cmd_type = 4;
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
@@ -228,6 +228,7 @@ int	cross_array_list(t_data *data)
 
 	temp_stdin = dup(0);
 	temp_stdout = dup(1);
+	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
 		pipe_ = malloc(sizeof(t_pipe));

@@ -14,19 +14,19 @@ void	handle_builtins(t_data *data)
 
 	cmd = data->cmd;
 	if (cmd[data->current_cmd]->cmd_type == cmd_echo)
-		bt_echo(cmd, data->current_cmd);
+		bt_echo(data, data->current_cmd);
 	if (cmd[data->current_cmd]->cmd_type == cmd_cd)
 		bt_cd(data);
 	if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
 		bt_pwd();
 	if (cmd[data->current_cmd]->cmd_type == cmd_export)
-		printf("builtin export");
+		display_export(data->envp);
 	if (cmd[data->current_cmd]->cmd_type == cmd_unset)
 		printf("builtin unset");
 	if (cmd[data->current_cmd]->cmd_type == cmd_env)
 		printf("builtin env");
 	if (cmd[data->current_cmd]->cmd_type == cmd_exit)
-		bt_exit(cmd, data->current_cmd);
+		bt_exit(data, data->current_cmd);
 }
 
 /*
