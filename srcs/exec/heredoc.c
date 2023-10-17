@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/06 21:49:35 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/17 11:25:28 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*seeded_word(long nbr, char *alnum)
 {
 	char	*word;
 	int		i;
-	
+
 	word = malloc((nbr / 10) * sizeof(char));
 	if (!word)
 		return (NULL);

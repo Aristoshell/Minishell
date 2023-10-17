@@ -18,7 +18,7 @@ void	wait_childs(t_data *data)
 	}
 	data->exec_val = WEXITSTATUS(status);
 	printf("$? ->%d\n",data->exec_val);
-} 
+}
 
 /*
 process du child une fois fork
@@ -77,7 +77,7 @@ char	**list_to_array(t_envlist *list)
 	if (!ret)
 		return (NULL);
 	j = 0;
-	while(j < i)
+	while (j < i)
 	{
 		ret[j] = join_lign_env(list);
 		list = list->next;
@@ -94,10 +94,6 @@ int	child_process(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 	char	**envp;
 
-	//if (data->cmd[data->current_cmd]->input == heredoc_)
-	//	data->cmd[data->current_cmd]->fd_in = heredoc("stop",data);
-	//if (data->cmd[data->current_cmd]->fd_in == -1)
-	//	exit(130);
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
@@ -186,12 +182,6 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
 
-	//data->cmd[0]->input = heredoc_;
-	//if ((data->current_cmd == 1 && data->nb_command > 1) || (data->current_cmd == 2 && data->nb_command > 2))
-	//	data->cmd[data->current_cmd]->input = pipe_; // a delete une fois le soucis sur la valeur pipe_ reglée
-	//if (data->current_cmd == 1)
-	// ft_display_tab_cmd(*data);
-	data->cmd[data->current_cmd]->cmd_type = 4;
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)

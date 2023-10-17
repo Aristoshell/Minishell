@@ -32,11 +32,11 @@ int	bt_echo(t_data *data, int to_do)
 	int	i;
 	int	n_option;
 	t_cmd	*cmd;
-	
+
 	cmd = data->cmd[to_do];
 	i = 1;
 	n_option = 0;
-	
+
 	if (cmd->cmd_args[1] != NULL)
 	{
 		if (ft_strncmp(cmd->cmd_args[1], "-n", ft_strlen(cmd->cmd_args[1])) == 0)

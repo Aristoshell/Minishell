@@ -20,7 +20,7 @@ void	handle_builtins(t_data *data)
 	if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
 		bt_pwd();
 	if (cmd[data->current_cmd]->cmd_type == cmd_export)
-		display_export(data->envp);
+		export(&data->envp, cmd[data->current_cmd]->cmd_args[1]);
 	if (cmd[data->current_cmd]->cmd_type == cmd_unset)
 		printf("builtin unset");
 	if (cmd[data->current_cmd]->cmd_type == cmd_env)

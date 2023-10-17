@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/16 12:28:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/16 16:13:51 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/17 12:10:01 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,13 +23,24 @@ int	export(t_envlist **env, char *line)
 {
 	t_envlist	*new;
 
+	printf("%s\n",line);
 	new = ft_new_envvar(line);
 	if (!new)
 		return (-1);
 	if (!(*env))
 		*env = new;
-	else
-		ft_lst_env_add_back(env, new);
+	while ((*env))
+	{
+		if (strcmp((*env)->key, new->key) == 0)
+		{
+			if (new->val != NULL)
+			{
+				ft_lst_env_delone(*env);
+				ft_lst_env_add_back(env, new);
+			}
+		}
+		(*env) = (*env)->next;
+	}
 	return (0);
 }
 
