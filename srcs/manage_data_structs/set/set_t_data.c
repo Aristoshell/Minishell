@@ -7,13 +7,14 @@ void	ft_init_data(t_data *data)
 	data->current_cmd = 0;
 	data->nb_command = 0;
 	data->exec_val = 0;
+	data->cmd = NULL;
 }
 
 void	ft_reinit_data(t_data *data)
 {
 	ft_init_data(data);
-	if (data->cmd)
-	 	ft_clean_2d_array((void **)data->cmd, (void *)ft_clean_t_cmd);
+	// if (data->cmd)
+	//  	ft_clean_2d_array((void **)data->cmd, (void *)ft_clean_t_cmd);
 }
 
 
@@ -60,9 +61,10 @@ void	ft_reinit_data(t_data *data)
 /* fin*/
 
 
-t_data	*ft_create_data(t_data *data, char **envp)
+t_data	*ft_create_data(char **envp)
 {
-	data = malloc(sizeof(t_data));
+	t_data	*const data = malloc(sizeof(t_data));
+
 	if (!data)
 		return (MEMORY_ERROR_PT);
 	ft_init_data(data);

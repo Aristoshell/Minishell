@@ -19,6 +19,7 @@
 # define MEMORY_ERROR_PT	NULL
 # define SYNTAX_QUOTE_ERROR	3
 # define SYNTAX_TOKEN_ERROR	4
+# define LINE_IS_EMPTY		5
 # define DOUBLE_QUOTE 		34
 # define SIMPLE_QUOTE 		39
 # define MASK_SET			0x10
@@ -42,6 +43,7 @@ typedef int	t_flag;
 typedef enum e_open_quote
 {
 	no_q,
+	true_q,
 	simple_q,
 	double_q
 }			t_open_quote;
@@ -51,8 +53,8 @@ typedef enum e_token_type
 	type_default,
 	type_pipe,
 	type_word,
-	type_in,
-	type_out,
+	type_from,
+	type_to,
 	type_heredoc,
 	type_append
 }			t_token_type;
@@ -62,13 +64,18 @@ typedef struct s_token
 {
 	char			*string;
 	t_token_type	type;
+	bool			join_with_next;
+	bool			expand;
+	t_open_quote	quote;
+	bool			empty_node;
+	bool			redir_file;
 }			t_token;
 
 typedef struct s_info
 {
-	int		nb_tokens;
-	int		current_token;
-	t_token	**tokens;
+	int		nb_tokens; // a delete
+	int		current_token; // a delete
+	t_list	*tokens;
 }			t_info;
 
 /* Fin lexer */
@@ -83,31 +90,38 @@ typedef enum e_builtin
 	cmd_cd,
 	cmd_pwd,
 	cmd_export,
+	cmd_export_print,
 	cmd_unset,
 	cmd_env,
 	cmd_exit,
 }			t_builtin;
 
-typedef enum e_in_out
+typedef enum e_filetype
 {
-	stdin_,
-	stdout_,
+	pipe_in_,
+	pipe_out_,
+	file_from,
+	file_to,
 	heredoc_,
 	append_,
-	pipe_,
-	file_,
-}			t_in_out;
+	ambiguous,
+}			t_filetype;
+
+typedef struct s_files
+{
+  char			*filename;
+  t_filetype	filetype;
+  bool			open;
+  bool			redirect;
+}				t_files;
 
 typedef struct s_cmd
 {
 	pid_t				pid;
 	char				**cmd_args;
-	t_builtin			cmd_type;MINISHELL_H
+	t_builtin			cmd_type;
 	char				**path_cmd;
-	t_in_out			input;
-	t_in_out			output;
-	char				*heredoc_name;
-	char				*heredoc_sep;
+	t_list				*list_files;
 	int					fd_in;
 	int					fd_out;
 }			t_cmd;
@@ -133,7 +147,7 @@ typedef struct s_data
 //hihi
 /* Create and Init */
 
-t_data		*ft_create_data(t_data *data, char **envp);
+t_data		*ft_create_data(char **envp);
 void		ft_init_data(t_data *data);
 t_info		*create_info(t_info *info);
 void		ft_init_info(t_info *info);
@@ -154,32 +168,37 @@ int			parsing(t_data *data, const char *input);
 
 /* Check pre parsing*/
 bool		check_syntax(const char *str);
-char		check_open_quote(const char *input);
+char		ft_check_open_quote(const char *input);
 bool		check_redir(const char *str);
 bool		check_pipe(const char *str);
 void		ft_pass_when_quote(const char *str, int *i);
-bool		ft_check_syntax_with_tokens(t_info info);
-
+bool		ft_check_syntax_with_tokens(t_list *token);
+bool		ft_check_empty_line(const char	*str, int i);
 
 /* LEXER */
-int				ft_lexer(const char *input, t_info *info);
+int	ft_tokenise(const char *input, t_info *info);
 char			*get_token_val(const char *str, int *i);
 t_token_type	get_token_type(const char *token);
-int				ft_count_token(char const *str);
+void			ft_display_lexer(t_info info);
+int		ft_del_quotes(t_info *info);
+int		ft_remove_quotes(t_list *list, char quote);
+int		ft_split_quotes(t_list *list);
+int		ft_insert_next_node(int i, t_list *list);
 
 
 /* PARSEUR */
-int		ft_parser(t_info *info, t_data *data);
-void	ft_count_cmd(t_info info, t_data *data);
+int		ft_interprete(t_info *info, t_data *data);
+void	ft_count_cmd(t_list *list, t_data *data);
 int		ft_init_tab_cmd(t_data *data);
 int		ft_init_cmd(t_data *data, int i);
-int		ft_fill_cmd(t_cmd *cmd, t_in_out out_prev, t_info *info, bool first);
-void	ft_fill_cmd_test_in(t_cmd *cmd, t_info *info, t_in_out out_prev, bool first);
-void	ft_fill_cmd_test_out(t_cmd *cmd, t_info *info);
-int		ft_fill_cmd_count_args(t_info *info);
+int		ft_fill_cmd(t_cmd *cmd, t_list *list, t_data *data);
+int		ft_fill_cmd_redirs(t_cmd *cmd, t_data *data, t_list *list);
+int		ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list);
+int		ft_fill_cmd_count_args(t_list *list);
 int		ft_fill_cmd_init_tab_args(int nb_args, t_cmd *cmd);
-int		ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_info *info, int nb_args);
-void	ft_display_tab_cmd(t_data data);
+int		ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_list *list, int nb_args);
+void	ft_display_tab_cmd(t_data *data);
+void	ft_print_redir_files(t_list *list_files);
 
 /* ERRORS */
 int				ft_error(int err_code);
@@ -196,7 +215,12 @@ bool		ft_is_cmd_separator(char c);
 bool		ft_is_dollar(char c);
 
 /* Expand */
-char	*ft_manage_expand(const char *input, t_envlist *env);
+int	 ft_detatch_expand(t_list *list, int i);
+int		ft_expand(t_info *info, t_envlist *envp);
+int		ft_expand_val(t_list *list, t_envlist *env);
+
+/* Join */
+int	ft_join_nodes(t_list *list);
 
 /* Envp  */
 char		*ft_get_val(char *line);

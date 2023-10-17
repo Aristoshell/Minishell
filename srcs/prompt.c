@@ -17,29 +17,20 @@ int	prompt(t_data *data)
 {
 	int			function_return;
 	const char	*input;
-	//char		*expanded_input;
 
 	while (1)
 	{
-		input = readline(PROMPT_COLOUR"aristoshell$ "PROMPT_RESET);
-		//expand
-		//ft_manage_expand(input, data->envp);
+		input = readline(YELLOW"aristoshell$ "NC);
 		if (input && input[0] != 0)
 		{
-			// if (check_exit(input)) // utilise seulement ici pour quitter proprement mais on nen naura plus besoin apres
-			// {
-			// 	free((void *)input);
-			// 	rl_clear_history();
-			// 	return (EXIT); //penser a bien tout free
-			// }
 			add_history(input); //il faudra bien le free
 			function_return = parsing(data, input);
 			free((void *)input);
 			if (function_return != FUNCTION_SUCCESS)
 				ft_error(function_return);
-			if(cross_array_list(data) == EXIT)
-				return (EXIT);
-			//ft_reinit_data(data);
+			// if(cross_array_list(data) == EXIT)
+			// 	return (EXIT);
+			ft_reinit_data(data);
 		}
 	}
 	clear_history();

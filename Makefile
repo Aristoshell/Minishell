@@ -1,12 +1,5 @@
 SRCS_FILES	= 	minishell.c \
 				prompt.c \
-				builtins/cd.c \
-				builtins/env.c \
-				builtins/export.c \
-				builtins/unset.c \
-				builtins/exit.c\
-				builtins/echo.c\
-				builtins/pwd.c\
 				errors/ft_errors.c \
 				manage_data_structs/clean/ft_clean_string.c \
 				manage_data_structs/clean/ft_clean_t_data.c \
@@ -19,57 +12,59 @@ SRCS_FILES	= 	minishell.c \
 				manage_data_structs/clean/ft_clean_2d_array_struct.c \
 				manage_data_structs/set/set_t_data.c \
 				manage_data_structs/set/set_t_info.c \
-				parsing/parser/ft_parser.c \
-				parsing/parser/ft_count_cmd.c \
-				parsing/parser/ft_init_tab_cmd.c \
-				parsing/parser/ft_init_cmd.c \
-				parsing/parser/ft_fill_cmd.c \
-				parsing/parser/ft_fill_cmd_test_in.c \
-				parsing/parser/ft_fill_cmd_test_out.c \
-				parsing/parser/ft_fill_cmd_count_args.c \
-				parsing/parser/ft_fill_cmd_init_tab_args.c \
-				parsing/parser/ft_fill_cmd_fill_tab_args.c \
-				parsing/parser/ft_display_tab_cmd.c \
-				parsing/expand/ft_manage_expand.c \
+				parsing/bools/ft_check_empty_line.c \
 				parsing/bools/ft_is_cmd_separator.c \
+				parsing/bools/ft_is_dollar.c \
 				parsing/bools/ft_is_operator.c \
 				parsing/bools/ft_is_pipe.c \
 				parsing/bools/ft_is_quote.c \
 				parsing/bools/ft_is_separator.c \
 				parsing/bools/ft_is_space.c \
-				parsing/bools/ft_is_dollar.c \
-				parsing/checks/ft_check_pipes.c \
-				parsing/checks/ft_check_quotes.c \
-				parsing/checks/ft_check_syntax.c \
-				parsing/checks/ft_check_redir.c \
-				parsing/checks/ft_pass_when_quote.c \
-				parsing/checks/ft_check_syntax_with_tokens.c \
+				parsing/checks_syntax/ft_check_quotes.c \
+				parsing/checks_syntax/ft_check_syntax_with_tokens.c \
+				parsing/delete_quotes/ft_del_quotes_detach.c \
+				parsing/delete_quotes/ft_del_quotes_remove_quotes.c \
+				parsing/delete_quotes/ft_del_quotes.c \
+				parsing/envp/lists/ft_lst_env_add_back.c \
+				parsing/envp/lists/ft_lst_env_add_front.c \
+				parsing/envp/lists/ft_lst_env_last.c \
+				parsing/envp/lists/ft_lst_env_new.c \
+				parsing/envp/lists/ft_lst_env_pop.c \
 				parsing/envp/ft_get_envp.c \
+				parsing/envp/ft_get_key.c \
 				parsing/envp/ft_get_val.c \
 				parsing/envp/ft_new_envvar.c \
-				parsing/envp/ft_get_key.c \
 				parsing/envp/ft_print_env.c \
 				parsing/envp/ft_set_flag.c \
-				parsing/lexer/ft_display_lexer.c \
-				parsing/lexer/ft_lexer_count_tokens.c \
-				parsing/lexer/ft_lexer_get_token_type.c \
-				parsing/lexer/ft_lexer_get_token_val.c \
-				parsing/lexer/ft_lexer.c \
-				parsing/lists/ft_lst_env_add_back.c \
-				parsing/lists/ft_lst_env_add_front.c \
-				parsing/lists/ft_lst_env_last.c \
-				parsing/lists/ft_lst_env_new.c \
-				parsing/lists/ft_lst_env_pop.c \
+				parsing/expand/ft_expand_detach.c \
+				parsing/expand/ft_expand_join_nodes.c \
+				parsing/expand/ft_expand_val.c \
+				parsing/expand/ft_expand.c \
+				parsing/interpretor/ft_display_cmd.c \
+				parsing/interpretor/ft_fill_cmd_args.c \
+				parsing/interpretor/ft_fill_cmd_redirs.c \
+				parsing/interpretor/ft_init_cmd.c \
+				parsing/interpretor/ft_interprete.c \
+				parsing/tokeniser/ft_display_tokens.c \
+				parsing/tokeniser/ft_tokenise_get_token_info.c \
+				parsing/tokeniser/ft_tokenise.c \
 				parsing/parsing.c \
-				exec/set_up_cmd.c\
-				exec/exec.c\
-				exec/close.c\
-				exec/error.c\
-				exec/free.c\
-				exec/redir.c\
-				exec/usefull.c\
-				exec/heredoc.c\
-				exec/signals.c
+				exec/set_up_cmd.c \
+				exec/exec.c \
+				exec/close.c \
+				exec/error.c \
+				exec/free.c \
+				exec/redir.c \
+				exec/usefull.c \
+				exec/heredoc.c \
+				exec/signals.c  \
+				builtins/cd.c  \
+				builtins/env.c  \
+				builtins/export.c  \
+				builtins/unset.c  \
+				builtins/exit.c \
+				builtins/echo.c \
+				builtins/pwd.c
 				
 PREFIX	= srcs
 
@@ -85,12 +80,15 @@ INCLUDE	= -Ilibft -Iheader -Ireadline
 
 CC    = cc
 
-CFLAGS  = -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS  = -Wall -Wextra -Werror -g3
 
 NAME    = minishell
 
 DEPS			=	${SRCS:.c=.d}
 
+ifeq ($(debug), true)
+	CFLAGS += -fsanitize=address,undefined
+endif
 
 #################
 #### DISPLAY ####

@@ -40,7 +40,7 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes);
 void	handle_builtins(t_data *data);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
-void	close_list_args(t_cmd **cmd, int len_list, int stdin_, int stdout_);
+// void	close_list_args(t_cmd **cmd, int len_list, int stdin_, int stdout_);
 
 void	close_pipes(t_data *data, t_pipe *pipes);
 

@@ -12,7 +12,7 @@ int	main(int argc, char **argv, char **envp)
 	if (!envp)
 		return (perror(DIS_ERR_ENV), 1);
 	data = NULL;
-	data = ft_create_data(data, envp);
+	data = ft_create_data(envp);
 	if (!data)
 		return (MEMORY_ERROR_NB); //checker ce que je dois effacer
 	if (prompt(data) == MEMORY_ERROR_NB)
