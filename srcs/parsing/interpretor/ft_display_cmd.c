@@ -25,6 +25,7 @@ void	ft_display_tab_cmd(t_data *data)
 	int	j;
 
 	i = 0;
+	printf("rentre\n");
 	while (i < data->nb_command)
 	{
 		printf(GREEN"cmd %d\n"NC, i);

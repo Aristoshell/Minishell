@@ -13,6 +13,8 @@ int	ft_init_cmd(t_data *data, int i)
 	data->cmd[i]->list_files = NULL;
 	data->cmd[i]->fd_in = 0;
 	data->cmd[i]->fd_out = 1;
+	data->cmd[i]->input = file_from;
+	data->cmd[i]->output = file_from;
 	return (FUNCTION_SUCCESS);
 }
 

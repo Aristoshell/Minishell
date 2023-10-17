@@ -124,6 +124,8 @@ typedef struct s_cmd
 	t_list				*list_files;
 	int					fd_in;
 	int					fd_out;
+	t_filetype			input;
+	t_filetype			output;
 }			t_cmd;
 
 typedef struct s_envlist

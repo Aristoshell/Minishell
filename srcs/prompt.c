@@ -28,8 +28,8 @@ int	prompt(t_data *data)
 			free((void *)input);
 			if (function_return != FUNCTION_SUCCESS)
 				ft_error(function_return);
-			// if(cross_array_list(data) == EXIT)
-			// 	return (EXIT);
+			if(cross_array_list(data) == EXIT)
+			 	return (EXIT);
 			ft_reinit_data(data);
 		}
 	}

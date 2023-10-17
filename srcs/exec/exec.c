@@ -96,7 +96,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	(void) pipes;
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
-	//pipes = handle_redirection(data, pipes);
+	pipes = handle_redirection(data, pipes);
 	if (cmd->cmd_type != no)
 	{
 		handle_builtins(data);
@@ -186,7 +186,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
-		//pipes = handle_redirection(data, pipes);
+		pipes = handle_redirection(data, pipes);
 		handle_builtins(data);
 		return (pipes);
 	}
@@ -218,13 +218,13 @@ int	cross_array_list(t_data *data)
 
 	temp_stdin = dup(0);
 	temp_stdout = dup(1);
+	pipe_ = NULL;
 	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
 		pipe_ = malloc(sizeof(t_pipe));
 		if (!pipe_)
 			error_malloc();
-
 		if (pipe(pipe_->tube[1]) != 0)
 			error_pipe();
 			//error(free_data)
@@ -238,8 +238,9 @@ int	cross_array_list(t_data *data)
 	}
 	if(data->nb_command > 1)
 		close_pipes(data, pipe_);
+	printf("wait_childs\n");
 	wait_childs(data);
-	//close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
+	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	close(temp_stdin);
 	close(temp_stdout);
 	return (0);
