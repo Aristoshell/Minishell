@@ -21,6 +21,7 @@ int	prompt(t_data *data)
 	while (1)
 	{
 		input = readline(YELLOW"aristoshell$ "NC);
+		//printf("Exec val : %d\n", data->exec_val);
 		if (input && input[0] != 0)
 		{
 			add_history(input); //il faudra bien le free

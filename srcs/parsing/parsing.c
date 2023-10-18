@@ -34,7 +34,7 @@ int	parsing(t_data *data, const char *input)
 				return (MEMORY_ERROR_NB);
 			// ft_display_lexer(*info);
 			// printf(BLUE"\nEXPAND\n"NC);
-			ft_expand(info, data->envp); //add secu
+			ft_expand(info, data->envp, data); //add secu
 			//ft_display_lexer(*info);
 			// printf(BLUE"\nJOIN\n"NC);
 			ft_join_nodes(info->tokens);

@@ -6,11 +6,20 @@ int	ft_need_detach(char *str)
 	int		i;
 
 	i = 1;
-	while (str[i])
+	if (str[1] == '?')
 	{
-		if (ft_is_space(str[i]) || ft_is_dollar(str[i]))
-			return (i);
-		i++;
+		if (!str[2])
+			return(0);
+		return (2);
+	}
+	else
+	{
+		while (str[i])
+		{
+			if (ft_is_space(str[i]) || ft_is_dollar(str[i]))
+				return (i);
+			i++;
+		}
 	}
 	return (0);
 }

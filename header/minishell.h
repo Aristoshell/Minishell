@@ -220,8 +220,8 @@ bool		ft_is_dollar(char c);
 
 /* Expand */
 int	 ft_detatch_expand(t_list *list, int i);
-int		ft_expand(t_info *info, t_envlist *envp);
-int		ft_expand_val(t_list *list, t_envlist *env);
+int		ft_expand(t_info *info, t_envlist *envp, t_data *data);
+int		ft_expand_val(t_list *list, t_envlist *env, t_data *data);
 
 /* Join */
 int	ft_join_nodes(t_list *list);

@@ -53,28 +53,36 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	return (FUNCTION_SUCCESS);
 }
 
-int	ft_expand_val(t_list *list, t_envlist *env)
+int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 {
 	t_token	*curr_token;
 	int		len;
 
 	curr_token = (t_token *)list->content;
-	len = ft_strlen(curr_token->string) + 1;
-	while (env && ft_strncmp(curr_token->string, (const char *)env->key, len))
-		env = env->next;
-	free(curr_token->string); //maybe invalide free
-	if (!env)
+	if (curr_token->string[0] == '?')
 	{
-		curr_token->empty_node = true;
-		curr_token->string = NULL;
-	}
-	else if (curr_token->quote == double_q)
-	{
-		curr_token->string = ft_strdup(env->val);
-		if (!curr_token->string)
-			return (MEMORY_ERROR_NB);
+		free(curr_token->string);
+		curr_token->string = ft_strdup(ft_itoa(data->exec_val));//verif retour itoa + ft_strdup en deux fois
 	}
 	else
-		ft_expand_val_split(list, env->val); //add verif
+	{
+		len = ft_strlen(curr_token->string) + 1;
+		while (env && ft_strncmp(curr_token->string, (const char *)env->key, len))
+			env = env->next;
+		free(curr_token->string); //maybe invalide free
+		if (!env)
+		{
+			curr_token->empty_node = true;
+			curr_token->string = NULL;
+		}
+		else if (curr_token->quote == double_q)
+		{
+			curr_token->string = ft_strdup(env->val);
+			if (!curr_token->string)
+				return (MEMORY_ERROR_NB);
+		}
+		else
+			ft_expand_val_split(list, env->val); //add verif
+	}
 	return (FUNCTION_SUCCESS);
 }
