@@ -5,9 +5,9 @@
 
 void	close_pipes(t_data *data, t_pipe *pipes)
 {
-	if (data->nb_command > 2)
+	if (data->nb_command > 1)
 	{
-		close(pipes->tube[0][0]);	
+		close(pipes->tube[0][0]);
 		close(pipes->tube[0][1]);
 	}
 	close(pipes->tube[1][1]);
@@ -15,9 +15,11 @@ void	close_pipes(t_data *data, t_pipe *pipes)
 	free(pipes);
 }
 
-void	close_list_args(t_cmd **cmd, int len_list, int stdin_save, int stdout_save)
+void	close_list_args(t_cmd **cmd, int len_list,
+	int stdin_save, int stdout_save)
 {
 	int	i;
+
 	i = 0;
 	while (i < len_list)
 	{

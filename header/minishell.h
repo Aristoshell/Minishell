@@ -105,6 +105,8 @@ typedef enum e_filetype
 	heredoc_,
 	append_,
 	ambiguous,
+	stdin_,
+	stdout_,
 }			t_filetype;
 
 typedef struct s_files

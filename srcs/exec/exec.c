@@ -17,7 +17,6 @@ void	wait_childs(t_data *data)
 		i++;
 	}
 	data->exec_val = WEXITSTATUS(status);
-	printf("$? ->%d\n",data->exec_val);
 }
 
 /*
@@ -93,7 +92,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	char	*path_temp;
 	t_cmd	*cmd;
 	char	**envp;
-	(void) pipes;
+
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
@@ -232,13 +231,12 @@ int	cross_array_list(t_data *data)
 	while (data->current_cmd < data->nb_command)
 	{
 		pipe_ = gen_child(data, pipe_);
-		if (pipe_ == NULL)
+		if (pipe_ == NULL && data->nb_command > 1)
 			return (0);
 		data->current_cmd++;
 	}
-	if(data->nb_command > 1)
+	if (data->nb_command > 1)
 		close_pipes(data, pipe_);
-	printf("wait_childs\n");
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	close(temp_stdin);
