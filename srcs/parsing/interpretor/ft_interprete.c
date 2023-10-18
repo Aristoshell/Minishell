@@ -41,26 +41,26 @@ int	ft_init_tab_cmd(t_data *data)
 
 void	ft_check_builtin(t_cmd	*cmd)
 {
-	if (!ft_strncmp("echo", cmd->cmd_args[0], ft_strlen("echo")))
+	if (!ft_strncmp("echo", cmd->cmd_args[0], (ft_strlen("echo") + 1)))
 		cmd->cmd_type = cmd_echo;
-	else if (!ft_strncmp("cd", cmd->cmd_args[0], ft_strlen("cd")))
+	else if (!ft_strncmp("cd", cmd->cmd_args[0], (ft_strlen("cd") + 1)))
 		cmd->cmd_type = cmd_cd;
-	else if (!ft_strncmp("pwd", cmd->cmd_args[0], ft_strlen("pwd")))
+	else if (!ft_strncmp("pwd", cmd->cmd_args[0], (ft_strlen("pwd") + 1)))
 		cmd->cmd_type = cmd_pwd;
-	else if (!ft_strncmp("export", cmd->cmd_args[0], ft_strlen("export")))
+	else if (!ft_strncmp("export", cmd->cmd_args[0], (ft_strlen("export") + 1)))
 	{
 		if (cmd->cmd_args[1])
 			cmd->cmd_type = cmd_export;
 		else
 			cmd->cmd_type = cmd_export_print;
 	}
-	else if (!ft_strncmp("unset", cmd->cmd_args[0], ft_strlen("unset")))
+	else if (!ft_strncmp("unset", cmd->cmd_args[0], (ft_strlen("unset") + 1)))
 		cmd->cmd_type = cmd_unset;
-	else if (!ft_strncmp("exit", cmd->cmd_args[0], ft_strlen("exit")))
+	else if (!ft_strncmp("exit", cmd->cmd_args[0], (ft_strlen("exit") + 1)))
 		cmd->cmd_type = cmd_exit;
 	else
 		cmd->cmd_type = no;
-	printf("builtin : %d\n", cmd->cmd_type);
+	//printf("builtin : %d\n", cmd->cmd_type);
 }
 
 int	ft_fill_tab_cmd(t_data *data, t_list *list)

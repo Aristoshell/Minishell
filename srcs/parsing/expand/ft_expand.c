@@ -16,7 +16,10 @@ int	ft_expand(t_info *info, t_envlist *envp, t_data *data)
 		{
 			dollar_loc = ft_strchr_int(curr_token->string, '$');
 			if (dollar_loc >= 0)
+			//if (dollar_loc >= 0 && !(curr_token->string[0] == '$' && (curr_token->string[1] == 0 || curr_token->string[1] == '$')))
 			{
+				// if (ft_special_expand(list, dollar_loc) != FUNCTION_SUCCESS)
+				// 	return (MEMORY_ERROR_NB);
 				if (ft_detatch_expand(list, dollar_loc) != FUNCTION_SUCCESS)
 					return (MEMORY_ERROR_NB);
 				if (curr_token->expand) //encore utile ?
