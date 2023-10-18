@@ -104,6 +104,6 @@ int	ft_interprete(t_info *info, t_data *data)
 		return (MEMORY_ERROR_NB);
 	if (ft_fill_tab_cmd(data, info->tokens))
 		return (MEMORY_ERROR_NB);
-	ft_display_tab_cmd(data);
+	//ft_display_tab_cmd(data);
 	return (0);
 }
