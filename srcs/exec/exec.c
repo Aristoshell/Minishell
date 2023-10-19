@@ -2,7 +2,7 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-int glb = 0;
+int g_glb = 0;
 
 void	wait_childs(t_data *data)
 {
@@ -86,7 +86,7 @@ char	**list_to_array(t_envlist *list)
 	return (ret);
 }
 
-int	child_process(t_data *data, t_pipe *pipes)
+int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
 {
 	char	*exec;
 	char	*path_temp;
@@ -95,7 +95,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
-	pipes = handle_redirection(data, pipes);
+	pipes = handle_redirection(data, pipes, fd_heredoc);
 	if (cmd->cmd_type != no)
 	{
 		handle_builtins(data);
@@ -180,12 +180,16 @@ et enfin appeler la fonction child process
 t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
+	int		fd_heredoc;
 
+	fd_heredoc = handle_heredoc(data);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
+	if (data->cmd[data->current_cmd]->cmd_args == NULL)
+		return (pipes);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
-		pipes = handle_redirection(data, pipes);
+		pipes = handle_redirection(data, pipes, fd_heredoc);
 		handle_builtins(data);
 		return (pipes);
 	}
@@ -193,7 +197,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	if (pid == -1)
 		error_fork();
 	if (pid == 0)
-		data->exec_val = child_process(data, pipes);
+		data->exec_val = child_process(data, pipes, fd_heredoc);
 	data->cmd[data->current_cmd]->pid = pid;
 	return (pipes);
 }

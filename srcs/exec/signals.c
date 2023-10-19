@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 22:15:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/06 21:45:12 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:17:42 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,16 +15,33 @@
 
 void	sighandler_heredoc(int sig)
 {
-    (void)sig;
-    //fixe la valeur $? a 130
-    //retourne au prompt
-    printf("\n");
-    glb = 130;
-    return ;
+	(void)sig;
+	g_glb = 130;
+	printf("yes\n");
 }
 
 void    handle_signals_heredoc()
 {
-    signal(SIGINT, &sighandler_heredoc);
-    signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, &sighandler_heredoc);
+	signal(SIGQUIT, SIG_IGN);
+}
+
+void	sighandler(int signum)
+{
+	(void)signum;
+	if (isatty(STDOUT_FILENO))
+	{
+		printf("\n");
+		rl_on_new_line();
+        rl_replace_line("", 0);
+        rl_redisplay();
+	}
+	g_glb = 1;
+	return ;
+}
+
+void    handle_signals_prompt()
+{
+	signal(SIGINT, &sighandler);
+	signal(SIGQUIT, SIG_IGN);
 }

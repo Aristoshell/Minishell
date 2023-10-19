@@ -70,31 +70,24 @@ t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 	return (pipes);
 }
 
-int	set_redir(t_cmd *cmd, t_data *data, t_list *l)
+int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 {
 	t_files	*f;
 	int		fail_open;
 
-	if (!data)
-		return 0;
-	if (!cmd)
-		return 0;
 	fail_open = 0;
 	if (!l)
 		return (0);
 	f = (t_files *)l->content;
 	while (l)
 	{
-		if (fail_open == 1)
+		if (fail_open != 1)
 		{
 			if (f->filetype == heredoc_)
 			{
-				cmd->fd_in = heredoc(f->filename, data);
+				cmd->fd_in = fd_heredoc;
 				cmd->input = file_from;
 			}
-		}
-		else
-		{
 			if (f->filetype == file_from)
 			{
 				cmd->fd_in = open(f->filename, O_RDONLY);
@@ -110,19 +103,10 @@ int	set_redir(t_cmd *cmd, t_data *data, t_list *l)
 				cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
 				cmd->fd_out = file_to;
 			}
-			else if (f->filetype == heredoc_)
-			{
-				cmd->fd_in = heredoc(f->filename, data);
-				cmd->input = file_from;
-			}
 			else if (f->filetype == pipe_in_)
-			{
 				cmd->input = pipe_in_;
-			}
 			else if (f->filetype == pipe_out_)
-			{
 				cmd->output = pipe_out_;
-			}
 			else if (cmd->fd_in == -1 || cmd->fd_out == -1)
 				fail_open = 1;
 		}
@@ -133,12 +117,12 @@ int	set_redir(t_cmd *cmd, t_data *data, t_list *l)
 	return (0);
 }
 
-t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
+t_pipe	*handle_redirection(t_data *data, t_pipe *pipes, int fd_heredoc)
 {
 	t_cmd	*cmd;
 
 	cmd = data->cmd[data->current_cmd];
-	set_redir(cmd, data, cmd->list_files);
+	set_redir(cmd, cmd->list_files, fd_heredoc);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
 	if (cmd->input == pipe_in_ || cmd->output == pipe_out_)

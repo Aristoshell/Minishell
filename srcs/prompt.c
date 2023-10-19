@@ -34,6 +34,8 @@ int	prompt(t_data *data)
 			 	return (EXIT);
 			ft_reinit_data(data);
 		}
+		else if (!input)
+			exit(0);
 	}
 	clear_history();
 	return(FUNCTION_SUCCESS);

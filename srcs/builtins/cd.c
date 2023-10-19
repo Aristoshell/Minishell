@@ -2,7 +2,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
 /*
 fonction get_env a modif un fois les deux codes link 
 au lieu de parcourir envp on parcourra la liste chainée
@@ -32,18 +31,18 @@ si 1 go_to doit chdir vers l'arg
 met a jour old_pwd et pwd
 */
 
-int update_env(t_envlist *envp, char *old_pwd)
+int	update_env(t_envlist *envp, char *old_pwd)
 {
-	int     i;
-	int     j;
-	char    pwd[PATH_MAX];
+	int		i;
+	int		j;
+	char	pwd[PATH_MAX];
 
 	i = 0;
 	if (!old_pwd)
 		return (0);
 	j = ft_envlstsize(envp);
 	getcwd(pwd, PATH_MAX);
-	while(i < j)
+	while (i < j)
 	{
 		if (ft_strncmp(envp->key, "OLDPWD", 7) == 0)
 		{
@@ -61,9 +60,9 @@ int update_env(t_envlist *envp, char *old_pwd)
 	return (0);
 }
 
-int    go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
+int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 {
-	char cwd[PATH_MAX];
+	char	cwd[PATH_MAX];
 
 	getcwd(cwd, PATH_MAX);
 	if (!env)
@@ -73,7 +72,7 @@ int    go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 		if (chdir(find_home(env)) == -1)
 		{
 			update_env(envp, cwd);
-			return  (1);
+			return (1);
 		}
 	}
 	if (chdir(cmd->cmd_args[0]) == -1)
@@ -85,10 +84,10 @@ int    go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 	return (0);
 }
 
-int bt_cd(t_data *data)
+int	bt_cd(t_data *data)
 {
-	t_cmd   *cmd;
-	char    **env;
+	t_cmd	*cmd;
+	char	**env;
 
 	env = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];

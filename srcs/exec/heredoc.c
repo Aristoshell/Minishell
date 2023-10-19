@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/17 11:25:28 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/19 15:19:13 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ int	heredoc2(char *limiter, int fd)
 	while (1)
 	{
 		lign = "";
-		while (buf[0] != '\n' && glb != 130)
+		while (buf[0] != '\n' && g_glb != 130)
 		{
 			read(0, buf, 1);
 			lign = add_char(lign, buf[0]);
@@ -130,14 +130,10 @@ int	heredoc2(char *limiter, int fd)
 				printf("warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
 				break ;
 			}
-			if (glb == 130)
-				return (-1);
 		}
 		if (((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
-			&& lign[ft_strlen(limiter)] == '\n') /*|| buf[0] == '\0'*/))
-		{
+			&& lign[ft_strlen(limiter)] == '\n') || buf[0] == '\0' || g_glb == 130))
 			return (free(lign), fd);
-		}
 		else
 		{
 			write(fd, lign, ft_strlen(lign));
@@ -156,8 +152,10 @@ int	heredoc(char *limiter, t_data *data)
 
 	if (!limiter)
 		return (0);
-	lign = seeded_word(total_ascii(data->cmd[data->current_cmd]->cmd_args, data->current_cmd),
-			"abcdefghijklmnopqrstuvwxyz0123456789");
+	if (!data->cmd[data->current_cmd]->cmd_args)
+		lign = seeded_word(785 * (data->nb_command + 1), "abcdefghijklmnopqrstuvwxyz0123456789");
+	else
+		lign = seeded_word(total_ascii(data->cmd[data->current_cmd]->cmd_args, data->current_cmd), "abcdefghijklmnopqrstuvwxyz0123456789");
 	if (!lign)
 		return (-1);
 	lign = ft_strjoin_free(lign, ".seed");
@@ -169,4 +167,43 @@ int	heredoc(char *limiter, t_data *data)
 	close(fd);
 	fd = open(lign, O_RDWR);
 	return (free(lign), fd);
+}
+
+int	handle_heredoc(t_data *data)
+{
+	t_files	*f;
+	t_list	*l;
+	t_cmd	*cmd;
+
+	cmd = data->cmd[data->current_cmd];
+	l = cmd->list_files;
+	if (!l)
+		return (0);
+	f = (t_files *)l->content;
+	while (l)
+	{
+		if (f->filetype == heredoc_)
+		{
+			handle_signals_heredoc();
+			cmd->fd_in = heredoc(f->filename, data);
+			if (!data->cmd[data->current_cmd]->cmd_args)
+			{
+				f->filename = seeded_word(785 * (data->nb_command + 1), \
+				"abcdefghijklmnopqrstuvwxyz0123456789");
+			}
+			else
+			{
+				f->filename = seeded_word(total_ascii \
+					(data->cmd[data->current_cmd]->cmd_args, \
+					data->current_cmd), \
+					"abcdefghijklmnopqrstuvwxyz0123456789");
+			}
+			cmd->input = file_from;
+			handle_signals_prompt();
+		}
+		l = l->next;
+		if (l)
+			f = (t_files *)l->content;
+	}
+	return (cmd->fd_in);
 }
