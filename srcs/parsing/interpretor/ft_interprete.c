@@ -41,25 +41,28 @@ int	ft_init_tab_cmd(t_data *data)
 
 void	ft_check_builtin(t_cmd	*cmd)
 {
-	if (!ft_strncmp("echo", cmd->cmd_args[0], (ft_strlen("echo") + 1)))
-		cmd->cmd_type = cmd_echo;
-	else if (!ft_strncmp("cd", cmd->cmd_args[0], (ft_strlen("cd") + 1)))
-		cmd->cmd_type = cmd_cd;
-	else if (!ft_strncmp("pwd", cmd->cmd_args[0], (ft_strlen("pwd") + 1)))
-		cmd->cmd_type = cmd_pwd;
-	else if (!ft_strncmp("export", cmd->cmd_args[0], (ft_strlen("export") + 1)))
+	if (cmd->cmd_args[0])
 	{
-		if (cmd->cmd_args[1])
-			cmd->cmd_type = cmd_export;
+		if (!ft_strncmp("echo", cmd->cmd_args[0], (ft_strlen("echo") + 1)))
+			cmd->cmd_type = cmd_echo;
+		else if (!ft_strncmp("cd", cmd->cmd_args[0], (ft_strlen("cd") + 1)))
+			cmd->cmd_type = cmd_cd;
+		else if (!ft_strncmp("pwd", cmd->cmd_args[0], (ft_strlen("pwd") + 1)))
+			cmd->cmd_type = cmd_pwd;
+		else if (!ft_strncmp("export", cmd->cmd_args[0], (ft_strlen("export") + 1)))
+		{
+			if (cmd->cmd_args[1])
+				cmd->cmd_type = cmd_export;
+			else
+				cmd->cmd_type = cmd_export_print;
+		}
+		else if (!ft_strncmp("unset", cmd->cmd_args[0], (ft_strlen("unset") + 1)))
+			cmd->cmd_type = cmd_unset;
+		else if (!ft_strncmp("exit", cmd->cmd_args[0], (ft_strlen("exit") + 1)))
+			cmd->cmd_type = cmd_exit;
 		else
-			cmd->cmd_type = cmd_export_print;
+			cmd->cmd_type = no;
 	}
-	else if (!ft_strncmp("unset", cmd->cmd_args[0], (ft_strlen("unset") + 1)))
-		cmd->cmd_type = cmd_unset;
-	else if (!ft_strncmp("exit", cmd->cmd_args[0], (ft_strlen("exit") + 1)))
-		cmd->cmd_type = cmd_exit;
-	else
-		cmd->cmd_type = no;
 	//printf("builtin : %d\n", cmd->cmd_type);
 }
 
@@ -75,7 +78,8 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 		if (ft_init_cmd(data, data->current_cmd)
 			|| ft_fill_cmd(data->cmd[data->current_cmd], list, data))
 			return (MEMORY_ERROR_NB);
-		ft_check_builtin(data->cmd[data->current_cmd]);
+		if (data->cmd[data->current_cmd]->cmd_args)
+			ft_check_builtin(data->cmd[data->current_cmd]);
 		data->current_cmd++;
 		while (curr_token->type != type_pipe)
 		{
@@ -93,13 +97,13 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 int	ft_interprete(t_info *info, t_data *data)
 {
 	data->nb_command = 0;
-	if (ft_check_empty_tokens_list(info->tokens))
-	{
-		ft_reinit_data(data);
-		return (printf("LINE IS EMPTY\n"), LINE_IS_EMPTY);
-	}
+	// if (ft_check_empty_tokens_list(info->tokens))
+	// {
+	// 	ft_reinit_data(data);
+	// 	return (printf("LINE IS EMPTY\n"), LINE_IS_EMPTY);
+	// }
 	ft_count_cmd(info->tokens, data);
-	// printf("nb cmd : %d\n", data->nb_command);
+	//printf("nb cmd : %d\n", data->nb_command);
 	if (ft_init_tab_cmd(data) != FUNCTION_SUCCESS)
 		return (MEMORY_ERROR_NB);
 	if (ft_fill_tab_cmd(data, info->tokens))

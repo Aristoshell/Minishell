@@ -40,7 +40,7 @@ int	parsing(t_data *data, const char *input)
 			ft_join_nodes(info->tokens);
 			// ft_display_lexer(*info);
 			// printf(BLUE"\nINTERPRETE\n"NC);
-			function_return = ft_interprete(info, data); // attention, on va avoir une verif a faire
+			function_return = ft_interprete(info, data); //attention, on va avoir une verif a faire
 			// if (function_return != FUNCTION_SUCCESS)
 			// 	return (ft_error(function_return, data, info));
 		}
