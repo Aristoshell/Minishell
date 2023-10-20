@@ -44,7 +44,7 @@ char	*join_lign_env(t_envlist *list)
 {
 	size_t		i;
 	size_t		j;
-	char	*ret;
+	char		*ret;
 
 	ret = malloc(sizeof(char) * ft_strlen(list->key) + ft_strlen(list->val) + 2);
 	i = 0;
@@ -185,8 +185,6 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	fd_heredoc = handle_heredoc(data);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
-	if (data->cmd[data->current_cmd]->cmd_args == NULL)
-		return (pipes);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes, fd_heredoc);

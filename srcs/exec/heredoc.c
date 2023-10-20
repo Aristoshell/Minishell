@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/19 15:19:13 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/19 17:03:23 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,15 +114,16 @@ int	heredoc2(char *limiter, int fd)
 	char	buf[1];
 	char	*lign;
 
-	buf[0] = 0;
 	handle_signals_heredoc();
+	buf[0] = 0;
 	write(1, "heredoc> ", 10);
 	while (1)
 	{
 		lign = "";
 		while (buf[0] != '\n' && g_glb != 130)
 		{
-			read(0, buf, 1);
+			if (read(0, buf, 1) == -1)
+				printf("%d\n",g_glb);
 			lign = add_char(lign, buf[0]);
 			if (buf[0] == '\0')
 			{
@@ -130,9 +131,11 @@ int	heredoc2(char *limiter, int fd)
 				printf("warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
 				break ;
 			}
+			if (g_glb == 130)
+				return (free(lign), fd);
 		}
 		if (((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
-			&& lign[ft_strlen(limiter)] == '\n') || buf[0] == '\0' || g_glb == 130))
+			&& lign[ft_strlen(limiter)] == '\n') || buf[0] == '\0'))
 			return (free(lign), fd);
 		else
 		{
@@ -184,8 +187,8 @@ int	handle_heredoc(t_data *data)
 	{
 		if (f->filetype == heredoc_)
 		{
-			handle_signals_heredoc();
 			cmd->fd_in = heredoc(f->filename, data);
+			handle_signals_prompt();
 			if (!data->cmd[data->current_cmd]->cmd_args)
 			{
 				f->filename = seeded_word(785 * (data->nb_command + 1), \
@@ -199,7 +202,6 @@ int	handle_heredoc(t_data *data)
 					"abcdefghijklmnopqrstuvwxyz0123456789");
 			}
 			cmd->input = file_from;
-			handle_signals_prompt();
 		}
 		l = l->next;
 		if (l)
