@@ -32,7 +32,7 @@ int	ft_fill_cmd(t_cmd *cmd, t_list *list, t_data *data)
 	// }
 	// else
 	// {
-	printf("nb args : %d\n", nb_args);
+	//printf("nb args : %d\n", nb_args);
 	if (nb_args)
 	{
 		if (ft_fill_cmd_init_tab_args(nb_args, cmd) == MEMORY_ERROR_NB)

@@ -1,14 +1,3 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   export.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/16 12:28:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/17 12:10:01 by lmarchai         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
@@ -44,50 +33,3 @@ int	export(t_envlist **env, char *line)
 	return (0);
 }
 
-
-int compareNodes(const t_envlist *node1, const t_envlist *node2)
-{
-    int keyComparison = strcmp(node1->key, node2->key);
-    if (keyComparison != 0)
-        return keyComparison;
-    return strcmp(node1->val, node2->val);
-}
-
-// Function to print the sorted list
-void printlist(t_envlist *node) 
-{
-	while (node != NULL) {
-		printf("Key: %s, Val: %s, Flag: %d\n", node->key, node->val, node->flag);
-		node = node->next;
-	}
-}
-
-void	sort_list(t_envlist *env)
-{
-	//t_envlist *sorted_list;
-	
-	while (env != NULL)
-	{
-		printf("%s\n", env->key);
-		env = env->next;
-		//printf("%s\n", to_comp->key);
-	}
-}
-
-
-void	display_export(t_envlist *env)
-{
-	//t_envlist sorted_list;
-
-	/*sorted_list = */sort_list(env);
-	//printlist(env);
-	while (env)
-	{
-		if (MASK_EXPORT & env->flag)
-			ft_dprintf(STDOUT_FILENO, "export %s\"=%s\"\n", env->key, env->val);
-		env = env->next;
-	}
-}
-
-// export qq chose
-// avec val ou pas

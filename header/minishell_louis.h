@@ -53,7 +53,7 @@ void	bt_exit(t_data *data, int i);
 int		bt_echo(t_data *data, int to_do);
 int		bt_pwd(void);
 int		bt_cd(t_data *data);
-void	display_export(t_envlist *env);
+// void	display_export(t_envlist *env);
 
 void	error_management(t_cmd *cmd, char *str, int exit_val);
 void	error_pipe(void);

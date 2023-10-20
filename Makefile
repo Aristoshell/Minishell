@@ -61,6 +61,8 @@ SRCS_FILES	= 	minishell.c \
 				builtins/cd.c  \
 				builtins/env.c  \
 				builtins/export.c  \
+				builtins/export_display_quicksort.c \
+				builtins/export_display.c \
 				builtins/unset.c  \
 				builtins/exit.c \
 				builtins/echo.c \

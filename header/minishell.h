@@ -257,6 +257,7 @@ void		ft_lst_env_clear(t_envlist **lst);
 void		display_env(t_envlist *env);
 int			unset(t_envlist **env, char *key);
 int			export(t_envlist **env, char *line);
-void		display_export(t_envlist *env);
+int			display_export(t_envlist *env);
+void		ft_quick_sort(char ***tab, int low, int high);
 
 #endif
