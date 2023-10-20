@@ -19,6 +19,39 @@ void	ft_print_redir_files(t_list *list_files)
 	}
 }
 
+// void	ft_display_tab_cmd(t_data *data)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (i < data->nb_command)
+// 	{
+// 		printf(GREEN"cmd %d\n"NC, i);
+// 		while (data->cmd[i])
+// 		{
+// 			j = 0;
+// 			printf(GREEN"REDIRECTIONS\n"NC);
+// 			printf("in : %d, out : %d, more redir ? : %p\n", data->cmd[i]->fd_in, data->cmd[i]->fd_out, data->cmd[i]->list_files);
+// 			if (data->cmd[i]->list_files)
+// 				ft_print_redir_files(data->cmd[i]->list_files);
+// 			printf(GREEN"COMMANDES\n"NC);
+// 			if (data->cmd[i]->cmd_args)
+// 			{
+// 				if (data->cmd[i]->cmd_args[j] && data->cmd[i]->cmd_args[j][0])
+// 				{
+// 					printf("arg[%d], %s\n", j, data->cmd[i]->cmd_args[j]);
+// 					j++;
+// 				}
+// 				printf("arg[%d], %s\n", j, data->cmd[i]->cmd_args[j]);
+// 				printf("\n");
+// 			}
+// 			i++;
+// 		}
+// 	}
+// }
+
+
 void	ft_display_tab_cmd(t_data *data)
 {
 	int	i;

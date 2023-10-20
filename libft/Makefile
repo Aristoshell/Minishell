@@ -27,6 +27,7 @@ SRCS_FILES = 	memory/ft_bzero.c \
 				strings/ft_strdup.c \
 				strings/ft_substr.c \
 				strings/ft_strjoin.c \
+				strings/ft_strjoin_ms.c \
 				strings/ft_strtrim.c \
 				strings/ft_split.c \
 				chars/ft_tolower.c \

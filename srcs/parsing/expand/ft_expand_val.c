@@ -29,6 +29,7 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	char	**splited;
 	t_token	*current_token;
 	int		i;
+	bool	mem_last;
 
 	splited = ft_split(env_val, ' ');
 	if (!splited)
@@ -36,20 +37,17 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	current_token = list->content;
 	current_token->expand = true; // a checker
 	current_token->string = splited[0];
-	// if (splited[1])
-	// 	current_token->join_with_next = true;
+	mem_last = current_token->join_with_next;
 	current_token->join_with_next = false;
 	i = 1;
 	while (splited && splited[i])
 	{
-		if (splited[i + 1] || current_token->join_with_next)
-			//ft_insert_expand_splitted(list, splited[i], true);
-			ft_insert_expand_splitted(list, splited[i], false);
-		else
-			ft_insert_expand_splitted(list, splited[i], false);
+		ft_insert_expand_splitted(list, splited[i], false);
 		i++;
 		list = list->next;
 	}
+	current_token = (t_token *)list->content;
+	current_token->join_with_next = mem_last;
 	return (FUNCTION_SUCCESS);
 }
 

@@ -14,24 +14,28 @@ int	ft_join_nodes(t_list *list)
 		current_token = (t_token *)list->content;
 		while (list && current_token->empty_node) //passer les empty
 		{
+			//printf("Passer les empty : %s\n", current_token->string);
 			list = list->next;
 			if (list)
 				current_token = (t_token *)list->content;
 		}
 		while (list && !current_token->join_with_next) //passer les non join
 		{
+			//printf("Passer les non join: %s\n", current_token->string);
 			list = list->next;
 			if (list)
 				current_token = (t_token *)list->content;
 		}
 		while (list && current_token->join_with_next) 
 		{
+			//printf("Join: %s\n", current_token->string);
 			next_node = list->next;
 			if (next_node)
 				next_token = (t_token *)next_node->content;
-			if (next_node && !next_token->empty_node)
+			if (next_node)
 			{
-				join = ft_strjoin(current_token->string, next_token->string);
+				//printf("On join : %s avec %s\n", current_token->string, next_token->string);
+				join = ft_strjoin_ms(current_token->string, next_token->string);
 				if (!join)
 					return (MEMORY_ERROR_NB);
 				free (current_token->string);

@@ -20,7 +20,7 @@ int	ft_remove_quotes(t_list *list, char quote)
 
 	current_token = (t_token *)list->content;
 	if (!ft_check_empty_line_quote(current_token->string, 0))
-		return (LINE_IS_EMPTY);
+		return (free(current_token->string), current_token->string = NULL, LINE_IS_EMPTY);
 	if (quote == DOUBLE_QUOTE)
 	{
 		current_token->quote = double_q;

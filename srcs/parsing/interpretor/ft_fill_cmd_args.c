@@ -20,6 +20,16 @@ int	ft_fill_cmd_count_args(t_list *list)
 	return (nb_agrs);
 }
 
+
+int	ft_fill_cmd_no_agrs(t_cmd *cmd)
+{
+	cmd->cmd_args = malloc(sizeof(char *) * (1));
+	if (!cmd->cmd_args)
+		return (MEMORY_ERROR_NB);
+	cmd->cmd_args[0] = NULL;
+	return (FUNCTION_SUCCESS);
+}
+
 int	ft_fill_cmd_init_tab_args(int nb_args, t_cmd *cmd)
 {
 	cmd->cmd_args = malloc(sizeof(char *) * (nb_args + 1));

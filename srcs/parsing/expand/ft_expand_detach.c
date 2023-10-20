@@ -6,7 +6,7 @@ int	ft_need_detach(char *str)
 	int		i;
 
 	i = 1;
-	if (str[1] == '?')
+	if (str[1] == '?' )
 	{
 		if (!str[2])
 			return(0);

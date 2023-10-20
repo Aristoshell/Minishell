@@ -103,7 +103,7 @@ int	ft_interprete(t_info *info, t_data *data)
 	// 	return (printf("LINE IS EMPTY\n"), LINE_IS_EMPTY);
 	// }
 	ft_count_cmd(info->tokens, data);
-	//printf("nb cmd : %d\n", data->nb_command);
+	printf("nb cmd : %d\n", data->nb_command);
 	if (ft_init_tab_cmd(data) != FUNCTION_SUCCESS)
 		return (MEMORY_ERROR_NB);
 	if (ft_fill_tab_cmd(data, info->tokens))
