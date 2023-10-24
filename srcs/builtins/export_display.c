@@ -66,11 +66,14 @@ int	display_export(t_envlist *env)
 	size = ft_get_size_export(env);
 	tab = ft_get_copy_export(env, size);
 	if (!tab)
-		return (MEMORY_ERROR_NB);
+		return (MEMORY_ERR_NB);
 	ft_quick_sort(tab, 0, size - 1);
 	while (i < size)
 	{
-		ft_dprintf(STDOUT_FILENO, "export %s=\"%s\"\n", tab[i][0], tab[i][1]);
+		if (tab[i][1])
+			ft_dprintf(STDOUT_FILENO, "export %s=\"%s\"\n", tab[i][0], tab[i][1]);
+		else
+			ft_dprintf(STDOUT_FILENO, "export %s\n", tab[i][0]);
 		i++;
 	}
 	ft_del_sorted_export(tab, size);

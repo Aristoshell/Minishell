@@ -35,7 +35,7 @@ int	ft_init_tab_cmd(t_data *data)
 {
 	data->cmd = malloc(sizeof(t_cmd) * data->nb_command);
 	if (!data->cmd)
-		return (MEMORY_ERROR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
+		return (MEMORY_ERR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
 	return (FUNCTION_SUCCESS);
 }
 
@@ -63,7 +63,8 @@ void	ft_check_builtin(t_cmd	*cmd)
 		else
 			cmd->cmd_type = no;
 	}
-	//printf("builtin : %d\n", cmd->cmd_type);
+	else
+		cmd->cmd_type = no_cmd;
 }
 
 int	ft_fill_tab_cmd(t_data *data, t_list *list)
@@ -77,7 +78,7 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 		// printf("current token : %s\n", curr_token->string);
 		if (ft_init_cmd(data, data->current_cmd)
 			|| ft_fill_cmd(data->cmd[data->current_cmd], list, data))
-			return (MEMORY_ERROR_NB);
+			return (MEMORY_ERR_NB);
 		if (data->cmd[data->current_cmd]->cmd_args)
 			ft_check_builtin(data->cmd[data->current_cmd]);
 		data->current_cmd++;
@@ -94,7 +95,7 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 	return (FUNCTION_SUCCESS);
 }
 
-int	ft_interprete(t_info *info, t_data *data)
+int	ft_interprete(t_data *data)
 {
 	data->nb_command = 0;
 	// if (ft_check_empty_tokens_list(info->tokens))
@@ -102,12 +103,12 @@ int	ft_interprete(t_info *info, t_data *data)
 	// 	ft_reinit_data(data);
 	// 	return (printf("LINE IS EMPTY\n"), LINE_IS_EMPTY);
 	// }
-	ft_count_cmd(info->tokens, data);
+	ft_count_cmd(data->tokens, data);
 	//printf("nb cmd : %d\n", data->nb_command);
-	if (ft_init_tab_cmd(data) != FUNCTION_SUCCESS)
-		return (MEMORY_ERROR_NB);
-	if (ft_fill_tab_cmd(data, info->tokens))
-		return (MEMORY_ERROR_NB);
+	if (ft_init_tab_cmd(data))
+		return (MEMORY_ERR_NB);
+	if (ft_fill_tab_cmd(data, data->tokens))
+		return (MEMORY_ERR_NB);
 	//ft_display_tab_cmd(data);
 	return (0);
 }

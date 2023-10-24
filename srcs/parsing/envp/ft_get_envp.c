@@ -16,7 +16,7 @@ t_envlist	*ft_get_envp(char **envp)
 	{
 		new = ft_new_envvar(envp[i]);
 		if (!new)
-			return (NULL);
+			return (ft_lst_env_clear(&list), MEMORY_ERROR_PT);
 		if (!list)
 			list = new;
 		else

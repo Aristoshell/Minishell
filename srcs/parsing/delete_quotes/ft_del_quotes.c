@@ -12,13 +12,14 @@ void	ft_change_join_bool(t_list *prev, t_list *curr)
 		prev_token->join_with_next = false;
 }
 
-int	ft_del_quotes(t_info *info)
+int	ft_del_quotes(t_data *data)
 {
 	t_list	*list;
 	t_token	*curr_tok;
 	t_list	*prev;
+	int		check;
 
-	list = info->tokens;
+	list = data->tokens;
 	prev = NULL;
 	while (list)
 	{
@@ -26,13 +27,12 @@ int	ft_del_quotes(t_info *info)
 		if (curr_tok->type == type_word)
 		{
 			if (ft_split_quotes(list) != FUNCTION_SUCCESS)
-				return (MEMORY_ERROR_NB); // attention, mal clean
-			if (curr_tok->quote
-				&& ft_remove_quotes(list, curr_tok->string[0]) == LINE_IS_EMPTY)
+				return (MEMORY_ERR_NB);
+			if (curr_tok->quote)
 			{
-				if (prev)
-					ft_change_join_bool(prev, list);
-				curr_tok->empty_node = true;
+				check = ft_remove_quotes(list, curr_tok->string[0]);
+				if (check == MEMORY_ERR_NB)
+					return (MEMORY_ERR_NB);
 			}
 		}
 		prev = list;

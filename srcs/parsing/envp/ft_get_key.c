@@ -13,7 +13,7 @@ char	*ft_get_key(char *line, int sep)
 		size = sep;
 	key = malloc((size + 1) * sizeof(char));
 	if (!key)
-		return (MEMORY_ERROR_PT);// attention a l'erreur renvoyee
-	ft_strlcpy(key, line, (size + 1));
+		return (MEMORY_ERROR_PT);
+	ft_strlcpy(key, line, (size + 1)); // vérifier le retour de cette fonction??
 	return (key);
 }

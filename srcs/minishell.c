@@ -8,16 +8,14 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argv ;
 	if (argc != 1)
-		return (perror(DIS_ERR_ARG), 1);
-	if (!envp)
-		return (perror(DIS_ERR_ENV), 1);
+		return (ft_error(WRONG_NB_ARG, NULL));
+	if (!envp && !envp[0])
+		return (ft_error(NO_ENV, NULL)); // bien vérifier
 	data = NULL;
 	data = ft_create_data(envp);
 	if (!data)
-		return (MEMORY_ERROR_NB); //checker ce que je dois effacer
-	if (prompt(data) == MEMORY_ERROR_NB)
-		return (MEMORY_ERROR_NB); //add ce que je dois effacer
-	if (data)
-		ft_clean_t_data(data);
+		return (ft_error(MEMORY_ERR_NB, NULL), MEMORY_ERR_NB);
+	if (prompt(data) == MEMORY_ERR_NB)
+		return (ft_clean_t_data(data), MEMORY_ERR_NB);
 	return (0);
 }

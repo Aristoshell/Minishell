@@ -30,6 +30,7 @@ void	bt_exit(t_data *data, int i)
 	if (!built_cmd->cmd_args[1])
 	{
 		printf("exit\n");
+		ft_clean_t_data(data);
 		exit(0);
 	}
 	if (ft_isnumber((built_cmd->cmd_args[1])))
@@ -44,7 +45,6 @@ void	bt_exit(t_data *data, int i)
 	}
 	else
 		error_management(built_cmd, "exit: numeric argument required", 2);
-	//free tout ce que l'on peut
 	printf("exit\n");
 	exit(exit_val);
 }

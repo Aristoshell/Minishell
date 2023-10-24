@@ -25,28 +25,28 @@ void	ft_get_i(char quote, char *string, int *i)
 
 int	ft_insert_next_node(int i, t_list *list)
 {
-	t_token	*curr_token;
-	t_token	*new_token;
-	char	*new_word;
+	t_token	*curr_tok;
+	t_token	*nw_tok;
+	char	*nw_word;
 	t_list	*new;
 
-	curr_token = (t_token *)list->content;
-	new_word = ft_substr(curr_token->string, i, ft_strlen(curr_token->string));
-	if (!new_word)
-		return (MEMORY_ERROR_NB);
-	new_token = malloc(sizeof(t_token));
-	if (!new_token)
-		return (MEMORY_ERROR_NB);
-	new_token->string = new_word;
-	new_token->type = type_word;
-	new_token->expand = false;
-	new_token->join_with_next = false;
-	new_token->quote = false;
-	new_token->empty_node = false;
-	new_token->redir_file = false;
-	new = ft_lstnew((void *)new_token);
+	curr_tok = (t_token *)list->content;
+	nw_word = ft_substr(curr_tok->string, i, ft_strlen(curr_tok->string));
+	if (!nw_word)
+		return (MEMORY_ERR_NB);
+	nw_tok = malloc(sizeof(t_token));
+	if (!nw_tok)
+		return (free(nw_word), nw_word = NULL, MEMORY_ERR_NB);
+	nw_tok->string = nw_word;
+	nw_tok->type = type_word;
+	nw_tok->expand = false;
+	nw_tok->join_with_next = false;
+	nw_tok->quote = false;
+	nw_tok->empty_node = false;
+	nw_tok->redir_file = false;
+	new = ft_lstnew((void *)nw_tok);
 	if (!new)
-		return (MEMORY_ERROR_NB);
+		return (free(nw_word), nw_word = NULL, free(nw_tok), nw_tok = NULL, 2);
 	new->next = list->next;
 	list->next = new;
 	return (FUNCTION_SUCCESS);
@@ -68,10 +68,10 @@ int	ft_detach_quotes(int i, t_list *list, char quote)
 			return (FUNCTION_SUCCESS);
 	}
 	if (ft_insert_next_node(i, list) != FUNCTION_SUCCESS)
-		return (MEMORY_ERROR_NB);
+		return (MEMORY_ERR_NB);
 	curr_word = ft_change_current_str(current_token, i, quote);
 	if (!curr_word)
-		return (MEMORY_ERROR_NB);
+		return (MEMORY_ERR_NB);
 	free(current_token->string);
 	current_token->string = curr_word;
 	return (FUNCTION_SUCCESS);
@@ -90,7 +90,11 @@ int	ft_split_quotes(t_list *list)
 	{
 		quote = ft_is_quote(current_token->string[i]);
 		if (quote)
-			return (ft_detach_quotes(i, list, quote));
+		{
+			if (ft_detach_quotes(i, list, quote))
+				return (MEMORY_ERR_NB);
+			return (FUNCTION_SUCCESS); // pourrait etre racourci avec return la fonction direct
+		}
 		i++;
 	}
 	return (FUNCTION_SUCCESS);

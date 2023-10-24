@@ -8,7 +8,7 @@ int	ft_insert_expand_splitted(t_list *list, char *new_word, bool join_next)
 
 	new_token = malloc(sizeof(t_token));
 	if (!new_token)
-		return (MEMORY_ERROR_NB);
+		return (MEMORY_ERR_NB);
 	new_token->string = new_word;
 	new_token->type = type_word;
 	new_token->expand = false;
@@ -18,7 +18,7 @@ int	ft_insert_expand_splitted(t_list *list, char *new_word, bool join_next)
 	new_token->redir_file = false;
 	new = ft_lstnew((void *)new_token);
 	if (!new)
-		return (MEMORY_ERROR_NB);
+		return (free(new_token), new_token = NULL, MEMORY_ERR_NB);
 	new->next = list->next;
 	list->next = new;
 	return (FUNCTION_SUCCESS);
@@ -33,7 +33,7 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 
 	splited = ft_split(env_val, ' ');
 	if (!splited)
-		return (MEMORY_ERROR_NB);
+		return (MEMORY_ERR_NB);
 	current_token = list->content;
 	current_token->expand = true; // a checker
 	current_token->string = splited[0];
@@ -42,7 +42,8 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	i = 1;
 	while (splited && splited[i])
 	{
-		ft_insert_expand_splitted(list, splited[i], false);
+		if (ft_insert_expand_splitted(list, splited[i], false))
+			return (ft_free_2d_array(splited), splited = NULL, MEMORY_ERR_NB);
 		i++;
 		list = list->next;
 	}
@@ -60,7 +61,12 @@ int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 	if (curr_token->string[0] == '?')
 	{
 		free(curr_token->string);
-		curr_token->string = ft_strdup(ft_itoa(data->exec_val));//verif retour itoa + ft_strdup en deux fois
+		curr_token->string = NULL;
+		// printf(YELLOW"EXEC VAL = %d\n"NC, data->exec_val);
+		char *nb = ft_itoa(data->exec_val);
+		if (!nb)
+			return (MEMORY_ERR_NB);
+		curr_token->string = nb;
 	}
 	else
 	{
@@ -68,6 +74,7 @@ int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 		while (env && ft_strncmp(curr_token->string, (const char *)env->key, len))
 			env = env->next;
 		free(curr_token->string); //maybe invalide free
+		curr_token->string = NULL;
 		if (!env)
 		{
 			curr_token->empty_node = true;
@@ -77,10 +84,10 @@ int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 		{
 			curr_token->string = ft_strdup(env->val);
 			if (!curr_token->string)
-				return (MEMORY_ERROR_NB);
+				return (MEMORY_ERR_NB);
 		}
-		else
-			ft_expand_val_split(list, env->val); //add verif
+		else if (ft_expand_val_split(list, env->val))
+			return (MEMORY_ERR_NB);
 	}
 	return (FUNCTION_SUCCESS);
 }

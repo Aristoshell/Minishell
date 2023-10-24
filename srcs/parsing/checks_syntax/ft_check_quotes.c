@@ -28,3 +28,12 @@ char	ft_check_open_quote(const char *input)
 	}
 	return (delimiter);
 }
+
+bool	ft_check_open_quote_bool(const char *input)
+{
+	if (ft_check_open_quote(input))
+		return (ft_error(SYNTAX_QUOTE_ERROR, NULL), true);
+	else
+		return (false);
+}
+

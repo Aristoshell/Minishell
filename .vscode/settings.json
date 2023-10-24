@@ -1,6 +1,10 @@
 {
 	"C_Cpp.errorSquiggles": "disabled",
 	"files.associations": {
-		"minishell_louis.h": "c"
+		"minishell_louis.h": "c",
+		"array": "c",
+		"string": "c",
+		"string_view": "c",
+		"vector": "c"
 	}
 }

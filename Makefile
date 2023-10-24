@@ -1,17 +1,8 @@
 SRCS_FILES	= 	minishell.c \
+				manage_t_data.c \
 				prompt.c \
+				utils.c \
 				errors/ft_errors.c \
-				manage_data_structs/clean/ft_clean_string.c \
-				manage_data_structs/clean/ft_clean_t_data.c \
-				manage_data_structs/clean/ft_clean_t_envlist_node.c \
-				manage_data_structs/clean/ft_clean_t_envlist.c \
-				manage_data_structs/clean/ft_clean_t_info.c \
-				manage_data_structs/clean/ft_clean_t_token.c \
-				manage_data_structs/clean/ft_clean_t_cmd.c \
-				manage_data_structs/clean/ft_clean_2d_array.c \
-				manage_data_structs/clean/ft_clean_2d_array_struct.c \
-				manage_data_structs/set/set_t_data.c \
-				manage_data_structs/set/set_t_info.c \
 				parsing/bools/ft_check_empty_line.c \
 				parsing/bools/ft_is_cmd_separator.c \
 				parsing/bools/ft_is_dollar.c \
@@ -36,6 +27,8 @@ SRCS_FILES	= 	minishell.c \
 				parsing/envp/ft_new_envvar.c \
 				parsing/envp/ft_print_env.c \
 				parsing/envp/ft_set_flag.c \
+				parsing/envp/lists/ft_lst_env_delone.c \
+				parsing/envp/lists/ft_lst_env_clear.c \
 				parsing/expand/ft_expand_detach.c \
 				parsing/expand/ft_expand_join_nodes.c \
 				parsing/expand/ft_expand_val.c \
