@@ -103,5 +103,5 @@ char	*get_cmd(char **paths, char *cmd)
 		free(to_try);
 		paths++;
 	}
-	return (printf("No such file or directory\n"), NULL);
+	return (printf("command not found\n"), NULL);
 }

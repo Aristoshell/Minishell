@@ -98,7 +98,10 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 				if (prev_in)
 					close(cmd->fd_in);
 				if (access(f->filename, F_OK) == -1)
+				{
+					cmd->fd_in = -1;
 					printf("%s No such file or directory\n", f->filename);
+				}
 				else
 				{
 					cmd->fd_in = open(f->filename, O_RDONLY);
@@ -113,7 +116,10 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 				if (prev_out)
 					close (cmd->fd_out);
 				if (access(f->filename, F_OK) == -1)
+				{
+					cmd->fd_out = -1;
 					printf("%s No such file or directory\n", f->filename);
+				}
 				else
 				{
 					cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
@@ -158,10 +164,10 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes, int fd_heredoc)
 
 	cmd = data->cmd[data->current_cmd];
 	set_redir(cmd, cmd->list_files, fd_heredoc);
-	// if (cmd->fd_in == -1)
-	// 	return (pipes);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
+	if (cmd->fd_in == -1)
+		cmd->cmd_type = no_cmd;
 	if (cmd->input == pipe_in_ || cmd->output == pipe_out_)
 	{
 		if (cmd->input == pipe_in_ && cmd->output != pipe_out_)
