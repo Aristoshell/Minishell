@@ -41,7 +41,7 @@ int	ft_init_tab_cmd(t_data *data)
 
 void	ft_check_builtin(t_cmd	*cmd)
 {
-	if (cmd->cmd_args[0])
+	if (cmd->cmd_args && cmd->cmd_args[0])
 	{
 		if (!ft_strncmp("echo", cmd->cmd_args[0], (ft_strlen("echo") + 1)))
 			cmd->cmd_type = cmd_echo;
@@ -79,8 +79,7 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 		if (ft_init_cmd(data, data->current_cmd)
 			|| ft_fill_cmd(data->cmd[data->current_cmd], list, data))
 			return (MEMORY_ERR_NB);
-		if (data->cmd[data->current_cmd]->cmd_args)
-			ft_check_builtin(data->cmd[data->current_cmd]);
+		ft_check_builtin(data->cmd[data->current_cmd]);
 		data->current_cmd++;
 		while (curr_token->type != type_pipe)
 		{

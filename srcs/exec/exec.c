@@ -185,10 +185,10 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	fd_heredoc = handle_heredoc(data);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
-	printf("%d\n",data->cmd[data->current_cmd]->cmd_type);
+	// printf("%d\n",data->cmd[data->current_cmd]->cmd_type);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
-		printf("test\n");
+		// printf("test\n");
 		pipes = handle_redirection(data, pipes, fd_heredoc);
 		handle_builtins(data);
 		return (pipes);
@@ -266,6 +266,16 @@ int	cross_array_list(t_data *data)
 		close_pipes(data, pipe_);
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
-	close_files(data);
+	// close_files(data);
+	if (data->cmd[data->current_cmd - 1]->fd_in)
+	{
+		printf("fd in: %d\n", data->cmd[data->current_cmd]->fd_in);
+		close(data->cmd[data->current_cmd]->fd_in);
+	}
+	if (data->cmd[data->current_cmd - 1]->fd_out)
+	{
+		printf("fd out: %d\n", data->cmd[data->current_cmd]->fd_out);
+		close(data->cmd[data->current_cmd]->fd_out);
+	}
 	return (0);
 }
