@@ -101,14 +101,14 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 				if (access(f->filename, F_OK) == -1)
 				{
 					cmd->fd_in = -1;
-					printf("%s No such file or directory\n", f->filename);
+					ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, f->filename);
 					fail_open = 1;
 				}
 				else
 				{
 					cmd->fd_in = open(f->filename, O_RDONLY);
 					if (cmd->fd_in == -1)
-						printf("%s Permission denied\n", f->filename);
+						ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 					prev_in = true;
 				}
 			}
@@ -120,7 +120,7 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 				cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
 				if (cmd->fd_out == -1)
 				{
-					printf("%s Permission denied\n", f->filename);
+					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 					cmd->fd_out = -1;
 				}
 				prev_out = true;
@@ -133,7 +133,7 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 				cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
 				if (cmd->fd_out == -1)
 				{
-					printf("%s Permission denied\n", f->filename);
+					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 					cmd->fd_out = -1;
 				}
 				prev_out = true;
