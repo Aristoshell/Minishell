@@ -74,6 +74,8 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 {
 	t_files	*f;
 	int		fail_open;
+	bool	prev_in = false;
+	bool prev_out = false;
 
 	fail_open = 0;
 	if (!l)
@@ -85,23 +87,56 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 		{
 			if (f->filetype == heredoc_)
 			{
+				if (prev_in)
+					close(cmd->fd_in);
 				cmd->fd_in = fd_heredoc;
 				cmd->input = file_from;
+				prev_in = true;
 			}
 			if (f->filetype == file_from)
 			{
-				cmd->fd_in = open(f->filename, O_RDONLY);
-				cmd->input = file_from;
+				if (prev_in)
+					close(cmd->fd_in);
+				if (access(f->filename, F_OK) == -1)
+					printf("%s No such file or directory\n", f->filename);
+				else
+				{
+					cmd->fd_in = open(f->filename, O_RDONLY);
+					if (cmd->fd_in == -1)
+						printf("%s Permission denied\n", f->filename);
+					cmd->input = file_from;
+					prev_in = true;
+				}
 			}
 			else if (f->filetype == file_to)
 			{
-				cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
-				cmd->output = file_to;
+				if (prev_out)
+					close (cmd->fd_out);
+				if (access(f->filename, F_OK) == -1)
+					printf("%s No such file or directory\n", f->filename);
+				else
+				{
+					cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
+					if (cmd->fd_out == -1)
+						printf("%s Permission denied\n", f->filename);
+					cmd->output = file_to;
+					prev_out = true;
+				}
 			}
 			else if (f->filetype == append_)
 			{
-				cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
-				cmd->fd_out = file_to;
+				if (prev_out)
+					close (cmd->fd_out);
+				if (access(f->filename, F_OK) == -1)
+					printf("%s No such file or directory\n", f->filename);
+				else
+				{
+					cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
+					if (cmd->fd_out == -1)
+						printf("%s Permission denied\n", f->filename);
+					cmd->output = file_to;
+					prev_out = true;
+				}
 			}
 			else if (f->filetype == pipe_in_)
 				cmd->input = pipe_in_;
@@ -123,6 +158,8 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes, int fd_heredoc)
 
 	cmd = data->cmd[data->current_cmd];
 	set_redir(cmd, cmd->list_files, fd_heredoc);
+	// if (cmd->fd_in == -1)
+	// 	return (pipes);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
 	if (cmd->input == pipe_in_ || cmd->output == pipe_out_)

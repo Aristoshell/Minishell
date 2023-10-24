@@ -63,7 +63,7 @@ char	*nopath(char *cmd)
 			return (cmd);
 		}
 	}
-	return (NULL);
+	return (printf("No such file or directory\n"), NULL);
 }
 
 /*
@@ -75,25 +75,33 @@ char	*get_cmd(char **paths, char *cmd)
 	char	*tmp;
 	char	*to_try;
 
-	if (!cmd)
-		return (/*printf("1\n"), */NULL);
-	if (!paths)\
-		return (/*printf("2\n"), */nopath(cmd));
-	if (ft_strchr(cmd, '/'))
+	// if (!paths)
+	// 	return (nopath(cmd));
+	if (!paths || ft_strchr(cmd, '/'))
 	{
-		if (access(cmd, F_OK | X_OK) == 0)
-			return (/*printf("3\n"), */cmd);
-		return (/*printf("4\n"), */cmd);
+		if (access(cmd, F_OK) == 0)
+		{
+			if (access(cmd, X_OK) == 0)
+				return (cmd);
+			else
+				return (printf("Permission denied\n"), NULL);
+		}
+		return (printf("No such file or directory\n"), NULL);
 	}
 	while (*paths)
 	{
 		tmp = ft_strjoin(*paths, "/");
 		to_try = ft_strjoin(tmp, cmd);
 		free(tmp);
-		if (access(to_try, 0) == 0)
-			return (/*printf("5\n"), */to_try);
+		if (access(to_try, F_OK) == 0)
+		{
+			if (access(to_try, X_OK) == 0)
+				return(to_try);
+			else
+				return (printf("Permission denied\n"), NULL);
+		}
 		free(to_try);
 		paths++;
 	}
-	return (/*printf("6\n"), */cmd);
+	return (printf("No such file or directory\n"), NULL);
 }

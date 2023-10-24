@@ -112,8 +112,10 @@ int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
 	else
 		cmd->path_cmd = NULL;
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
+	if (!exec)
+		exit(1);
 	execve(exec, cmd->cmd_args, envp);
-	ft_error(WRONG_CMD_ARG, cmd->cmd_args[0]);
+	printf("command not found\n"); //free tout le bordel et close fd 
 	exit(1);
 }
 
@@ -267,7 +269,7 @@ int	cross_array_list(t_data *data)
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	// close_files(data);
-	if (data->cmd[data->current_cmd - 1]->fd_in)
+	/*if (data->cmd[data->current_cmd - 1]->fd_in)
 	{
 		printf("fd in: %d\n", data->cmd[data->current_cmd]->fd_in);
 		close(data->cmd[data->current_cmd]->fd_in);
@@ -276,6 +278,6 @@ int	cross_array_list(t_data *data)
 	{
 		printf("fd out: %d\n", data->cmd[data->current_cmd]->fd_out);
 		close(data->cmd[data->current_cmd]->fd_out);
-	}
+	}*/
 	return (0);
 }

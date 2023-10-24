@@ -84,6 +84,10 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 	return (0);
 }
 
+/*
+arg jamais pris en compte il faut 
+*/
+
 int	bt_cd(t_data *data)
 {
 	t_cmd	*cmd;

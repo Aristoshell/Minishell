@@ -37,6 +37,7 @@ int	bt_echo(t_data *data, int to_do)
 	i = 1;
 	n_option = 0;
 
+	//il faut pouvoir passer un nombre de n indefini apres le -n
 	if (cmd->cmd_args[1] != NULL)
 	{
 		if (ft_strncmp(cmd->cmd_args[1], "-n", ft_strlen(cmd->cmd_args[1])) == 0)
