@@ -63,7 +63,7 @@ char	*nopath(char *cmd)
 			return (cmd);
 		}
 	}
-	return (printf("No such file or directory\n"), NULL);
+	return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL);
 }
 
 /*
@@ -82,11 +82,18 @@ char	*get_cmd(char **paths, char *cmd)
 		if (access(cmd, F_OK) == 0)
 		{
 			if (access(cmd, X_OK) == 0)
+			{
+				// ft_dprintf(STDERR_FILENO, "0	");
 				return (cmd);
+			}
 			else
-				return (printf("Permission denied\n"), NULL);
+			{
+				// ft_dprintf(STDERR_FILENO, "1	");
+				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, cmd), NULL);
+			}
 		}
-		return (printf("No such file or directory\n"), NULL);
+		// ft_dprintf(STDERR_FILENO, "2	");
+		return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL);
 	}
 	while (*paths)
 	{
@@ -96,12 +103,19 @@ char	*get_cmd(char **paths, char *cmd)
 		if (access(to_try, F_OK) == 0)
 		{
 			if (access(to_try, X_OK) == 0)
+			{
+				// ft_dprintf(STDERR_FILENO, "3	");
 				return(to_try);
+			}
 			else
-				return (printf("Permission denied\n"), NULL);
+			{
+				// ft_dprintf(STDERR_FILENO, "4	");
+				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, to_try), NULL);
+			}
 		}
 		free(to_try);
 		paths++;
 	}
-	return (printf("command not found\n"), NULL);
+	// ft_dprintf(STDERR_FILENO, "5	");
+	return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL);
 }
