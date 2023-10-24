@@ -95,61 +95,53 @@ int	set_redir(t_cmd *cmd, t_list *l, int fd_heredoc)
 			}
 			if (f->filetype == file_from)
 			{
+				cmd->input = file_from;
 				if (prev_in)
 					close(cmd->fd_in);
 				if (access(f->filename, F_OK) == -1)
 				{
 					cmd->fd_in = -1;
 					printf("%s No such file or directory\n", f->filename);
+					fail_open = 1;
 				}
 				else
 				{
 					cmd->fd_in = open(f->filename, O_RDONLY);
 					if (cmd->fd_in == -1)
 						printf("%s Permission denied\n", f->filename);
-					cmd->input = file_from;
 					prev_in = true;
 				}
 			}
 			else if (f->filetype == file_to)
 			{
+				cmd->output = file_to;
 				if (prev_out)
-					close (cmd->fd_out);
-				if (access(f->filename, F_OK) == -1)
+				close (cmd->fd_out);
+				cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
+				if (cmd->fd_out == -1)
 				{
+					printf("%s Permission denied\n", f->filename);
 					cmd->fd_out = -1;
-					printf("%s No such file or directory\n", f->filename);
 				}
-				else
-				{
-					cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
-					if (cmd->fd_out == -1)
-						printf("%s Permission denied\n", f->filename);
-					cmd->output = file_to;
-					prev_out = true;
-				}
+				prev_out = true;
 			}
 			else if (f->filetype == append_)
 			{
+				cmd->output = file_to;
 				if (prev_out)
-					close (cmd->fd_out);
-				if (access(f->filename, F_OK) == -1)
-					printf("%s No such file or directory\n", f->filename);
-				else
+				close (cmd->fd_out);
+				cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
+				if (cmd->fd_out == -1)
 				{
-					cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
-					if (cmd->fd_out == -1)
-						printf("%s Permission denied\n", f->filename);
-					cmd->output = file_to;
-					prev_out = true;
+					printf("%s Permission denied\n", f->filename);
+					cmd->fd_out = -1;
 				}
+				prev_out = true;
 			}
 			else if (f->filetype == pipe_in_)
 				cmd->input = pipe_in_;
 			else if (f->filetype == pipe_out_)
 				cmd->output = pipe_out_;
-			else if (cmd->fd_in == -1 || cmd->fd_out == -1)
-				fail_open = 1;
 		}
 		l = l->next;
 		if (l)
@@ -166,8 +158,8 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes, int fd_heredoc)
 	set_redir(cmd, cmd->list_files, fd_heredoc);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
-	if (cmd->fd_in == -1)
-		cmd->cmd_type = no_cmd;
+	if (cmd->fd_in == -1 || cmd->fd_out == -1)
+		return (cmd->cmd_type = no_cmd, NULL);
 	if (cmd->input == pipe_in_ || cmd->output == pipe_out_)
 	{
 		if (cmd->input == pipe_in_ && cmd->output != pipe_out_)

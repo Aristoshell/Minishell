@@ -112,7 +112,7 @@ int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
 	else
 		cmd->path_cmd = NULL;
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
-	if (!exec)
+	if (!exec || cmd->cmd_type == no_cmd)
 		exit(1);
 	execve(exec, cmd->cmd_args, envp);
 	printf("command not found\n"); //free tout le bordel et close fd 
@@ -218,23 +218,14 @@ free tout
 void	close_files(t_data *data)
 {
 	int		i;
-	t_files	*f;
-	t_list	*l;
 
 	i = 0;
 	while (i < data->nb_command)
 	{
-		l = data->cmd[i]->list_files;
-		if (l)
-			f = (t_files *)l->content;
-		while (l)
-		{
-			if (f->fd != -1)
-				close(f->fd);
-			l = l->next;
-			if (l)
-				f = (t_files *)l->content;
-		}
+		if (data->cmd[i]->input == file_from && data->cmd[i]->fd_out != -1)
+			close(data->cmd[i]->fd_in);
+		if (data->cmd[i]->input == file_to && data->cmd[i]->fd_in != -1)
+			close(data->cmd[i]->fd_in);
 		i++;
 	}
 }
@@ -268,16 +259,6 @@ int	cross_array_list(t_data *data)
 		close_pipes(data, pipe_);
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
-	// close_files(data);
-	/*if (data->cmd[data->current_cmd - 1]->fd_in)
-	{
-		printf("fd in: %d\n", data->cmd[data->current_cmd]->fd_in);
-		close(data->cmd[data->current_cmd]->fd_in);
-	}
-	if (data->cmd[data->current_cmd - 1]->fd_out)
-	{
-		printf("fd out: %d\n", data->cmd[data->current_cmd]->fd_out);
-		close(data->cmd[data->current_cmd]->fd_out);
-	}*/
+	close_files(data);
 	return (0);
 }
