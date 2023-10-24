@@ -98,6 +98,7 @@ int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
 	t_cmd	*cmd;
 	char	**envp;
 
+	printf("c'est la merde");
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes, fd_heredoc);
@@ -190,7 +191,6 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	// printf("%d\n",data->cmd[data->current_cmd]->cmd_type);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
-		// printf("test\n");
 		pipes = handle_redirection(data, pipes, fd_heredoc);
 		handle_builtins(data);
 		return (pipes);
@@ -257,6 +257,7 @@ int	cross_array_list(t_data *data)
 	}
 	if (data->nb_command > 1)
 		close_pipes(data, pipe_);
+	//printf("test\n");
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	close_files(data);

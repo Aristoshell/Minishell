@@ -24,15 +24,9 @@ void	close_list_args(t_cmd **cmd, int len_list,
 	while (i < len_list)
 	{
 		if (cmd[i]->input != pipe_in_)
-		{
-			if (cmd[i]->fd_in == 0)
-				dup2(stdin_save, 0);
-		}
+			dup2(stdin_save, 0);
 		if (cmd[i]->output != pipe_out_)
-		{
-			if (cmd[i]->fd_out == 1)
-				dup2(stdout_save, 1);
-		}
+			dup2(stdout_save, 1);
 		i++;
 	}
 	close(stdin_save);
