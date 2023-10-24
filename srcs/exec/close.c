@@ -35,4 +35,6 @@ void	close_list_args(t_cmd **cmd, int len_list,
 		}
 		i++;
 	}
+	close(stdin_save);
+	close(stdout_save);
 }

@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 22:15:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/19 17:05:21 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:58:23 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,13 @@ void	sighandler_heredoc(int sig)
 	(void)sig;
 	printf("\n");
 	g_glb = 130;
-	return ;
 }
 
-void    handle_signals_heredoc()
+void handle_signals_heredoc()
 {
-	signal(SIGINT, &sighandler_heredoc);
-	signal(SIGQUIT, SIG_IGN);
+    signal(SIGINT, sighandler_heredoc);
+    signal(SIGQUIT, SIG_IGN);
 }
-
 void	sighandler(int signum)
 {
 	(void)signum;

@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/19 17:03:23 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/23 12:58:44 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,67 +109,47 @@ char	*add_char(char *s, char c)
 	return (free(s), res);
 }
 
-int	heredoc2(char *limiter, int fd)
+int	heredoc2(const char *limiter, int fd)
 {
-	char	buf[1];
-	char	*lign;
+	char	input;
 
 	handle_signals_heredoc();
-	buf[0] = 0;
-	write(1, "heredoc> ", 10);
 	while (1)
 	{
-		lign = "";
-		while (buf[0] != '\n' && g_glb != 130)
+		if (read(0, &input, 1) == -1)
 		{
-			if (read(0, buf, 1) == -1)
-				printf("%d\n",g_glb);
-			lign = add_char(lign, buf[0]);
-			if (buf[0] == '\0')
-			{
-				printf("\n");
-				printf("warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
-				break ;
-			}
-			if (g_glb == 130)
-				return (free(lign), fd);
+			perror("read");
+			break ;
 		}
-		if (((ft_strncmp(lign, limiter, ft_strlen(limiter)) == 0
-			&& lign[ft_strlen(limiter)] == '\n') || buf[0] == '\0'))
-			return (free(lign), fd);
-		else
+		if (input == '\n')
+			break ;
+		if (input == 0)
 		{
-			write(fd, lign, ft_strlen(lign));
-			buf[0] = '\0';
+			printf("\n");
+			printf("warning: here-document at line 1 delimited\
+				 by end-of-file (wanted `%s')\n", limiter);
+			break ;
 		}
-		free(lign);
-		write(1, "heredoc> ", 10);
+		if (g_glb == 130)
+		{
+			printf("hello\n");
+			break ;
+		}
+		write(fd, &input, 1);
 	}
-	return (free(lign), fd);
+	return (fd);
 }
 
-int	heredoc(char *limiter, t_data *data)
+int heredoc(char *limiter, t_data *data)
 {
-	int		fd;
-	char	*lign;
+	int result;
+	int fd;
 
-	if (!limiter)
-		return (0);
-	if (!data->cmd[data->current_cmd]->cmd_args)
-		lign = seeded_word(785 * (data->nb_command + 1), "abcdefghijklmnopqrstuvwxyz0123456789");
-	else
-		lign = seeded_word(total_ascii(data->cmd[data->current_cmd]->cmd_args, data->current_cmd), "abcdefghijklmnopqrstuvwxyz0123456789");
-	if (!lign)
+	fd = data->cmd[data->current_cmd]->fd_in;
+	if (fd == -1)
 		return (-1);
-	lign = ft_strjoin_free(lign, ".seed");
-	if (!lign)
-		return (free(lign), -1);
-	fd = open(lign, O_CREAT | O_RDWR | O_TRUNC, 0666);
-	if (heredoc2(limiter, fd) == -1)
-		return (-1);
-	close(fd);
-	fd = open(lign, O_RDWR);
-	return (free(lign), fd);
+	result = heredoc2(limiter, fd);
+	return (result);
 }
 
 int	handle_heredoc(t_data *data)

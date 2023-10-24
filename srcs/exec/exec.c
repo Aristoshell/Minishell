@@ -7,7 +7,7 @@ int g_glb = 0;
 void	wait_childs(t_data *data)
 {
 	int	i;
-	int status;
+	int	status;
 
 	i = 0;
 	while (i < data->nb_command)
@@ -34,8 +34,9 @@ int	ft_envlstsize(t_envlist *lst)
 	i = 0;
 	while (lst != NULL)
 	{
+		if (lst->flag == MASK_ENV)
+			i++;
 		lst = lst->next;
-		i++;
 	}
 	return (i);
 }
@@ -46,7 +47,8 @@ char	*join_lign_env(t_envlist *list)
 	size_t		j;
 	char		*ret;
 
-	ret = malloc(sizeof(char) * ft_strlen(list->key) + ft_strlen(list->val) + 2);
+	ret = malloc(sizeof(char) * ft_strlen(list->key) \
+		+ ft_strlen(list->val) + 2);
 	i = 0;
 	j = 0;
 	while (i < ft_strlen(list->key))
@@ -78,9 +80,12 @@ char	**list_to_array(t_envlist *list)
 	j = 0;
 	while (j < i)
 	{
-		ret[j] = join_lign_env(list);
+		if (list->flag == MASK_ENV)
+		{
+			ret[j] = join_lign_env(list);
+			j++;
+		}
 		list = list->next;
-		j++;
 	}
 	ret[j] = NULL;
 	return (ret);
@@ -106,14 +111,9 @@ int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
 		cmd->path_cmd = ft_split(path_temp, ':');
 	else
 		cmd->path_cmd = NULL;
-	if (!cmd->cmd_args)
-	{
-		printf("error_cmd\n");
-		exit(1);
-	}
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	execve(exec, cmd->cmd_args, envp);
-	printf("errorcmd\n");
+	ft_error(WRONG_CMD_ARG, cmd->cmd_args[0]);
 	exit(1);
 }
 
@@ -185,8 +185,10 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	fd_heredoc = handle_heredoc(data);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
+	printf("%d\n",data->cmd[data->current_cmd]->cmd_type);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
+		printf("test\n");
 		pipes = handle_redirection(data, pipes, fd_heredoc);
 		handle_builtins(data);
 		return (pipes);
@@ -211,6 +213,30 @@ attente des childs
 free tout
 */
 
+void	close_files(t_data *data)
+{
+	int		i;
+	t_files	*f;
+	t_list	*l;
+
+	i = 0;
+	while (i < data->nb_command)
+	{
+		l = data->cmd[i]->list_files;
+		if (l)
+			f = (t_files *)l->content;
+		while (l)
+		{
+			if (f->fd != -1)
+				close(f->fd);
+			l = l->next;
+			if (l)
+				f = (t_files *)l->content;
+		}
+		i++;
+	}
+}
+
 int	cross_array_list(t_data *data)
 {
 	t_pipe	*pipe_;
@@ -228,7 +254,6 @@ int	cross_array_list(t_data *data)
 			error_malloc();
 		if (pipe(pipe_->tube[1]) != 0)
 			error_pipe();
-			//error(free_data)
 	}
 	while (data->current_cmd < data->nb_command)
 	{
@@ -241,7 +266,6 @@ int	cross_array_list(t_data *data)
 		close_pipes(data, pipe_);
 	wait_childs(data);
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
-	close(temp_stdin);
-	close(temp_stdout);
+	close_files(data);
 	return (0);
 }
