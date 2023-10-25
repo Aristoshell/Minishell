@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/23 12:58:44 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/25 20:04:49 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,75 +81,39 @@ char	*seeded_word(long nbr, char *alnum)
 	return (word);
 }
 
-char	*add_char(char *s, char c)
-{
-	int				len_tot;
-	unsigned int	i;
-	char			*res;
-
-	if (s[0] == '\0')
-	{
-		res = malloc(sizeof(char) * 2);
-		if (!res)
-			return (NULL);
-		return (res[0] = c, res[1] = 0, res);
-	}
-	len_tot = ft_strlen(s);
-	res = malloc(sizeof(char) * len_tot + 2);
-	if (!res)
-		return (NULL);
-	i = 0;
-	while (s[i])
-	{
-		res[i] = s[i];
-		i++;
-	}
-	res[i] = c;
-	res[i + 1] = '\0';
-	return (free(s), res);
-}
-
 int	heredoc2(const char *limiter, int fd)
 {
-	char	input;
+	const char	*input;
 
 	handle_signals_heredoc();
-	while (1)
+	while(1)
 	{
-		if (read(0, &input, 1) == -1)
-		{
-			perror("read");
-			break ;
-		}
-		if (input == '\n')
-			break ;
-		if (input == 0)
-		{
-			printf("\n");
-			printf("warning: here-document at line 1 delimited\
-				 by end-of-file (wanted `%s')\n", limiter);
-			break ;
-		}
+		input = readline(">");
 		if (g_glb == 130)
+			return (130);
+		if (!input || input[0] == 0)
+			return (printf("aristoshell: warning: here-document at line 1 delimited by end-of-file (wanted `stop')\n"), 0);
+		if (ft_strncmp(input, limiter, ft_strlen(input)) == 0)
+			return (0);
+		else
 		{
-			printf("hello\n");
-			break ;
+			ft_putstr_fd((char *)input, fd);
+			write(fd, "\n", 1);
 		}
-		write(fd, &input, 1);
+		input = NULL;
 	}
-	return (fd);
+	return (0);
 }
 
-int heredoc(char *limiter, t_data *data)
+int heredoc(char *filename, char *limiter)
 {
-	int result;
 	int fd;
-
-	fd = data->cmd[data->current_cmd]->fd_in;
-	if (fd == -1)
-		return (-1);
-	result = heredoc2(limiter, fd);
-	return (result);
+	
+	fd = open(filename, O_CREAT | O_RDWR | O_TRUNC, 0666);
+	if (fd != -1)
+		heredoc2(limiter, fd);
+	close (fd);
+	return (fd);
 }
 
 int	handle_heredoc(t_data *data)
@@ -157,6 +121,7 @@ int	handle_heredoc(t_data *data)
 	t_files	*f;
 	t_list	*l;
 	t_cmd	*cmd;
+	char 	*limiter;
 
 	cmd = data->cmd[data->current_cmd];
 	l = cmd->list_files;
@@ -167,8 +132,7 @@ int	handle_heredoc(t_data *data)
 	{
 		if (f->filetype == heredoc_)
 		{
-			cmd->fd_in = heredoc(f->filename, data);
-			handle_signals_prompt();
+			limiter = f->filename;
 			if (!data->cmd[data->current_cmd]->cmd_args)
 			{
 				f->filename = seeded_word(785 * (data->nb_command + 1), \
@@ -181,7 +145,8 @@ int	handle_heredoc(t_data *data)
 					data->current_cmd), \
 					"abcdefghijklmnopqrstuvwxyz0123456789");
 			}
-			cmd->input = file_from;
+			cmd->fd_in = heredoc(f->filename, limiter);
+			handle_signals_prompt();
 		}
 		l = l->next;
 		if (l)

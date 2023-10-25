@@ -36,8 +36,8 @@ t_pipe	*new_pipes(t_pipe *pipes, int i);
 void	wait_childs(t_data *data);
 int		child_process(t_data *data, t_pipe *pipes, int fd_heredoc);
 
-t_pipe	*handle_redirection(t_data *data, t_pipe *pipes, int fd_heredoc);
-int		set_redir(t_cmd *cmd, t_list *l, int fd_heredoc);
+t_pipe	*handle_redirection(t_data *data, t_pipe *pipes);
+int		set_redir(t_cmd *cmd, t_list *l);
 void	handle_builtins(t_data *data);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
@@ -64,7 +64,7 @@ void	error_fork(void);
 void    handle_signals_heredoc();
 void    handle_signals_prompt();
 int		handle_heredoc(t_data *data);
-int		heredoc(char *limiter, t_data *data);
+int		heredoc(char *filemame, char *limiter);
 
 int		ft_envlstsize(t_envlist *lst);
 char	**list_to_array(t_envlist *list);
