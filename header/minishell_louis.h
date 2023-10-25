@@ -34,7 +34,7 @@ int		cross_array_list(t_data *data);
 t_pipe	*gen_child(t_data *data, t_pipe *pipes);
 t_pipe	*new_pipes(t_pipe *pipes, int i);
 void	wait_childs(t_data *data);
-int		child_process(t_data *data, t_pipe *pipes, int fd_heredoc);
+int		child_process(t_data *data, t_pipe *pipes);
 
 t_pipe	*handle_redirection(t_data *data, t_pipe *pipes);
 int		set_redir(t_cmd *cmd, t_list *l);

@@ -91,7 +91,7 @@ char	**list_to_array(t_envlist *list)
 	return (ret);
 }
 
-int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
+int	child_process(t_data *data, t_pipe *pipes)
 {
 	char	*exec;
 	char	*path_temp;
@@ -100,7 +100,7 @@ int	child_process(t_data *data, t_pipe *pipes, int fd_heredoc)
 
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
-	pipes = handle_redirection(data, pipes, fd_heredoc);
+	pipes = handle_redirection(data, pipes);
 	if (cmd->cmd_type != no)
 	{
 		handle_builtins(data);
@@ -190,7 +190,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
-		pipes = handle_redirection(data, pipes, fd_heredoc);
+		pipes = handle_redirection(data, pipes);
 		handle_builtins(data);
 		return (pipes);
 	}
@@ -198,7 +198,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	if (pid == -1)
 		error_fork();
 	if (pid == 0)
-		data->exec_val = child_process(data, pipes, fd_heredoc);
+		data->exec_val = child_process(data, pipes);
 	data->cmd[data->current_cmd]->pid = pid;
 	return (pipes);
 }
