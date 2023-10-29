@@ -34,14 +34,14 @@ int	export_single(t_envlist **env, char *line)
 	t_envlist	*temp;
 	t_envlist	*curr;
 
-	if (!isalpha(line[0]))
-		return (ft_error(WRONG_ID_EXPORT, line));
+	if (!isalpha(line[0]) && line[0] != '_')
+		return (ft_error(WRONG_ID_EXPORT, line), 2);
 	temp = *env;
 	new = ft_new_envvar(line);
 	if (!new)
 		return (MEMORY_ERR_NB);
 	if (!(*env))
-		*env = new;
+		return (*env = new, FUNCTION_SUCCESS);
 	curr = ft_key_exist(*env, (char *)new->key);
 	if (curr)
 		ft_update_curr(new, curr);
@@ -54,13 +54,19 @@ int	export_single(t_envlist **env, char *line)
 int	export(t_envlist **env, char **tab)
 {
 	int	i;
+	int	rez;
+	int	final_rez;
 
 	i = 1;
+	final_rez = 0;
 	while (tab[i])
 	{
-		if (export_single(env, tab[i]))
+		rez = export_single(env, tab[i]);
+		if (rez == MEMORY_ERR_NB)
 			return (MEMORY_ERR_NB);
+		if (rez == 2)
+			final_rez = 2;
 		i++;
 	}
-	return (FUNCTION_SUCCESS);
+	return (final_rez);
 }

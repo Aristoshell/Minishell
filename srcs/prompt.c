@@ -19,7 +19,7 @@ int	prompt(t_data *data)
 			input = NULL;
 			if (check_error)
 				return (clear_history(), ft_clean_t_data(data), MEMORY_ERR_NB);
-			if (cross_array_list(data) == EXIT)
+			if (cross_array_list(data))
 				return (clear_history(), ft_clean_t_data(data), EXIT);
 			ft_reinit_data(data);
 		}

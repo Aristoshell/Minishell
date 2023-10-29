@@ -6,8 +6,6 @@ int	ft_error(int err_code, char *arg)
 {
 	if (err_code == WRONG_NB_ARG)
 		ft_dprintf(STDERR_FILENO, D_ER_ARG);
-	else if (err_code == NO_ENV)
-		ft_dprintf(STDERR_FILENO, D_ER_ENV);
 	else if (err_code == MEMORY_ERR_NB)
 		ft_dprintf(STDERR_FILENO, D_ER_MEM);
 	else if (err_code == SYNTAX_QUOTE_ERROR)

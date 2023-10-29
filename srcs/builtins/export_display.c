@@ -56,12 +56,17 @@ void	ft_del_sorted_export(char ***tab, int size)
 	tab = NULL;
 }
 
-int	display_export(t_envlist *env)
+int	display_export(t_envlist *env, char **args)
 {
 	int		size;
 	char	***tab;
 	int		i;
 
+	if (args[1])
+	{
+		ft_dprintf(2, D_ER_EXPORT_UNSET, "export", args[1]);
+		return (2);
+	}
 	i = 0;
 	size = ft_get_size_export(env);
 	tab = ft_get_copy_export(env, size);

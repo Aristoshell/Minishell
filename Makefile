@@ -20,7 +20,6 @@ SRCS_FILES	= 	minishell.c \
 				parsing/envp/lists/ft_lst_env_add_front.c \
 				parsing/envp/lists/ft_lst_env_last.c \
 				parsing/envp/lists/ft_lst_env_new.c \
-				parsing/envp/lists/ft_lst_env_pop.c \
 				parsing/envp/ft_get_envp.c \
 				parsing/envp/ft_get_key.c \
 				parsing/envp/ft_get_val.c \

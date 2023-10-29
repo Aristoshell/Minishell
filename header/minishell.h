@@ -12,7 +12,6 @@
 // a mettre en majuscule
 # define D_ER_MEM  "Problem with memory allocation\n"
 # define D_ER_ARG "minishell: please launch minishell with no argument\n"
-# define D_ER_ENV "minishell: please launch minishell with env\n"
 # define D_ER_SYN_QUOTE "minishell: unclosed quote\n"
 # define D_ER_SYN_PIPE "minishell: syntax error near unexpected token `|'\n"
 # define D_ER_SYN_NL "minishell: syntax error near unexpected token `newline'\n"
@@ -24,9 +23,11 @@
 # define D_ER_PERM "minishell: %s: Permission denied\n"
 # define D_ER_NO_FILDIR "minishell: %s: No such file or directory\n"
 # define D_ER_EXPAND "minishell: export: `%s': not a valid identifier\n"
+# define D_ER_EXPORT_UNSET "minishell: %s: -%s: invalid option\n"
+# define D_ER_ENV "env: invalid option -- '%c'\n"
 # define FUNCTION_SUCCESS	0
 # define EXIT				1
-# define MEMORY_ERR_NB		2
+# define MEMORY_ERR_NB		99
 # define MEMORY_ERROR_PT	NULL
 # define SYNTAX_QUOTE_ERROR	3
 # define SYNTAX_PIPE_ERROR	4
@@ -42,6 +43,7 @@
 # define NO_ENV				10
 # define WRONG_ID_EXPORT	11
 # define WRONG_CMD_ARG		16
+# define ERROR_BUILTIN		17
 # define DOUBLE_QUOTE 		34
 # define SIMPLE_QUOTE 		39
 # define MASK_SET			0x10
@@ -164,7 +166,7 @@ void			ft_clean_t_data(t_data *data);
 
 char			*ft_get_val(char *line);
 t_envlist		*ft_new_envvar(char *line);
-t_envlist		*ft_get_envp(char **envp);
+int				ft_get_envp(t_envlist **env, char **envp);
 char			*ft_get_key(char *line, int sep);
 void			ft_print_env(t_envlist *env);
 void			ft_set_flag(int *flag, char *val);
@@ -172,7 +174,7 @@ void			ft_lst_env_add_back(t_envlist **lst, t_envlist *new);
 void			ft_lst_env_add_front(t_envlist **lst, t_envlist *new);
 t_envlist		*ft_lst_env_last(t_envlist *lst);
 t_envlist		*ft_lst_env_new(const char *key, char *val);
-void			ft_lst_env_pop(t_envlist **lst, char *key);
+void			unset_single(t_envlist **lst, char *key);
 void			ft_lst_env_delone(t_envlist *lst);
 void			ft_lst_env_clear(t_envlist **lst);
 
@@ -228,10 +230,10 @@ bool			ft_is_separator(char c);
 bool			ft_is_cmd_separator(char c);
 bool			ft_is_dollar(char c);
 
-void			display_env(t_envlist *env);
+int				display_env(t_envlist *env, char **args);
 int				unset(t_envlist **env, char **key);
 int				export(t_envlist **env, char **tab);
-int				display_export(t_envlist *env);
+int				display_export(t_envlist *env, char **args);
 void			ft_quick_sort(char ***tab, int low, int high);
 
 #endif

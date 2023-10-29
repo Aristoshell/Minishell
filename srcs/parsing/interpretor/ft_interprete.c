@@ -49,9 +49,11 @@ void	ft_check_builtin(t_cmd	*cmd)
 			cmd->cmd_type = cmd_cd;
 		else if (!ft_strncmp("pwd", cmd->cmd_args[0], (ft_strlen("pwd") + 1)))
 			cmd->cmd_type = cmd_pwd;
+		else if (!ft_strncmp("env", cmd->cmd_args[0], (ft_strlen("env") + 1)))
+			cmd->cmd_type = cmd_env;
 		else if (!ft_strncmp("export", cmd->cmd_args[0], (ft_strlen("export") + 1)))
 		{
-			if (cmd->cmd_args[1])
+			if (cmd->cmd_args[1] && cmd->cmd_args[1][0] != '-')
 				cmd->cmd_type = cmd_export;
 			else
 				cmd->cmd_type = cmd_export_print;

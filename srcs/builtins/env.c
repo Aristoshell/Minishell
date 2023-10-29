@@ -2,8 +2,13 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-void	display_env(t_envlist *env)
+int	display_env(t_envlist *env, char **args)
 {
+	if (args[1])
+	{
+		ft_dprintf(2, D_ER_ENV, args[1][1]);
+		return (2);
+	}
 	while (env) // verif si besoin de 
 	{
 		if (MASK_EXPORT & env->flag && MASK_SET & env->flag)
@@ -11,6 +16,7 @@ void	display_env(t_envlist *env)
 		if (env->next)
 			env = env->next;
 		else
-			return ;
+			break;
 	}
+	return (0);
 }
