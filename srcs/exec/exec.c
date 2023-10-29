@@ -113,7 +113,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
-	pipes = handle_redirectiosyscall-template.Sn(data, pipes);
+	pipes = handle_redirection(data, pipes);
 	if (cmd->cmd_type != no)
 	{
 		handle_builtins(data);
@@ -208,10 +208,8 @@ et enfin appeler la fonction child process
 t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
-	int		fd_heredoc;
 
-
-	fd_heredoc = handle_heredoc(data);
+	handle_heredoc(data);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)

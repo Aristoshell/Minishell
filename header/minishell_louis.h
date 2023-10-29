@@ -70,4 +70,5 @@ int		heredoc(char *filemame, char *limiter);
 
 int		ft_envlstsize(t_envlist *lst);
 char	**list_to_array(t_envlist *list);
+void	close_files(t_data *data);
 #endif
