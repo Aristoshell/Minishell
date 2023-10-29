@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 22:15:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/25 18:35:34 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/29 16:45:16 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,17 @@ void    handle_signals_prompt()
 	g_glb = 0;
 	signal(SIGINT, &sighandler);
 	signal(SIGQUIT, SIG_IGN);
+}
+
+
+static void    sighandler_exec(int signum)
+{
+    (void)signum;
+    printf("\n");
+}
+
+void	handle_signals_exec()
+{
+	g_glb = 0;
+	signal(SIGINT, &sighandler_exec);
 }

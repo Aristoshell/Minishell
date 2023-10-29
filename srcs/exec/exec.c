@@ -112,8 +112,10 @@ int	child_process(t_data *data, t_pipe *pipes)
 	else
 		cmd->path_cmd = NULL;
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
+	handle_signals_exec();
 	if (!exec || cmd->cmd_type == no_cmd)
 		exit(1);
+	handle_signals_prompt();
 	execve(exec, cmd->cmd_args, envp);
 	printf("command not found\n"); //free tout le bordel et close fd 
 	exit(1);
@@ -258,6 +260,7 @@ int	cross_array_list(t_data *data)
 		close_pipes(data, pipe_);
 	//printf("test\n");
 	wait_childs(data);
+	handle_signals_prompt();
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	close_files(data);
 	return (0);
