@@ -15,8 +15,8 @@ void	wait_childs(t_data *data)
 		if (data->cmd[i]->pid != -1)
 			waitpid(data->cmd[i]->pid, &status, 0);
 		i++;
+		data->exec_val = WEXITSTATUS(status);
 	}
-	data->exec_val = WEXITSTATUS(status);
 }
 
 /*
@@ -113,10 +113,10 @@ int	child_process(t_data *data, t_pipe *pipes)
 		cmd->path_cmd = NULL;
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	if (!exec || cmd->cmd_type == no_cmd)
-		exit(1);
+		exit(127);
 	execve(exec, cmd->cmd_args, envp);
 	printf("command not found\n"); //free tout le bordel et close fd 
-	exit(1);
+	exit(127);
 }
 
 /*
@@ -257,7 +257,6 @@ int	cross_array_list(t_data *data)
 	}
 	if (data->nb_command > 1)
 		close_pipes(data, pipe_);
-	//printf("test\n");
 	wait_childs(data);
 	handle_signals_prompt();
 	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
