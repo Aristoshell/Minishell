@@ -91,6 +91,19 @@ char	**list_to_array(t_envlist *list)
 	return (ret);
 }
 
+void free_envp(char **a)
+{
+	int i;
+
+	i = 0;
+	while (a[i])
+	{
+		free(a[i]);
+		i++;
+	}
+	free(a);
+}
+
 int	child_process(t_data *data, t_pipe *pipes)
 {
 	char	*exec;
@@ -100,7 +113,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
-	pipes = handle_redirection(data, pipes);
+	pipes = handle_redirectiosyscall-template.Sn(data, pipes);
 	if (cmd->cmd_type != no)
 	{
 		handle_builtins(data);
@@ -108,13 +121,26 @@ int	child_process(t_data *data, t_pipe *pipes)
 	}
 	path_temp = find_path(envp);
 	if (path_temp)
+	{
 		cmd->path_cmd = ft_split(path_temp, ':');
+		if (!cmd->path_cmd)
+			exit(2);
+		//error 4
+	}
 	else
 		cmd->path_cmd = NULL;
 	exec = get_cmd(cmd->path_cmd, cmd->cmd_args[0]);
 	if (!exec || cmd->cmd_type == no_cmd)
+	{
+		free_envp(envp);
+		close_files(data);
+		ft_clean_t_data(data);
 		exit(127);
+	}
 	execve(exec, cmd->cmd_args, envp);
+	free_envp(envp);
+	close_files(data);
+	ft_clean_t_data(data);
 	printf("command not found\n"); //free tout le bordel et close fd 
 	exit(127);
 }
@@ -244,9 +270,9 @@ int	cross_array_list(t_data *data)
 	{
 		pipe_ = malloc(sizeof(t_pipe));
 		if (!pipe_)
-			error_malloc();
+			return (close_and_free(NULL, temp_stdin, temp_stdout, 0), MEMORY_ERR_NB);
 		if (pipe(pipe_->tube[1]) != 0)
-			error_pipe();
+			return (close_and_free(pipe_, temp_stdin, temp_stdout, 1), MEMORY_ERR_NB);
 	}
 	while (data->current_cmd < data->nb_command)
 	{
@@ -259,7 +285,7 @@ int	cross_array_list(t_data *data)
 		close_pipes(data, pipe_);
 	wait_childs(data);
 	handle_signals_prompt();
-	close_list_args(data->cmd, data->nb_command, temp_stdin, temp_stdout);
+	close_fd(data->cmd, data->nb_command, temp_stdin, temp_stdout);
 	close_files(data);
 	return (0);
 }

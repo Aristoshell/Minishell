@@ -75,24 +75,15 @@ char	*get_cmd(char **paths, char *cmd)
 	char	*tmp;
 	char	*to_try;
 
-	// if (!paths)
-	// 	return (nopath(cmd));
 	if (!paths || ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) == 0)
 		{
 			if (access(cmd, X_OK) == 0)
-			{
-				// ft_dprintf(STDERR_FILENO, "0	");
 				return (cmd);
-			}
 			else
-			{
-				// ft_dprintf(STDERR_FILENO, "1	");
 				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, cmd), NULL);
-			}
 		}
-		// ft_dprintf(STDERR_FILENO, "2	");
 		return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL);
 	}
 	while (*paths)
@@ -103,19 +94,12 @@ char	*get_cmd(char **paths, char *cmd)
 		if (access(to_try, F_OK) == 0)
 		{
 			if (access(to_try, X_OK) == 0)
-			{
-				// ft_dprintf(STDERR_FILENO, "3	");
 				return(to_try);
-			}
 			else
-			{
-				// ft_dprintf(STDERR_FILENO, "4	");
 				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, to_try), NULL);
-			}
 		}
 		free(to_try);
 		paths++;
 	}
-	// ft_dprintf(STDERR_FILENO, "5	");
 	return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL);
 }

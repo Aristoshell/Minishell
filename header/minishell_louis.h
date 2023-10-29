@@ -41,7 +41,8 @@ int		set_redir(t_cmd *cmd, t_list *l);
 void	handle_builtins(t_data *data);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
-void	close_list_args(t_cmd **cmd, int len_list, int stdin_, int stdout_);
+void	close_fd(t_cmd **cmd, int len_list, int stdin_, int stdout_);
+void	close_and_free(t_pipe *pipes, int stdin_save, int stdout_save, int status);
 
 void	close_pipes(t_data *data, t_pipe *pipes);
 

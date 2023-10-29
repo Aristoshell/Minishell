@@ -3,6 +3,14 @@
 #include "minishell_louis.h"
 
 
+void	close_and_free(t_pipe *pipes, int stdin_save, int stdout_save, int status)
+{
+	if (status > 0)
+		free(pipes);
+	close(stdin_save);
+	close(stdout_save);
+}
+
 void	close_pipes(t_data *data, t_pipe *pipes)
 {
 	if (data->nb_command > 1)
@@ -15,7 +23,7 @@ void	close_pipes(t_data *data, t_pipe *pipes)
 	free(pipes);
 }
 
-void	close_list_args(t_cmd **cmd, int len_list,
+void	close_fd(t_cmd **cmd, int len_list,
 	int stdin_save, int stdout_save)
 {
 	int	i;
