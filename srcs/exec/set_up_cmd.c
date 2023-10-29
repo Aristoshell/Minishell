@@ -16,17 +16,17 @@ void	handle_builtins(t_data *data)
 	if (cmd[data->current_cmd]->cmd_type == no_cmd)
 		return ;
 	if (cmd[data->current_cmd]->cmd_type == cmd_echo)
-		bt_echo(data, data->current_cmd);
+		data->exec_val = bt_echo(data, data->current_cmd);
 	if (cmd[data->current_cmd]->cmd_type == cmd_cd)
-		bt_cd(data);
+		data->exec_val = bt_cd(data);
 	if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
-		bt_pwd();
+		data->exec_val = bt_pwd();
 	if (cmd[data->current_cmd]->cmd_type == cmd_export)
-		export(&data->envp, cmd[data->current_cmd]->cmd_args);
+		data->exec_val = export(&data->envp, cmd[data->current_cmd]->cmd_args);
 	if (cmd[data->current_cmd]->cmd_type == cmd_export_print)
-		display_export(data->envp);
+		data->exec_val = display_export(data->envp);
 	if (cmd[data->current_cmd]->cmd_type == cmd_unset)
-		unset(&data->envp, cmd[data->current_cmd]->cmd_args);
+		data->exec_val = unset(&data->envp, cmd[data->current_cmd]->cmd_args);
 	if (cmd[data->current_cmd]->cmd_type == cmd_env)
 		display_env(data->envp);
 	if (cmd[data->current_cmd]->cmd_type == cmd_exit)
