@@ -30,7 +30,6 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	t_token	*current_token;
 	int		i;
 	bool	mem_last;
-
 	splited = ft_split(env_val, ' ');
 	if (!splited)
 		return (MEMORY_ERR_NB);
@@ -40,7 +39,7 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	mem_last = current_token->join_with_next;
 	current_token->join_with_next = false;
 	if (!splited[0])
-		return (FUNCTION_SUCCESS);
+		return (current_token->string = ft_strdup("\0"), FUNCTION_SUCCESS); //faudra le mettre dans une autre fonction
 	i = 1;
 	while (splited && splited[i])
 	{
@@ -78,8 +77,7 @@ int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 		curr_token->string = NULL;
 		if (!env)
 		{
-			curr_token->empty_node = true;
-			curr_token->string = NULL;
+			curr_token->string = ft_strdup("\0"); // a proteger
 		}
 		else if (curr_token->quote == double_q)
 		{

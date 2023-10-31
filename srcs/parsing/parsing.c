@@ -11,7 +11,7 @@ int	parsing(t_data *data, const char *input)
 	if (ft_check_syntax_with_tokens(data->tokens))
 	{
 		if (ft_del_quotes(data) || ft_expand(data->envp, data)
-			|| ft_join_nodes(data->tokens) || ft_interprete(data))
+			|| ft_join_nodes(data->tokens, data) || ft_interprete(data))
 		{
 			ft_lstclear(&(data)->tokens, (void *)ft_clean_token);
 			data->tokens = NULL;

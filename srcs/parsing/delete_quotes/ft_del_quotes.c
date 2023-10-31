@@ -38,5 +38,7 @@ int	ft_del_quotes(t_data *data)
 		prev = list;
 		list = list->next;
 	}
+	printf("DEL QUOTES\n");
+	ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }

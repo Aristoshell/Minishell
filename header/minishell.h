@@ -192,7 +192,7 @@ int				ft_detatch_expand(t_list *list, int i);
 int				ft_expand(t_envlist *envp, t_data *data);
 int				ft_expand_val(t_list *list, t_envlist *env, t_data *data);
 
-int				ft_join_nodes(t_list *list);
+int	ft_join_nodes(t_list *list, t_data *data);
 
 int				ft_interprete(t_data *data);
 void			ft_count_cmd(t_list *list, t_data *data);
