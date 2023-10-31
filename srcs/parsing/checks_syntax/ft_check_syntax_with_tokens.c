@@ -1,16 +1,16 @@
 
 #include <minishell.h>
 
-int	ft_check_message(t_token *current_node, t_list *token, t_token *next_node, int i)
+int	ft_check_message(t_token *cur_node, t_list *tok, t_token *next_node, int i)
 {
-	if (current_node->type == type_pipe)
+	if (cur_node->type == type_pipe)
 	{
-		if (i == 0 || !token->next || next_node->type == type_pipe)
+		if (i == 0 || !tok->next || next_node->type == type_pipe)
 			return (ft_dprintf(STDERR_FILENO, D_ER_SYN_PIPE), 1);
 	}
-	else if (current_node->type >= type_from)
+	else if (cur_node->type >= type_from)
 	{
-		if (!token->next)
+		if (!tok->next)
 			return (ft_dprintf(STDERR_FILENO, D_ER_SYN_NL), 1);
 		else if (next_node->type == type_pipe)
 			return (ft_dprintf(STDERR_FILENO, D_ER_SYN_PIPE), 1);

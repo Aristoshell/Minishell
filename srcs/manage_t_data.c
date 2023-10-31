@@ -14,7 +14,6 @@ void	ft_clean_cmd(t_cmd *cmd)
 {
 	if (cmd->cmd_args)
 	{
-		//printf("Cleaning cmd args\n");
 		ft_free_2d_array(cmd->cmd_args);
 		cmd->cmd_args = NULL;
 	}
@@ -47,7 +46,6 @@ void	ft_reinit_data(t_data *data)
 	if (data->tokens)
 		ft_lstclear(&(data)->tokens, (void *)ft_clean_token);
 	ft_init_data(data);
-	//printf("data reinit\n");
 }
 
 void	ft_clean_t_data(t_data *data)
@@ -60,7 +58,6 @@ void	ft_clean_t_data(t_data *data)
 	data->envp = NULL;
 	free(data);
 	data = NULL;
-	//printf("t_data cleaned\n");
 }
 
 t_data	*ft_create_data(char **envp)

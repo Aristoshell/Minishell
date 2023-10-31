@@ -59,12 +59,12 @@ int	ft_detach_quotes(int i, t_list *list, char quote)
 
 	curr_word = NULL;
 	current_token = (t_token *)list->content;
-	if (i == 0) //on est dans une quote + c'est la premiere
+	if (i == 0)
 	{
 		ft_get_i(quote, current_token->string, &i);
 		if (current_token->string[0] == quote)
 			current_token->quote = true_q;
-		if (!current_token->string[i]) // si jamais ya rien a split, on return
+		if (!current_token->string[i])
 			return (FUNCTION_SUCCESS);
 	}
 	if (ft_insert_next_node(i, list) != FUNCTION_SUCCESS)
@@ -90,11 +90,7 @@ int	ft_split_quotes(t_list *list)
 	{
 		quote = ft_is_quote(current_token->string[i]);
 		if (quote)
-		{
-			if (ft_detach_quotes(i, list, quote))
-				return (MEMORY_ERR_NB);
-			return (FUNCTION_SUCCESS); // pourrait etre racourci avec return la fonction direct
-		}
+			return (ft_detach_quotes(i, list, quote));
 		i++;
 	}
 	return (FUNCTION_SUCCESS);

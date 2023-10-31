@@ -19,7 +19,6 @@ int	ft_del_quotes(t_data *data)
 	t_list	*prev;
 	int		check;
 
-	(void)prev;
 	list = data->tokens;
 	prev = NULL;
 	while (list)

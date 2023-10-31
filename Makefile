@@ -36,6 +36,7 @@ SRCS_FILES	= 	minishell.c \
 				parsing/interpretor/ft_fill_cmd_redirs.c \
 				parsing/interpretor/ft_init_cmd.c \
 				parsing/interpretor/ft_interprete.c \
+				parsing/interpretor/ft_check_builtins.c \
 				parsing/tokeniser/ft_display_tokens.c \
 				parsing/tokeniser/ft_tokenise_get_token_info.c \
 				parsing/tokeniser/ft_tokenise.c \

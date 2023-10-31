@@ -18,11 +18,11 @@ void	unset_single(t_envlist **lst, char *key)
 		prev = curr;
 		curr = curr->next;
 	}
-	if (!prev) // trouve mais premier maillon
+	if (!prev)
 		(*lst) = (*lst)->next;
-	else // trouve
+	else
 	{
-		if (!curr || ft_strcmp(key, curr->key)) // pas trouve
+		if (!curr || ft_strcmp(key, curr->key))
 			return ;
 		next = curr->next;
 	}
@@ -37,7 +37,7 @@ int	unset(t_envlist **env, char **key)
 
 	i = 1;
 	if (key[i][0] == '-')
-		return (ft_dprintf(2, D_ER_EXPORT_UNSET, "unset", key[1]) , 2);
+		return (ft_dprintf(2, D_ER_EXPORT_UNSET, "unset", key[1]), 2);
 	while (key[i])
 	{
 		unset_single(env, key[i]);

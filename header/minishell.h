@@ -208,6 +208,7 @@ int				ft_fill_cmd_init_tab_args(int nb_args, t_cmd *cmd);
 int				ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_list *list, int n_args);
 void			ft_display_tab_cmd(t_data *data);
 void			ft_print_redir_files(t_list *list_files);
+int				ft_check_builtin(t_cmd *cmd);
 
 bool			ft_is_space(char c);
 bool			ft_is_simple_quote(char c);

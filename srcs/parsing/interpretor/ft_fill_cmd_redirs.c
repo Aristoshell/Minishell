@@ -62,7 +62,7 @@ int	ft_fill_cmd_redirs_pipe_out(t_cmd *cmd, t_data *data)
 
 int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 {
-	t_token	*curr_tok;//ici je gererais le ambigious
+	t_token	*curr_tok;
 	t_files	*redir;
 	t_list	*new;
 
@@ -92,9 +92,9 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 				redir->filename = NULL;
 				curr_tok->redir_file = true;
 			}
-				list = list->next;
-				if (list)
-					curr_tok = (t_token *)list->content;
+			list = list->next;
+			if (list)
+				curr_tok = (t_token *)list->content;
 		}
 		if (redir->filetype != ambiguous)
 		{

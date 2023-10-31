@@ -14,6 +14,6 @@ char	*ft_get_val(char *line)
 	if (!size)
 		val[0] = 0;
 	else
-		ft_strlcpy(val, line, (size + 1)); //attention au retour de cette fonction ?
+		ft_strlcpy(val, line, (size + 1));
 	return (val);
 }

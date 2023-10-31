@@ -2,7 +2,9 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-t_envlist *ft_key_exist(t_envlist *env, char *new_key)
+t_envlist		// printf("tokens cleaned\n");
+	// printf("tokens cleaned\n");
+*ft_key_exist(t_envlist *env, char *new_key)
 {
 	while (env)
 	{

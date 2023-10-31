@@ -11,7 +11,7 @@ void	swap(char ***tab, int i, int j)
 	tab[j] = temp;
 }
 
-int compare(const char **a, const char **b)
+int	compare(const char **a, const char **b)
 {
 	int	size_a;
 	int	size_b;

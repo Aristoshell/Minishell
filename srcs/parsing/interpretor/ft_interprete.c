@@ -1,8 +1,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-// penser a initialiser les currents
-
 bool	ft_check_empty_tokens_list(t_list *list)
 {
 	t_token	*curr_tok;
@@ -39,36 +37,6 @@ int	ft_init_tab_cmd(t_data *data)
 	return (FUNCTION_SUCCESS);
 }
 
-void	ft_check_builtin(t_cmd	*cmd)
-{
-	if (cmd->cmd_args && cmd->cmd_args[0])
-	{
-		if (!ft_strncmp("echo", cmd->cmd_args[0], (ft_strlen("echo") + 1)))
-			cmd->cmd_type = cmd_echo;
-		else if (!ft_strncmp("cd", cmd->cmd_args[0], (ft_strlen("cd") + 1)))
-			cmd->cmd_type = cmd_cd;
-		else if (!ft_strncmp("pwd", cmd->cmd_args[0], (ft_strlen("pwd") + 1)))
-			cmd->cmd_type = cmd_pwd;
-		else if (!ft_strncmp("env", cmd->cmd_args[0], (ft_strlen("env") + 1)))
-			cmd->cmd_type = cmd_env;
-		else if (!ft_strncmp("export", cmd->cmd_args[0], (ft_strlen("export") + 1)))
-		{
-			if (cmd->cmd_args[1] && cmd->cmd_args[1][0] != '-')
-				cmd->cmd_type = cmd_export;
-			else
-				cmd->cmd_type = cmd_export_print;
-		}
-		else if (!ft_strncmp("unset", cmd->cmd_args[0], (ft_strlen("unset") + 1)))
-			cmd->cmd_type = cmd_unset;
-		else if (!ft_strncmp("exit", cmd->cmd_args[0], (ft_strlen("exit") + 1)))
-			cmd->cmd_type = cmd_exit;
-		else
-			cmd->cmd_type = no;
-	}
-	else
-		cmd->cmd_type = no_cmd;
-}
-
 int	ft_fill_tab_cmd(t_data *data, t_list *list)
 {
 	t_token	*curr_token;
@@ -77,7 +45,6 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 	curr_token = (t_token *)list->content;
 	while (data->current_cmd < data->nb_command)
 	{
-		// printf("current token : %s\n", curr_token->string);
 		if (ft_init_cmd(data, data->current_cmd)
 			|| ft_fill_cmd(data->cmd[data->current_cmd], list, data))
 			return (MEMORY_ERR_NB);
@@ -99,17 +66,10 @@ int	ft_fill_tab_cmd(t_data *data, t_list *list)
 int	ft_interprete(t_data *data)
 {
 	data->nb_command = 0;
-	// if (ft_check_empty_tokens_list(info->tokens))
-	// {
-	// 	ft_reinit_data(data);
-	// 	return (printf("LINE IS EMPTY\n"), LINE_IS_EMPTY);
-	// }
 	ft_count_cmd(data->tokens, data);
-	//printf("nb cmd : %d\n", data->nb_command);
 	if (ft_init_tab_cmd(data))
 		return (MEMORY_ERR_NB);
 	if (ft_fill_tab_cmd(data, data->tokens))
 		return (MEMORY_ERR_NB);
-	//ft_display_tab_cmd(data);
 	return (0);
 }

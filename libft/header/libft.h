@@ -2,7 +2,6 @@
 #ifndef LIBFT_H
 # define LIBFT_H
 
-
 /* ************************* */
 /*         Librairies        */
 /* ************************* */
@@ -143,6 +142,5 @@ char	*get_hex_value(unsigned long nbr, int *size);
 
 int		ft_dprintf(int i, char	*str, ...);
 int		is_convert(char c);
-
 
 #endif

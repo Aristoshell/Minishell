@@ -36,4 +36,3 @@ bool	ft_check_open_quote_bool(const char *input)
 	else
 		return (false);
 }
-

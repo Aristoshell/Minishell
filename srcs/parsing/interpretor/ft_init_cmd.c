@@ -25,14 +25,6 @@ int	ft_fill_cmd(t_cmd *cmd, t_list *list, t_data *data)
 	if (ft_fill_cmd_redirs(cmd, data, list))
 		return (MEMORY_ERR_NB);
 	nb_args = ft_fill_cmd_count_args(list);
-	// if (!nb_args)
-	// {
-	// 	if (ft_fill_cmd_no_agrs(cmd) == MEMORY_ERR_NB)
-	// 		return (MEMORY_ERR_NB);
-	// }
-	// else
-	// {
-	//printf("nb args : %d\n", nb_args);
 	if (nb_args)
 	{
 		if (ft_fill_cmd_init_tab_args(nb_args, cmd) == MEMORY_ERR_NB)
@@ -40,6 +32,5 @@ int	ft_fill_cmd(t_cmd *cmd, t_list *list, t_data *data)
 		if (ft_fill_cmd_fill_tab_args(cmd, list, nb_args))
 			return (MEMORY_ERR_NB);
 	}
-	// }
 	return (FUNCTION_SUCCESS);
 }

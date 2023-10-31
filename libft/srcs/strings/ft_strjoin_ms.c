@@ -9,8 +9,6 @@ char	*ft_strjoin_ms(char const *s1, char const *s2)
 
 	i = 0;
 	j = 0;
-	// if (!s1 && !s2)
-	// 	return (NULL);
 	if (!s1)
 		return (ft_strdup(s2));
 	else if (!s2)

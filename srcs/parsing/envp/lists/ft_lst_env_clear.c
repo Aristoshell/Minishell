@@ -16,5 +16,4 @@ void	ft_lst_env_clear(t_envlist **lst)
 			*lst = p;
 		}
 	}
-	//printf("Env cleaned\n");
 }

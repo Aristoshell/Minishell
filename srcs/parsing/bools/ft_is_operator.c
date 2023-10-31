@@ -4,7 +4,7 @@
 
 bool	ft_is_operator(char c)
 {
-	if (c == '>' || c == '<' || c == '|') // || (c == '>' && next == '>')|| (c == '<' && next == '<'))
+	if (c == '>' || c == '<' || c == '|')
 		return (true);
 	return (false);
 }
