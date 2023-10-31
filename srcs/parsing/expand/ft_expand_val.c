@@ -35,10 +35,12 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 	if (!splited)
 		return (MEMORY_ERR_NB);
 	current_token = list->content;
-	current_token->expand = true; // a checker
+	current_token->expand = true; // a checker //est ce aue je met a jour que le node est vide ? jai peur que ca pete le code plus loin...
 	current_token->string = splited[0];
 	mem_last = current_token->join_with_next;
 	current_token->join_with_next = false;
+	if (!splited[0])
+		return (FUNCTION_SUCCESS);
 	i = 1;
 	while (splited && splited[i])
 	{
@@ -48,8 +50,7 @@ int	ft_expand_val_split(t_list *list, char *env_val)
 		list = list->next;
 	}
 	current_token = (t_token *)list->content;
-	current_token->join_with_next = mem_last;
-	return (FUNCTION_SUCCESS);
+	return (current_token->join_with_next = mem_last, FUNCTION_SUCCESS);
 }
 
 int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)

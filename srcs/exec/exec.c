@@ -141,7 +141,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	free_envp(envp);
 	close_files(data);
 	ft_clean_t_data(data);
-	printf("command not found\n"); //free tout le bordel et close fd 
+	printf("minishell: : command not found\n"); //free tout le bordel et close fd 
 	exit(127);
 }
 
