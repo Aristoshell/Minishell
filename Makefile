@@ -2,7 +2,6 @@ SRCS_FILES	= 	minishell.c \
 				manage_t_data.c \
 				prompt.c \
 				utils.c \
-				errors/ft_errors.c \
 				parsing/bools/ft_check_empty_line.c \
 				parsing/bools/ft_is_cmd_separator.c \
 				parsing/bools/ft_is_dollar.c \

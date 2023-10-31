@@ -35,7 +35,7 @@ int	export_single(t_envlist **env, char *line)
 	t_envlist	*curr;
 
 	if (!isalpha(line[0]) && line[0] != '_')
-		return (ft_error(WRONG_ID_EXPORT, line), 2);
+		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 2);
 	temp = *env;
 	new = ft_new_envvar(line);
 	if (!new)

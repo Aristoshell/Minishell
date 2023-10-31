@@ -8,12 +8,12 @@ int	main(int argc, char **argv, char **envp)
 
 	(void) argv ;
 	if (argc != 1)
-		return (ft_error(WRONG_NB_ARG, NULL));
+		return (ft_dprintf(STDERR_FILENO, D_ER_ARG), 1);
 	data = NULL;
 	data = ft_create_data(envp);
 	if (!data)
-		return (ft_error(MEMORY_ERR_NB, NULL), MEMORY_ERR_NB);
+		return (ft_dprintf(STDERR_FILENO, D_ER_MEM), 1);
 	if (prompt(data) == MEMORY_ERR_NB)
-		return (ft_clean_t_data(data), MEMORY_ERR_NB);
+		return (ft_clean_t_data(data), 1);
 	return (0);
 }

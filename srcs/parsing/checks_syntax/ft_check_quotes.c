@@ -32,7 +32,7 @@ char	ft_check_open_quote(const char *input)
 bool	ft_check_open_quote_bool(const char *input)
 {
 	if (ft_check_open_quote(input))
-		return (ft_error(SYNTAX_QUOTE_ERROR, NULL), true);
+		return (ft_dprintf(STDERR_FILENO, D_ER_SYN_QUOTE), true);
 	else
 		return (false);
 }
