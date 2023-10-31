@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/29 22:02:48 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/10/31 17:48:53 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int	heredoc2(const char *limiter, int fd)
 			return (130);
 		if (!input || input[0] == 0)
 			return (printf("aristoshell: warning: here-document at line 1 delimited by end-of-file (wanted `stop')\n"), 0);
-		if (ft_strncmp(input, limiter, ft_strlen(limiter)) == 0 && input[ft_strlen(limiter)] == '\n')
+		if (ft_strncmp(input, limiter, ft_strlen(limiter)) == 0 && input[ft_strlen(limiter)] == 0)
 			return (0);
 		else
 		{
