@@ -25,7 +25,7 @@ int	prompt(t_data *data)
 		else if (!input)
 		{
 			ft_clean_t_data(data);
-			clear_history()
+			clear_history();
 			exit(0);
 		}
 	}

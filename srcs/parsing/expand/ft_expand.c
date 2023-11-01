@@ -14,7 +14,7 @@ int	ft_expand(t_envlist *envp, t_data *data)
 	while (list)
 	{
 		curr_token = (t_token *)list->content;
-		if (curr_token->type == type_word && prev_type != type_heredoc && (curr_token->quote != simple_q) && !curr_token->empty_node)
+		if (curr_token->type == type_word && prev_type != type_heredoc && (curr_token->quote != simple_q)/* && !curr_token->empty_node*/)
 		{
 			dollar_loc = ft_strchr_int(curr_token->string, '$');
 			if (dollar_loc >= 0 && !(curr_token->string[0] == '$' && (curr_token->string[1] == 0 || curr_token->string[1] == '$')))
@@ -29,7 +29,7 @@ int	ft_expand(t_envlist *envp, t_data *data)
 			prev_type = curr_token->type;
 		list = list->next;
 	}
-	//printf("EXPAND\n");
-	//ft_display_lexer(*data);
+	// printf("EXPAND\n");
+	// ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }

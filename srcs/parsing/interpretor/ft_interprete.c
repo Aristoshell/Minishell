@@ -1,20 +1,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-bool	ft_check_empty_tokens_list(t_list *list)
-{
-	t_token	*curr_tok;
-
-	while (list)
-	{
-		curr_tok = (t_token *)list->content;
-		if (curr_tok->empty_node != true)
-			return (false);
-		list = list->next;
-	}
-	return (true);
-}
-
 void	ft_count_cmd(t_list *list, t_data *data)
 {
 	t_token	*curr_tok;
@@ -71,7 +57,7 @@ int	ft_interprete(t_data *data)
 		return (MEMORY_ERR_NB);
 	if (ft_fill_tab_cmd(data, data->tokens))
 		return (MEMORY_ERR_NB);
-	//printf("INTERPRETE\n");
-	//ft_display_lexer(*data);
+	// printf("INTERPRETE\n");
+	// ft_display_lexer(*data);
 	return (0);
 }
