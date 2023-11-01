@@ -8,7 +8,7 @@ appellera le builtin voulu en fonction de la valeurs dans le champ cmd->type
 de la struct cmd
 */
 
-void	handle_builtins(t_data *data)
+void	handle_builtins(t_data *data, t_pipe *pipes)
 {
 	t_cmd	**cmd;
 
@@ -30,7 +30,7 @@ void	handle_builtins(t_data *data)
 	if (cmd[data->current_cmd]->cmd_type == cmd_env)
 		data->exec_val = display_env(data->envp, cmd[data->current_cmd]->cmd_args);
 	if (cmd[data->current_cmd]->cmd_type == cmd_exit)
-		bt_exit(data, data->current_cmd);
+		bt_exit(data, data->current_cmd, pipes);
 	//printf("data exec val : %d\n", data->exec_val);
 	// if (data->exec_val == MEMORY_ERR_NB);
 	// return qqchose

@@ -35,12 +35,13 @@ t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
 
 t_pipe	*redir_pipe_to_pipe(t_pipe *pipes)
 {
-
 	if (dup2(pipes->tube[0][0], 0) == -1 \
 		|| dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();
-	close (pipes->tube[0][1]);
-	close (pipes->tube[1][0]);
+	close(pipes->tube[0][0]);	
+	close(pipes->tube[0][1]);
+	close(pipes->tube[1][0]);
+	close(pipes->tube[1][1]);
 	return (pipes);
 }
 
@@ -53,7 +54,10 @@ t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 	}
 	if (dup2(pipes->tube[0][0], 0) == -1)
 		error_dup2();
+	close(pipes->tube[0][0]);	
 	close(pipes->tube[0][1]);
+	close(pipes->tube[1][0]);
+	close(pipes->tube[1][1]);
 	return (pipes);
 }
 
@@ -67,6 +71,11 @@ t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 	if (dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();
 	close(pipes->tube[1][0]);
+	if (pipes->tube[1][0] != -1)
+	{
+		close(pipes->tube[1][0]);
+		close(pipes->tube[1][1]);
+	}
 	return (pipes);
 }
 

@@ -75,7 +75,7 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 			return (1);
 		}
 	}
-	if (chdir(cmd->cmd_args[1]) == -1)
+	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1] && chdir(cmd->cmd_args[1]) == -1)
 	{
 		update_env(envp, cwd);
 		return (1);
@@ -100,15 +100,15 @@ int	bt_cd(t_data *data)
 		if (cmd->cmd_args[2])
 		{
 			printf("too many arguments\n");
-			return (1);
+			return (ft_free_2d_array(env), 1);
 		}
-		return (go_to(cmd, 1, data->envp, env));
+		return (ft_free_2d_array(env), go_to(cmd, 1, data->envp, env));
 	}
 	if (!find_home(env))
 	{
 		printf("HOME not set\n");
-		return (1);
+		return (ft_free_2d_array(env), 1);
 	}
 	go_to(cmd, 0, data->envp, env);
-	return (0);
+	return (ft_free_2d_array(env), 0);
 }

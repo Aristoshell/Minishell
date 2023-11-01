@@ -15,11 +15,15 @@ void	close_pipes(t_data *data, t_pipe *pipes)
 {
 	if (data->nb_command > 1)
 	{
-		close(pipes->tube[0][0]);
-		close(pipes->tube[0][1]);
+		if (pipes->tube[0][0] != -1)
+			close(pipes->tube[0][0]);
+		if (pipes->tube[0][1] != -1)
+			close(pipes->tube[0][1]);
 	}
-	close(pipes->tube[1][1]);
-	close(pipes->tube[1][0]);
+	if (pipes->tube[1][0] != -1)
+		close(pipes->tube[1][0]);
+	if (pipes->tube[1][1] != -1)
+		close(pipes->tube[1][1]);
 	free(pipes);
 }
 

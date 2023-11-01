@@ -1,0 +1,8 @@
+header
+ignore_readline.supp
+libft
+Makefile
+malloc.md
+minishell
+srcs
+test

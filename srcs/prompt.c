@@ -21,11 +21,12 @@ int	prompt(t_data *data)
 				return (clear_history(), ft_clean_t_data(data), MEMORY_ERR_NB);
 			if (cross_array_list(data))
 				return (clear_history(), ft_clean_t_data(data), EXIT);
+			ft_reinit_data(data);
 		}
 		else if (!input)
 		{
 			ft_clean_t_data(data);
-			clear_history()
+			clear_history();
 			exit(0);
 		}
 	}

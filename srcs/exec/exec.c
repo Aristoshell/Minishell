@@ -110,22 +110,41 @@ int	child_process(t_data *data, t_pipe *pipes)
 	char	*path_temp;
 	t_cmd	*cmd;
 	char	**envp;
+	int		exec_val;
 
+	close(data->stdin_save);
+	close(data->stdout_save);
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
 	if (cmd->cmd_type != no)
 	{
-		handle_builtins(data);
-		exit(0);
+		exec_val = data->exec_val;
+		handle_builtins(data, pipes);
+		free_envp(envp);
+		if (data->nb_command > 1)
+			close_pipes(data, pipes);
+		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
+		close_files(data);
+		ft_clean_t_data(data);
+		exit(exec_val);
 	}
 	path_temp = find_path(envp);
 	if (path_temp)
 	{
 		cmd->path_cmd = ft_split(path_temp, ':');
 		if (!cmd->path_cmd)
+		{
+			exec_val = data->exec_val;
+			handle_builtins(data, pipes);
+			free_envp(envp);
+			if (data->nb_command > 1)
+				close_pipes(data, pipes);
+			close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
+			close_files(data);
+			ft_clean_t_data(data);
 			exit(2);
-		//error 4
+		}
 	}
 	else
 		cmd->path_cmd = NULL;
@@ -133,13 +152,17 @@ int	child_process(t_data *data, t_pipe *pipes)
 	if (!exec || cmd->cmd_type == no_cmd)
 	{
 		free_envp(envp);
-		close_files(data);
+		if (data->nb_command > 1)
+			close_pipes(data, pipes);
 		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
+		close_files(data);
 		ft_clean_t_data(data);
 		exit(127);
 	}
 	execve(exec, cmd->cmd_args, envp);
 	free_envp(envp);
+	if (data->nb_command > 1)
+		close_pipes(data, pipes);
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	close_files(data);
 	ft_clean_t_data(data);
@@ -217,7 +240,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
-		handle_builtins(data);
+		handle_builtins(data, pipes);
 		return (pipes);
 	}
 	handle_signals_exec();
@@ -285,6 +308,10 @@ int	cross_array_list(t_data *data)
 	if (data->nb_command > 1)
 	{
 		pipe_ = malloc(sizeof(t_pipe));
+		pipe_->tube[0][0] = -1;
+		pipe_->tube[0][1] = -1;
+		pipe_->tube[1][1] = -1;
+		pipe_->tube[1][1] = -1;
 		if (!pipe_)
 			return (close_and_free(NULL, data->stdin_save, data->stdout_save, 0), MEMORY_ERR_NB);
 		if (pipe(pipe_->tube[1]) != 0)

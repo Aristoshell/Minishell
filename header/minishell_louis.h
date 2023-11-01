@@ -38,7 +38,7 @@ int		child_process(t_data *data, t_pipe *pipes);
 
 t_pipe	*handle_redirection(t_data *data, t_pipe *pipes);
 int		set_redir(t_cmd *cmd, t_list *l);
-void	handle_builtins(t_data *data);
+void	handle_builtins(t_data *data, t_pipe *pipes);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
 void	close_fd(t_cmd **cmd, int len_list, int stdin_, int stdout_);
@@ -49,7 +49,7 @@ void	close_pipes(t_data *data, t_pipe *pipes);
 int		strlen_list(t_cmd **cmd);
 
 int		ft_isnumber(char *str);
-void	bt_exit(t_data *data, int i);
+void	bt_exit(t_data *data, int i, t_pipe *pipes);
 
 int		bt_echo(t_data *data, int to_do);
 int		bt_pwd(void);

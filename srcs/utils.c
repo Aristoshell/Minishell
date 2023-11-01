@@ -16,6 +16,5 @@ void	ft_free_2d_array(char **two_di_array)
 			i++;
 		}
 		free(two_di_array);
-		two_di_array = NULL;
 	}
 }
