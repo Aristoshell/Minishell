@@ -29,7 +29,7 @@ int	ft_expand(t_envlist *envp, t_data *data)
 			prev_type = curr_token->type;
 		list = list->next;
 	}
-	printf("EXPAND\n");
-	ft_display_lexer(*data);
+	//printf("EXPAND\n");
+	//ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }

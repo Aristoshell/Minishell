@@ -146,6 +146,8 @@ typedef struct s_data
 	t_envlist	*envp;
 	t_list		*tokens;
 	int			exec_val;
+	int			stdin_save;
+	int			stdout_save;
 }			t_data;
 
 t_data			*ft_create_data(char **envp);

@@ -56,7 +56,7 @@ int	ft_tokenise(const char *input, t_data *data)
 		}
 		ft_lstadd_back(&data->tokens, new_node);
 	}
-	printf("TOKENISE\n");
-	ft_display_lexer(*data);
+	//printf("TOKENISE\n");
+	//ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }

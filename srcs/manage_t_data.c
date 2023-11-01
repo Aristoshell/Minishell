@@ -8,6 +8,8 @@ void	ft_init_data(t_data *data)
 	data->nb_command = 0;
 	data->cmd = NULL;
 	data->tokens = NULL;
+	data->stdin_save = -1;
+	data->stdout_save = -1;
 }
 
 void	ft_clean_cmd(t_cmd *cmd)

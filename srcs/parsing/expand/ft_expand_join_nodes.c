@@ -45,7 +45,7 @@ int	ft_join_nodes(t_list *list, t_data *data)
 			list = list->next;
 		}
 	}
-	printf("JOIN NODES\n");
-	ft_display_lexer(*data);
+	//printf("JOIN NODES\n");
+	//ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }

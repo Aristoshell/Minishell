@@ -134,11 +134,13 @@ int	child_process(t_data *data, t_pipe *pipes)
 	{
 		free_envp(envp);
 		close_files(data);
+		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 		ft_clean_t_data(data);
 		exit(127);
 	}
 	execve(exec, cmd->cmd_args, envp);
 	free_envp(envp);
+	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	close_files(data);
 	ft_clean_t_data(data);
 	printf("minishell: : command not found\n"); //free tout le bordel et close fd 
@@ -239,6 +241,23 @@ attente des childs
 free tout
 */
 
+void	unlink_files(t_list *l)
+{
+	t_files	*f;
+
+	if (!l)
+		return ;
+	f = (t_files *)l->content;
+	while (l)
+	{
+		if (f->filetype == heredoc_)
+			unlink(f->filename);
+		l = l->next;
+		if (l)
+			f = (t_files *)l->content;
+	}
+}
+
 void	close_files(t_data *data)
 {
 	int		i;
@@ -248,8 +267,9 @@ void	close_files(t_data *data)
 	{
 		if (data->cmd[i]->input == file_from && data->cmd[i]->fd_out != -1)
 			close(data->cmd[i]->fd_in);
-		if (data->cmd[i]->input == file_to && data->cmd[i]->fd_in != -1)
+		if (data->cmd[i]->output == file_to && data->cmd[i]->fd_out != -1)
 			close(data->cmd[i]->fd_in);
+		unlink_files(data->cmd[i]->list_files);
 		i++;
 	}
 }
@@ -257,20 +277,18 @@ void	close_files(t_data *data)
 int	cross_array_list(t_data *data)
 {
 	t_pipe	*pipe_;
-	int		temp_stdin;
-	int		temp_stdout;
 
-	temp_stdin = dup(0);
-	temp_stdout = dup(1);
+	data->stdin_save = dup(0);
+	data->stdout_save = dup(1);
 	pipe_ = NULL;
 	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
 		pipe_ = malloc(sizeof(t_pipe));
 		if (!pipe_)
-			return (close_and_free(NULL, temp_stdin, temp_stdout, 0), MEMORY_ERR_NB);
+			return (close_and_free(NULL, data->stdin_save, data->stdout_save, 0), MEMORY_ERR_NB);
 		if (pipe(pipe_->tube[1]) != 0)
-			return (close_and_free(pipe_, temp_stdin, temp_stdout, 1), MEMORY_ERR_NB);
+			return (close_and_free(pipe_, data->stdin_save, data->stdout_save, 1), MEMORY_ERR_NB);
 	}
 	while (data->current_cmd < data->nb_command)
 	{
@@ -283,7 +301,7 @@ int	cross_array_list(t_data *data)
 		close_pipes(data, pipe_);
 	wait_childs(data);
 	handle_signals_prompt();
-	close_fd(data->cmd, data->nb_command, temp_stdin, temp_stdout);
+	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	close_files(data);
 	return (0);
 }

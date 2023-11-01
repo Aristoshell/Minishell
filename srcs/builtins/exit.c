@@ -30,6 +30,8 @@ void	bt_exit(t_data *data, int i)
 	if (!built_cmd->cmd_args[1])
 	{
 		printf("exit\n");
+		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
+		close_files(data);
 		ft_clean_t_data(data);
 		exit(0);
 	}
@@ -45,6 +47,9 @@ void	bt_exit(t_data *data, int i)
 	}
 	else
 		error_management(built_cmd, "exit: numeric argument required", 2);
+	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
+	close_files(data);
+	ft_clean_t_data(data);
 	printf("exit\n");
 	exit(exit_val);
 }

@@ -13,7 +13,7 @@
 {
     readline_add_history
     Memcheck:Leak
-    ...﻿
+    ...
     fun:add_history
 }
 {
