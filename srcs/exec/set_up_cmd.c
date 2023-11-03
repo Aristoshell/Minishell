@@ -79,16 +79,19 @@ char	*get_cmd(char **paths, char *cmd)
 {
 	char	*tmp;
 	char	*to_try;
+	struct    stat file_info;
 
-	// if (!paths)
-	// 	return (nopath(cmd));
 	if (!paths || ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) == 0)
 		{
 			if (access(cmd, X_OK) == 0)
 			{
-				// ft_dprintf(STDERR_FILENO, "0	");
+				if (stat(cmd, &file_info) == 0)
+                {
+                    if (S_ISDIR(file_info.st_mode))
+                        return (ft_dprintf(STDERR_FILENO, D_ER_ISDIR, cmd), NULL);
+                }
 				return (cmd);
 			}
 			else

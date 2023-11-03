@@ -162,7 +162,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	if (data->nb_command > 1)
 		close_pipes(data, pipes);
 	ft_clean_t_data(data);
-	printf("minishell: : command not found\n"); //free tout le bordel et close fd 
+	ft_dprintf(STDERR_FILENO, "minishell: : command not found\n"); 
 	exit(127);
 }
 

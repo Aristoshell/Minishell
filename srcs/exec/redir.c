@@ -2,7 +2,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
 /*
 sert a faire nos redirection au debut du child
 il y a 4 possibilites 

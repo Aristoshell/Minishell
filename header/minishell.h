@@ -7,6 +7,7 @@
 # include <stdbool.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <sys/stat.h>
 
 //defines
 // a mettre en majuscule
@@ -22,6 +23,7 @@
 # define D_ER_CMD_NF "minishell: %s: command not found\n"
 # define D_ER_PERM "minishell: %s: Permission denied\n"
 # define D_ER_NO_FILDIR "minishell: %s: No such file or directory\n"
+# define D_ER_ISDIR "minishell: %s: Is a directory\n"
 # define D_ER_EXPAND "minishell: export: `%s': not a valid identifier\n"
 # define D_ER_EXPORT_UNSET "minishell: %s: -%s: invalid option\n"
 # define D_ER_ENV "env: invalid option -- '%c'\n"
@@ -46,6 +48,8 @@
 # define PROMPT_RESET		"\001\033[0m\002"
 # define BLUE				"\033[1;36m"
 # define NC					"\033[0m"
+# define DETACH_BEGGINGIN    1
+# define DETACH_REST        2
 
 //typedefs
 
