@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 22:15:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/10/29 16:54:41 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/03 11:50:05 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ void	sighandler_heredoc(int sig)
 	return ;
 }
 
-void handle_signals_heredoc()
+void handle_signals_heredoc(t_data *data)
 {
+	if (g_glb == 130)
+		data->exec_val = 130;
 	g_glb = 0;
     signal(SIGINT, sighandler_heredoc);
     signal(SIGQUIT, SIG_IGN);
@@ -42,15 +44,17 @@ void	sighandler(int signum)
         rl_replace_line("", 0);
         rl_redisplay();
 	}
-	g_glb = 1;
+	g_glb = 130;
 	return ;
 }
 
-void    handle_signals_prompt()
+void    handle_signals_prompt(t_data *data)
 {
+	if (g_glb == 130)
+		data->exec_val = 130;
 	g_glb = 0;
 	signal(SIGINT, &sighandler);
-	signal(SIGQUIT, SIG_IGN);
+	signal(SIGQUIT, SIG_DFL);
 }
 
 
@@ -61,8 +65,14 @@ static void    sighandler_exec(int signum)
     printf("\n");
 }
 
-void	handle_signals_exec()
+void	handle_signals_exec(t_data *data)
 {
+	if (g_glb == 130)
+	{
+		data->exec_val = 130;
+		printf("%d\n", data->exec_val);
+	}
 	g_glb = 0;
 	signal(SIGINT, &sighandler_exec);
+	signal(SIGQUIT, SIG_DFL);
 }

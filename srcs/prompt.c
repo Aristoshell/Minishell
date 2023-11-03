@@ -9,8 +9,13 @@ int	prompt(t_data *data)
 
 	while (1)
 	{
-		handle_signals_prompt();
+		handle_signals_prompt(data);
 		input = readline(PROMPT_COLOUR"aristoshell$ "PROMPT_RESET);
+		if (g_glb == 130)
+		{
+			data->exec_val = 130;
+			g_glb = 0;
+		}
 		if (input && input[0] != 0)
 		{
 			add_history(input);

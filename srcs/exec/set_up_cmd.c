@@ -8,32 +8,34 @@ appellera le builtin voulu en fonction de la valeurs dans le champ cmd->type
 de la struct cmd
 */
 
-void	handle_builtins(t_data *data, t_pipe *pipes)
+int	handle_builtins(t_data *data, t_pipe *pipes)
 {
 	t_cmd	**cmd;
 
 	cmd = data->cmd;
 	if (cmd[data->current_cmd]->cmd_type == no_cmd)
-		return ;
-	if (cmd[data->current_cmd]->cmd_type == cmd_echo)
-		data->exec_val = bt_echo(data, data->current_cmd);
-	if (cmd[data->current_cmd]->cmd_type == cmd_cd)
-		data->exec_val = bt_cd(data);
-	if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
-		data->exec_val = bt_pwd();
-	if (cmd[data->current_cmd]->cmd_type == cmd_export)
-		data->exec_val = export(&data->envp, cmd[data->current_cmd]->cmd_args);
-	if (cmd[data->current_cmd]->cmd_type == cmd_export_print)
-		data->exec_val = display_export(data->envp, cmd[data->current_cmd]->cmd_args);
-	if (cmd[data->current_cmd]->cmd_type == cmd_unset)
-		data->exec_val = unset(&data->envp, cmd[data->current_cmd]->cmd_args);
-	if (cmd[data->current_cmd]->cmd_type == cmd_env)
-		data->exec_val = display_env(data->envp, cmd[data->current_cmd]->cmd_args);
-	if (cmd[data->current_cmd]->cmd_type == cmd_exit)
+	{
+		if (data->exec_val == 130)
+			return (130);
+		return (1);
+	}
+	else if (cmd[data->current_cmd]->cmd_type == cmd_echo)
+		return (bt_echo(data, data->current_cmd));
+	else if (cmd[data->current_cmd]->cmd_type == cmd_cd)
+		return (bt_cd(data));
+	else if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
+		return (bt_pwd());
+	else if (cmd[data->current_cmd]->cmd_type == cmd_export)
+		return (export(&data->envp, cmd[data->current_cmd]->cmd_args));
+	else if (cmd[data->current_cmd]->cmd_type == cmd_export_print)
+		return (display_export(data->envp, cmd[data->current_cmd]->cmd_args));
+	else if (cmd[data->current_cmd]->cmd_type == cmd_unset)
+		return (unset(&data->envp, cmd[data->current_cmd]->cmd_args));
+	else if (cmd[data->current_cmd]->cmd_type == cmd_env)
+		return (display_env(data->envp, cmd[data->current_cmd]->cmd_args));
+	else if (cmd[data->current_cmd]->cmd_type == cmd_exit)
 		bt_exit(data, data->current_cmd, pipes);
-	//printf("data exec val : %d\n", data->exec_val);
-	// if (data->exec_val == MEMORY_ERR_NB);
-	// return qqchose
+	return (0);
 }
 
 /*

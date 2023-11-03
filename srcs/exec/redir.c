@@ -105,7 +105,7 @@ int	set_redir(t_cmd *cmd, t_list *l)
 					ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, f->filename);
 					fail_open = 1;
 				}
-				else
+				else if (cmd->fd_in != -2)
 				{
 					cmd->fd_in = open(f->filename, O_RDONLY);
 					if (cmd->fd_in == -1)
@@ -159,6 +159,8 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 	set_redir(cmd, cmd->list_files);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
+	if (cmd->fd_in == -2)
+		return (data->exec_val = 130, cmd->cmd_type = no_cmd, NULL);
 	if (cmd->fd_in == -1 || cmd->fd_out == -1)
 		return (cmd->cmd_type = no_cmd, NULL);
 	if (cmd->input == pipe_in_ || cmd->output == pipe_out_)

@@ -14,8 +14,9 @@ void	wait_childs(t_data *data)
 	{
 		if (data->cmd[i]->pid != -1)
 			waitpid(data->cmd[i]->pid, &status, 0);
+		if (data->nb_command > 1 || data->cmd[i]->cmd_type == no)
+			data->exec_val = WEXITSTATUS(status);
 		i++;
-		data->exec_val = WEXITSTATUS(status);
 	}
 }
 
@@ -117,15 +118,14 @@ int	child_process(t_data *data, t_pipe *pipes)
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
+	close_files(data);
+	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	if (cmd->cmd_type != no)
 	{
-		exec_val = data->exec_val;
-		handle_builtins(data, pipes);
+		exec_val = handle_builtins(data, pipes);
 		free_envp(envp);
 		if (data->nb_command > 1)
 			close_pipes(data, pipes);
-		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
-		close_files(data);
 		ft_clean_t_data(data);
 		exit(exec_val);
 	}
@@ -140,8 +140,6 @@ int	child_process(t_data *data, t_pipe *pipes)
 			free_envp(envp);
 			if (data->nb_command > 1)
 				close_pipes(data, pipes);
-			close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
-			close_files(data);
 			ft_clean_t_data(data);
 			exit(2);
 		}
@@ -163,8 +161,6 @@ int	child_process(t_data *data, t_pipe *pipes)
 	free_envp(envp);
 	if (data->nb_command > 1)
 		close_pipes(data, pipes);
-	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
-	close_files(data);
 	ft_clean_t_data(data);
 	printf("minishell: : command not found\n"); //free tout le bordel et close fd 
 	exit(127);
@@ -240,16 +236,17 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
-		handle_builtins(data, pipes);
+		data->exec_val = handle_builtins(data, pipes);
 		return (pipes);
 	}
-	handle_signals_exec();
+	handle_signals_exec(data);
 	pid = fork();
 	if (pid == -1)
 		error_fork();
 	if (pid == 0)
-		data->exec_val = child_process(data, pipes);
-	data->cmd[data->current_cmd]->pid = pid;
+		child_process(data, pipes);
+	else
+		data->cmd[data->current_cmd]->pid = pid;
 	return (pipes);
 }
 
@@ -327,7 +324,9 @@ int	cross_array_list(t_data *data)
 	if (data->nb_command > 1)
 		close_pipes(data, pipe_);
 	wait_childs(data);
-	handle_signals_prompt();
+	if (g_glb == 130)
+		data->exec_val = 130;
+	handle_signals_prompt(data);
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	close_files(data);
 	return (0);

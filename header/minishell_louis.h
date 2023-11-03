@@ -38,7 +38,7 @@ int		child_process(t_data *data, t_pipe *pipes);
 
 t_pipe	*handle_redirection(t_data *data, t_pipe *pipes);
 int		set_redir(t_cmd *cmd, t_list *l);
-void	handle_builtins(t_data *data, t_pipe *pipes);
+int		handle_builtins(t_data *data, t_pipe *pipes);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
 void	close_fd(t_cmd **cmd, int len_list, int stdin_, int stdout_);
@@ -62,9 +62,9 @@ void	error_dup2(void);
 void	error_malloc(void);
 void	error_fork(void);
 
-void    handle_signals_heredoc();
-void    handle_signals_prompt();
-void	handle_signals_exec();
+void    handle_signals_heredoc(t_data *data);
+void    handle_signals_prompt(t_data *data);
+void	handle_signals_exec(t_data *data);
 int		handle_heredoc(t_data *data);
 int		heredoc(char *filemame, char *limiter);
 
