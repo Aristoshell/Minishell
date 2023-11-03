@@ -30,9 +30,10 @@ int	prompt(t_data *data)
 		}
 		else if (!input)
 		{
+			printf("exit\n");
 			ft_clean_t_data(data);
 			clear_history();
-			exit(0);
+			exit(data->exec_val);
 		}
 	}
 	return (clear_history(), FUNCTION_SUCCESS);

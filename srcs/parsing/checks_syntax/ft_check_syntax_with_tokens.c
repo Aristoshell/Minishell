@@ -20,7 +20,7 @@ int	ft_check_message(t_token *cur_node, t_list *tok, t_token *next_node, int i)
 			return (ft_dprintf(STDERR_FILENO, D_ER_SYN_HERED), 1);
 		else if (next_node->type == type_to)
 			return (ft_dprintf(STDERR_FILENO, D_ER_SYN_TO), 1);
-		else if (next_node->type == type_heredoc)
+		else if (next_node->type == type_append)
 			return (ft_dprintf(STDERR_FILENO, D_ER_SYN_APPEND), 1);
 	}
 	return (FUNCTION_SUCCESS);

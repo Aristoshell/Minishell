@@ -18,6 +18,8 @@ int	parsing(t_data *data, const char *input)
 			return (MEMORY_ERR_NB);
 		}
 	}
+	else
+		data->exec_val = 2;
 	ft_lstclear(&(data)->tokens, (void *)ft_clean_token);
 	data->tokens = NULL;
 	return (FUNCTION_SUCCESS);
