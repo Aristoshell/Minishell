@@ -1,0 +1,71 @@
+
+
+
+
+pwd: -p: invalid optionâpwd: usage: pwd [-LP]
+pwd: --: invalid optionâpwd: usage: pwd [-LP]
+pwd: --: invalid optionâpwd: usage: pwd [-LP]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+cd: srcs: No such file or directory
+cd: too many arguments
+cd: srcs: No such file or directory
+cd: srcs: No such file or directory
+
+
+
+cd: sr: No such file or directory
+cd: Makefile: No such file or directory
+cd: ../minishell: Not a directory
+
+cd: .././../.././../bin/ls: No such file or directory
+
+
+
+
+
+
+
+cd: /minishell: No such file or directory
+
+cd: _: No such file or directory
+
+
+cd: --: invalid optionâcd: usage: cd [-L|[-P [-e]] [-@]] [dir]
+
+cd: too many arguments
+
+cd: /mnt/nfs/homes/lmarchai/Documents/cercle3/Minishell/minishell42tester/srcs: No such file or directory
+cd: $PWD/srcs: No such file or directory
+cd: HOME not set
+
+cd: HOME not set
+cd: too many arguments
+
+
+
+
+cd: too many arguments
+cd: too many arguments
+cd: too many arguments
+rm: cannot remove 'a': No such file or directoryâcd: ..: No such file or directory
+
+
+
+
+
+
+
+

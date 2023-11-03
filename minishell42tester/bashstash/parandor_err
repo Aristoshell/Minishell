@@ -1,0 +1,68 @@
+
+
+
+
+
+
+
+
+
+
+
+
+export: `': not a valid identifier
+export: `': not a valid identifier
+export: `': not a valid identifier
+syntax error near unexpected token `;'
+syntax error near unexpected token `;'
+syntax error near unexpected token `;'
+syntax error near unexpected token `;'
+syntax error near unexpected token `newline'
+syntax error near unexpected token `newline'
+
+
+
+
+export: `': not a valid identifier
+
+
+syntax error near unexpected token `)'
+
+
+
+
+
+
+
+syntax error near unexpected token `('
+
+pwd: No such file or directory
+pwd: No such file or directory
+
+syntax error near unexpected token `)'
+syntax error near unexpected token `('
+
+lss: command not foundâlss: command not found
+lss: command not found
+
+
+
+
+
+ls: invalid option -- 'z'âTry 'ls --help' for more information.
+
+
+ls: invalid option -- 'z'âTry 'ls --help' for more information.
+ls: invalid option -- 'z'âTry 'ls --help' for more information.
+
+ls: invalid option -- 'z'âTry 'ls --help' for more information.
+
+
+
+
+ls: invalid option -- 'z'âTry 'ls --help' for more information.
+ls: invalid option -- 'z'âTry 'ls --help' for more information.
+> syntax error: unexpected end of fileâexit
+> syntax error: unexpected end of fileâexit
+syntax error near unexpected token `&&'
+syntax error near unexpected token `||'

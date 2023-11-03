@@ -1,0 +1,46 @@
+exit
+exitâexit: exit: numeric argument required
+exitâexit: hola: numeric argument required
+exitâexit: hola: numeric argument required
+exit
+exit
+exit
+exitâexit: too many arguments
+exitâexit: too many arguments
+exitâexit: hola: numeric argument required
+exitâexit: too many arguments
+exitâexit: too many arguments
+exitâexit: hola: numeric argument required
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exit
+exitâexit: too many arguments
+exitâexit: --666: numeric argument required
+exitâexit: ++++666: numeric argument required
+exitâexit: ++++++0: numeric argument required
+exitâexit: ------0: numeric argument required
+exit
+exit
+exit
+exit
+exitâexit: ----666: numeric argument required
+exitâexit: ++++666: numeric argument required
+exit
+exit
+exitâexit: '666': numeric argument required
+exitâexit: "666": numeric argument required
+exit
+exit
+exit
+exit
+exitâexit: 9223372036854775808: numeric argument required
+exit
+exitâexit: -9223372036854775809: numeric argument required

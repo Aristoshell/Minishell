@@ -10,7 +10,7 @@ int	prompt(t_data *data)
 	while (1)
 	{
 		handle_signals_prompt(data);
-		input = readline(PROMPT_COLOUR"aristoshell$ "PROMPT_RESET);
+		input = readline("minishell$ ");
 		if (g_glb == 130)
 		{
 			data->exec_val = 130;

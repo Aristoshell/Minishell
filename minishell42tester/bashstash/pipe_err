@@ -1,0 +1,56 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+hola: command not found
+ls: cannot access 'hola': No such file or directory
+hola: command not found
+hola: command not found
+hola: command not found
+
+
+
+
+
+
+
+
+
+
+
+syntax error near unexpected token `|'
+o: command not foundâech: command not found
+cat: .testignore: No such file or directory
+cat: .testignore: No such file or directory
+cat: .testignore: No such file or directory
+cd: file_not_exist: No such file or directoryâcat: .testignore: No such file or directory
+hello: command not foundâcat: .testignore: No such file or directory
+
+
+
+
+
+âreal	0m1.002sâuser	0m0.003sâsys	0m0.000s
+
+
+
