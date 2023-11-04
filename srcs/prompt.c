@@ -6,6 +6,7 @@ int	prompt(t_data *data)
 {
 	const char	*input;
 	int			check_error;
+	int			exec_val;
 
 	while (1)
 	{
@@ -30,10 +31,11 @@ int	prompt(t_data *data)
 		}
 		else if (!input)
 		{
+			exec_val = data->exec_val;
 			printf("exit\n");
 			ft_clean_t_data(data);
 			clear_history();
-			exit(data->exec_val);
+			exit(exec_val);
 		}
 	}
 	return (clear_history(), FUNCTION_SUCCESS);

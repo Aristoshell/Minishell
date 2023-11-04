@@ -5,10 +5,7 @@
 int	display_env(t_envlist *env, char **args)
 {
 	if (args[1])
-	{
-		ft_dprintf(2, D_ER_ENV, args[1][1]);
-		return (2);
-	}
+		return (ft_dprintf(STDOUT_FILENO, D_ER_ENV, args[1]), 2);
 	while (env)
 	{
 		if (MASK_EXPORT & env->flag && MASK_SET & env->flag)

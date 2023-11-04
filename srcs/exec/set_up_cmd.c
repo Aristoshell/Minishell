@@ -54,34 +54,26 @@ char	*find_path(char **envp)
 	}
 	return (*envp + 5);
 }
-
-/*
-si on a aucun path cette fonction est appellee permet de gerer les chemin absolu
-*/
-
-char	*nopath(char *cmd)
-{
-	if (cmd[0] == '/')
-	{
-		if (access(cmd, F_OK | X_OK) == 0)
-		{
-			return (cmd);
-		}
-	}
-	return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL);
-}
-
 /*
 cette fonction join le path et la commande
 */
 
-char	*get_cmd(char **paths, char *cmd)
+bool    ft_special_case(char *cmd)
 {
-	char	*tmp;
-	char	*to_try;
-	struct    stat file_info;
+    if (!ft_strncmp(cmd, ".", 2) || !ft_strncmp(cmd, "..", 3) || !ft_strncmp(cmd, "", 1))
+        return (true);
+    return (false);
+}
 
-	if (!paths || ft_strchr(cmd, '/'))
+char    *get_cmd(char **paths, char *cmd)
+{
+    char    *tmp;
+    char    *to_try;
+    struct    stat file_info;
+
+    if (ft_special_case(cmd))
+        return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL); // 127
+	else if (!paths || ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) == 0)
 		{
@@ -90,18 +82,18 @@ char	*get_cmd(char **paths, char *cmd)
 				if (stat(cmd, &file_info) == 0)
                 {
                     if (S_ISDIR(file_info.st_mode))
-                        return (ft_dprintf(STDERR_FILENO, D_ER_ISDIR, cmd), NULL);
+                        return (ft_dprintf(STDERR_FILENO, D_ER_ISDIR, cmd), NULL); //126
                 }
 				return (cmd);
 			}
 			else
 			{
 				// ft_dprintf(STDERR_FILENO, "1	");
-				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, cmd), NULL);
+				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, cmd), NULL); //126
 			}
 		}
 		// ft_dprintf(STDERR_FILENO, "2	");
-		return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL);
+		return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL); //127
 	}
 	while (*paths)
 	{
@@ -118,12 +110,12 @@ char	*get_cmd(char **paths, char *cmd)
 			else
 			{
 				// ft_dprintf(STDERR_FILENO, "4	");
-				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, to_try), NULL);
+				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, to_try), NULL); //126
 			}
 		}
 		free(to_try);
 		paths++;
 	}
 	// ft_dprintf(STDERR_FILENO, "5	");
-	return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL);
+	return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL); //127
 }

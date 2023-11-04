@@ -101,17 +101,19 @@ int	set_redir(t_cmd *cmd, t_list *l)
 				if (access(f->filename, F_OK) == -1)
 				{
 					cmd->fd_in = -1;
-					ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, f->filename);
+					ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, f->filename); //1
 					fail_open = 1;
 				}
 				else if (cmd->fd_in != -2)
 				{
 					cmd->fd_in = open(f->filename, O_RDONLY);
 					if (cmd->fd_in == -1)
-						ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
+						ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename); //1
 					prev_in = true;
 				}
 			}
+			//else if (f->filetype == ambigous_)
+			
 			else if (f->filetype == file_to)
 			{
 				cmd->output = file_to;
@@ -120,7 +122,7 @@ int	set_redir(t_cmd *cmd, t_list *l)
 				cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
 				if (cmd->fd_out == -1)
 				{
-					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
+					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename); //1
 					cmd->fd_out = -1;
 				}
 				prev_out = true;
@@ -133,7 +135,7 @@ int	set_redir(t_cmd *cmd, t_list *l)
 				cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
 				if (cmd->fd_out == -1)
 				{
-					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
+					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename); //1
 					cmd->fd_out = -1;
 				}
 				prev_out = true;

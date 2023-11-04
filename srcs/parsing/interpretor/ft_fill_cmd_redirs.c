@@ -116,7 +116,7 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 int	ft_fill_cmd_redirs(t_cmd *cmd, t_data *data, t_list *list)
 {
 	if (ft_fill_cmd_redirs_pipe_in(cmd, data)
-		|| ft_fill_cmd_redirs_pipe_out(cmd, data)
+		|| ft_fill_cmd_redirs_pipe_out(cmd, data) 
 		|| ft_fill_cmd_redirs_files(cmd, list))
 		return (MEMORY_ERR_NB);
 	return (FUNCTION_SUCCESS);

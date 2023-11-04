@@ -162,7 +162,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	if (data->nb_command > 1)
 		close_pipes(data, pipes);
 	ft_clean_t_data(data);
-	ft_dprintf(STDERR_FILENO, "minishell: : command not found\n"); 
+	ft_dprintf(STDERR_FILENO, "ON EST PAS DANS UNE FUSEE C'EST OK\n");
 	exit(127);
 }
 
@@ -233,7 +233,8 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	handle_heredoc(data);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
 		pipes = new_pipes(pipes, data->current_cmd);
-	if (data->cmd[data->current_cmd]->cmd_type != no && data->nb_command == 1)
+	if (data->cmd[data->current_cmd]->cmd_type != no && data->cmd[data->current_cmd]->cmd_type != no_cmd 
+		&& data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
 		data->exec_val = handle_builtins(data, pipes);
@@ -288,7 +289,7 @@ void	close_files(t_data *data)
 		if (data->cmd[i]->input == file_from && data->cmd[i]->fd_out != -1)
 			close(data->cmd[i]->fd_in);
 		if (data->cmd[i]->output == file_to && data->cmd[i]->fd_out != -1)
-			close(data->cmd[i]->fd_in);
+			close(data->cmd[i]->fd_out);
 		unlink_files(data->cmd[i]->list_files);
 		i++;
 	}
