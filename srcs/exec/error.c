@@ -2,17 +2,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
-void	error_management(t_cmd *cmd, char *str, int exit_val)
-{
-	if (!cmd)
-		return ;
-	printf("%s\n",str);
-	//set la value de retour a exit_val
-	//free le plus de truc possible
-	exit(exit_val);
-}
-
 void	error_dup2(void)
 {
 	printf("erno : %sn",strerror(errno));

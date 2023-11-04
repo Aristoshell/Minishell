@@ -34,7 +34,7 @@ int	handle_builtins(t_data *data, t_pipe *pipes)
 	else if (cmd[data->current_cmd]->cmd_type == cmd_env)
 		return (display_env(data->envp, cmd[data->current_cmd]->cmd_args));
 	else if (cmd[data->current_cmd]->cmd_type == cmd_exit)
-		bt_exit(data, data->current_cmd, pipes);
+		return (bt_exit(data, data->current_cmd, pipes));
 	return (0);
 }
 

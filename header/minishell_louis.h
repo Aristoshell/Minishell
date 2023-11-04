@@ -49,7 +49,7 @@ void	close_pipes(t_data *data, t_pipe *pipes);
 int		strlen_list(t_cmd **cmd);
 
 int		ft_isnumber(char *str);
-void	bt_exit(t_data *data, int i, t_pipe *pipes);
+int		bt_exit(t_data *data, int i, t_pipe *pipes);
 
 int		bt_echo(t_data *data, int to_do);
 int		bt_pwd(void);
