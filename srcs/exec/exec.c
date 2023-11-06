@@ -112,7 +112,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 	char	**envp;
 	int		exec_val;
-
+	
 	close(data->stdin_save);
 	close(data->stdout_save);
 	envp = list_to_array(data->envp);
@@ -154,13 +154,21 @@ int	child_process(t_data *data, t_pipe *pipes)
 			close_pipes(data, pipes);
 		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 		close_files(data);
+		if (data->exec_val != 130)
+			exec_val = g_glb;
+		else
+			exec_val = 130;
 		ft_clean_t_data(data);
-		exit(127);
+		exit(exec_val);
 	}
 	execve(exec, cmd->cmd_args, envp);
 	free_envp(envp);
 	if (data->nb_command > 1)
 		close_pipes(data, pipes);
+	if (data->exec_val != 130)
+		exec_val = g_glb;
+	else
+		exec_val = 130;
 	ft_clean_t_data(data);
 	ft_dprintf(STDERR_FILENO, "ON EST PAS DANS UNE FUSEE C'EST OK\n");
 	exit(127);

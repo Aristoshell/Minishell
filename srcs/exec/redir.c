@@ -112,8 +112,6 @@ int	set_redir(t_cmd *cmd, t_list *l)
 					prev_in = true;
 				}
 			}
-			//else if (f->filetype == ambigous_)
-			
 			else if (f->filetype == file_to)
 			{
 				cmd->output = file_to;

@@ -72,7 +72,7 @@ char    *get_cmd(char **paths, char *cmd)
     struct    stat file_info;
 
     if (ft_special_case(cmd))
-        return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL); // 127
+        return (g_glb = 127, ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL); // 127
 	else if (!paths || ft_strchr(cmd, '/'))
 	{
 		if (access(cmd, F_OK) == 0)
@@ -82,18 +82,18 @@ char    *get_cmd(char **paths, char *cmd)
 				if (stat(cmd, &file_info) == 0)
                 {
                     if (S_ISDIR(file_info.st_mode))
-                        return (ft_dprintf(STDERR_FILENO, D_ER_ISDIR, cmd), NULL); //126
+                        return (g_glb = 126, ft_dprintf(STDERR_FILENO, D_ER_ISDIR, cmd), NULL); //126
                 }
 				return (cmd);
 			}
 			else
 			{
 				// ft_dprintf(STDERR_FILENO, "1	");
-				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, cmd), NULL); //126
+				return (g_glb = 126, ft_dprintf(STDERR_FILENO, D_ER_PERM, cmd), NULL); //126
 			}
 		}
 		// ft_dprintf(STDERR_FILENO, "2	");
-		return (ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL); //127
+		return (g_glb = 127, ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, cmd), NULL); //127
 	}
 	while (*paths)
 	{
@@ -110,12 +110,12 @@ char    *get_cmd(char **paths, char *cmd)
 			else
 			{
 				// ft_dprintf(STDERR_FILENO, "4	");
-				return (ft_dprintf(STDERR_FILENO, D_ER_PERM, to_try), NULL); //126
+				return (g_glb = 126, ft_dprintf(STDERR_FILENO, D_ER_PERM, to_try), NULL); //126
 			}
 		}
 		free(to_try);
 		paths++;
 	}
 	// ft_dprintf(STDERR_FILENO, "5	");
-	return (ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL); //127
+	return (g_glb = 127, ft_dprintf(STDERR_FILENO, D_ER_CMD_NF, cmd), NULL); //127
 }
