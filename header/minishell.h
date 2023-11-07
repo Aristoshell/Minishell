@@ -193,7 +193,7 @@ int				ft_insert_next_node(int i, t_list *list);
 int				ft_del_quotes(t_data *data);
 int				ft_remove_quotes(t_list *list, char quote);
 int				ft_split_quotes(t_list *list);
-int				ft_remove_quotes_empty(t_token *current_token);
+int				ft_detach_quotes(int i, t_list *list, char quote);
 
 int				ft_detatch_expand(t_list *list, int i);
 int				ft_expand(t_envlist *envp, t_data *data);
