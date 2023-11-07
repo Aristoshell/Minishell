@@ -52,7 +52,7 @@ int		ft_isnumber(char *str);
 int		bt_exit(t_data *data, int i, t_pipe *pipes);
 
 int		bt_echo(t_data *data, int to_do);
-int		bt_pwd(t_data *data);
+int		bt_pwd(void);
 int		bt_cd(t_data *data);
 // void	display_export(t_envlist *env);
 

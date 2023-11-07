@@ -64,4 +64,5 @@ int bt_exit(t_data *data, int i, t_pipe *pipes)
 	ft_clean_t_data(data);
 	ft_dprintf(STDERR_FILENO,"exit\n");
 	exit(exit_val);
+	return (0);
 }

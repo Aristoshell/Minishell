@@ -63,7 +63,6 @@ int	update_env(t_envlist *envp, char *old_pwd)
 int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 {
 	char	cwd[PATH_MAX];
-	struct    stat file_info;
 
 	getcwd(cwd, PATH_MAX);
 	if (!env)
@@ -71,21 +70,23 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 	if (nbr_arg == 0)
 	{
 		if (chdir(find_home(env)) == -1)
-			return (update_env(envp, cwd), 1);
-		return (0);
-	}
-	else if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1] && chdir(cmd->cmd_args[1]) == -1)
-	{
-		if (stat(cmd->cmd_args[1], &file_info) == 0)
 		{
-			if (S_ISDIR(file_info.st_mode) == 0)
-				return (ft_dprintf(STDERR_FILENO, "cd: %s: Not a directory\n", cmd->cmd_args[1]), 1);
+			update_env(envp, cwd);
+			return (1);
 		}
-		update_env(envp, cwd);
-		return (ft_dprintf(2,"cd: %s: No such file or directory☃\n",cmd->cmd_args[1]), 1);
 	}
+	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1] && chdir(cmd->cmd_args[1]) == -1)
+	{
+		update_env(envp, cwd);
+		return (1);
+	}
+	update_env(envp, cwd);
 	return (0);
 }
+
+/*
+arg jamais pris en compte il faut 
+*/
 
 int	bt_cd(t_data *data)
 {
@@ -98,14 +99,14 @@ int	bt_cd(t_data *data)
 	{
 		if (cmd->cmd_args[2])
 		{
-			ft_dprintf(2,"cd: too many arguments\n");
+			printf("too many arguments\n");
 			return (ft_free_2d_array(env), 1);
 		}
 		return (ft_free_2d_array(env), go_to(cmd, 1, data->envp, env));
 	}
 	if (!find_home(env))
 	{
-		ft_dprintf(2,"HOME not set\n");
+		printf("HOME not set\n");
 		return (ft_free_2d_array(env), 1);
 	}
 	go_to(cmd, 0, data->envp, env);
