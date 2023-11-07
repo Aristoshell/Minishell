@@ -24,7 +24,7 @@ int	handle_builtins(t_data *data, t_pipe *pipes)
 	else if (cmd[data->current_cmd]->cmd_type == cmd_cd)
 		return (bt_cd(data));
 	else if (cmd[data->current_cmd]->cmd_type == cmd_pwd)
-		return (bt_pwd());
+		return (bt_pwd(data));
 	else if (cmd[data->current_cmd]->cmd_type == cmd_export)
 		return (export(&data->envp, cmd[data->current_cmd]->cmd_args));
 	else if (cmd[data->current_cmd]->cmd_type == cmd_export_print)

@@ -50,7 +50,7 @@ int	export_single(t_envlist **env, char *line)
 	t_envlist	*curr;
 
 	if ((!isalpha(line[0]) && line[0] != '_') || is_forbiden_in_var(&line[1]))
-		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 2);
+		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 1);
 	temp = *env;
 	new = ft_new_envvar(line);
 	if (!new)
@@ -79,8 +79,8 @@ int	export(t_envlist **env, char **tab)
 		rez = export_single(env, tab[i]);
 		if (rez == MEMORY_ERR_NB)
 			return (MEMORY_ERR_NB);
-		if (rez == 2)
-			final_rez = 2;
+		if (rez == 1)
+			final_rez = 1;
 		i++;
 	}
 	return (final_rez);
