@@ -4,55 +4,41 @@
 int	ft_need_detach(char *str)
 {
 	int		i;
-	int		equals;
 
 	i = 1;
-	if (str[1] == '?' )
+	//rajouter une condition qui va checker avant quon n'a pas de = juste apres le $
+	if (str[1] == '?')
 	{
 		if (!str[2])
-			return(0);
+			return (0);
 		return (2);
 	}
-	equals = ft_strchr_int(str, '=');
-	if (equals > 0)
-		return (equals);
-	else
+	while (str[i])
 	{
-		while (str[i])
-		{
-			if (ft_is_space(str[i]) || ft_is_dollar(str[i]))
-				return (i);
-			i++;
-		}
+		if (!isalnum(str[i]) && str[i] != '_' && str[i] != '=')
+			return (i);
+		i++;
 	}
 	return (0);
 }
 
-int	ft_suppress_dollar(t_token *curr_token)
+int	ft_suppress_dollar(t_token *curr_token, t_list *list)
 {
 	char	*truncate;
-
+	
 	if (curr_token->string[0] == '$')
 	{
+		if (curr_token->string[1] == '\0' && (!list->next))
+				return (FUNCTION_SUCCESS);
 		curr_token->expand = true;
-		truncate = ft_strtrim(curr_token->string, "$");
+		truncate = ft_strdup(&curr_token->string[1]);
 		if (!truncate)
 			return (MEMORY_ERR_NB);
 		free(curr_token->string);
 		curr_token->string = truncate;
-		return (FUNCTION_SUCCESS);
 	}
 	return (FUNCTION_SUCCESS);
 }
-
-// int	ft_special_expand(t_list *list, int i)
-// {
-// 	t_token	*current_token;
-// 	t_token	*next;
-// 	char	*truncate;
-
-// 	current_token = (t_token *)list->content;
-// }
 
 int	ft_detatch_expand(t_list *list, int i)
 {
@@ -74,13 +60,10 @@ int	ft_detatch_expand(t_list *list, int i)
 		}
 		current_token->join_with_next = true; //important de le garder apres
 		truncate = ft_substr(current_token->string, 0, i);
-		//printf("Truncate = %s\n", truncate);
 		if (!truncate)
 			return (MEMORY_ERR_NB);
 		free(current_token->string);
 		current_token->string = truncate;
 	}
-	if (ft_suppress_dollar(current_token))
-		return (MEMORY_ERR_NB);
-	return (FUNCTION_SUCCESS);
+	return (ft_suppress_dollar(current_token, list));
 }

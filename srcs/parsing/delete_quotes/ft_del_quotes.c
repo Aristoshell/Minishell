@@ -1,32 +1,45 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-void	ft_change_join_bool(t_list *prev, t_list *curr)
-{
-	t_token	*curr_token;
-	t_token	*prev_token;
+/* This function checks for each token whether there are quotes or not. 
+If applicable, a function will check wether there are more parts that need to be separated or not */
 
-	curr_token = (t_token *)curr->content;
-	prev_token = (t_token *)prev->content;
-	if (prev_token->join_with_next && !curr_token->join_with_next)
-		prev_token->join_with_next = false;
+int	ft_split_quotes(t_list *list)
+{
+	t_token	*current_token;
+	size_t	i;
+	char	quote;
+
+	i = 0;
+	quote = 0;
+	current_token = (t_token *)list->content;
+	while (current_token->string[i] && !quote)
+	{
+		quote = ft_is_quote(current_token->string[i]);
+		if (quote)
+			return (ft_detach_quotes(i, list, quote));
+		i++;
+	}
+	return (FUNCTION_SUCCESS);
 }
+
+/* This function aims to delete the quotes from the tokens :
+1) splitting nodes that have several parts using quotes as separator
+2) removing the quotes from the strings of nodes needing it, specifying wether the string used to have  simple or double quotes using a boolean */
 
 int	ft_del_quotes(t_data *data)
 {
 	t_list	*list;
 	t_token	*curr_tok;
-	t_list	*prev;
 	int		check;
 
 	list = data->tokens;
-	prev = NULL;
 	while (list)
 	{
 		curr_tok = (t_token *)list->content;
 		if (curr_tok->type == type_word)
 		{
-			if (ft_split_quotes(list) != FUNCTION_SUCCESS)
+			if (ft_split_quotes(list) != FUNCTION_SUCCESS) 
 				return (MEMORY_ERR_NB);
 			if (curr_tok->quote)
 			{
@@ -35,7 +48,6 @@ int	ft_del_quotes(t_data *data)
 					return (MEMORY_ERR_NB);
 			}
 		}
-		prev = list;
 		list = list->next;
 	}
 	// printf("DEL QUOTES\n");

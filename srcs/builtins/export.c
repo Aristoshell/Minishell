@@ -30,13 +30,26 @@ void	ft_update_curr(t_envlist *new, t_envlist *curr)
 	free(new);
 }
 
+int	is_forbiden_in_var(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!isalnum(str[i]) && str[i] != '_' && str[i] != '=')
+			return (i);
+		i++;
+	}
+	return (0);
+}
 int	export_single(t_envlist **env, char *line)
 {
 	t_envlist	*new;
 	t_envlist	*temp;
 	t_envlist	*curr;
 
-	if (!isalpha(line[0]) && line[0] != '_')
+	if ((!isalpha(line[0]) && line[0] != '_') || is_forbiden_in_var(&line[1]))
 		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 2);
 	temp = *env;
 	new = ft_new_envvar(line);

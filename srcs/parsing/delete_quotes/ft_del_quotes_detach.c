@@ -14,8 +14,7 @@ char	*ft_change_current_str(t_token *current_token, int i, char quote)
 	return (curr_word);
 }
 
-// on aura peut etre un segfault ici car on check pas si /0
-void	ft_get_i(char quote, char *string, int *i)
+void	ft_get_length(char quote, char *string, int *i)
 {
 	*i += 1;
 	while (string[*i] != quote)
@@ -42,7 +41,7 @@ int	ft_insert_next_node(int i, t_list *list)
 	nw_tok->expand = false;
 	nw_tok->join_with_next = false;
 	nw_tok->quote = false;
-	nw_tok->empty_node = false;
+	nw_tok->empty_node = false;// a tej
 	nw_tok->redir_file = false;
 	new = ft_lstnew((void *)nw_tok);
 	if (!new)
@@ -51,6 +50,20 @@ int	ft_insert_next_node(int i, t_list *list)
 	list->next = new;
 	return (FUNCTION_SUCCESS);
 }
+/* This function aims to detach tokens that have several parts.
+ex: a token with a string "hihi"ahah'omgg'yeaah) will be detatched in 4 different tokens :
+		- "hihi" (enum quote = true)
+		- ahah (enum quote = no)
+		- 'omg' (enum quote = true)
+		- yeaah (enum quote = no) 
+- If the quote is located at the begining, the ft_get_length 
+will check where the closing quote is located to check if another parts needs
+to be detatched or not. In both case, the node will have its quote enum to true.
+If the token ends at the closing quote, there is no need to continue, and the function returns
+- The function continues if the quote was not in the first part or if there
+ is another part after quotes, to separate the parts with insert new node
+- After the new node is created, the current node will get his extra part
+that has been aded in a new node removed with the function change current string*/
 
 int	ft_detach_quotes(int i, t_list *list, char quote)
 {
@@ -61,7 +74,7 @@ int	ft_detach_quotes(int i, t_list *list, char quote)
 	current_token = (t_token *)list->content;
 	if (i == 0)
 	{
-		ft_get_i(quote, current_token->string, &i);
+		ft_get_length(quote, current_token->string, &i);
 		if (current_token->string[0] == quote)
 			current_token->quote = true_q;
 		if (!current_token->string[i])
@@ -74,24 +87,5 @@ int	ft_detach_quotes(int i, t_list *list, char quote)
 		return (MEMORY_ERR_NB);
 	free(current_token->string);
 	current_token->string = curr_word;
-	return (FUNCTION_SUCCESS);
-}
-
-int	ft_split_quotes(t_list *list)
-{
-	t_token	*current_token;
-	size_t	i;
-	char	quote;
-
-	i = 0;
-	quote = 0;
-	current_token = (t_token *)list->content;
-	while (current_token->string[i] && !quote)
-	{
-		quote = ft_is_quote(current_token->string[i]);
-		if (quote)
-			return (ft_detach_quotes(i, list, quote));
-		i++;
-	}
 	return (FUNCTION_SUCCESS);
 }

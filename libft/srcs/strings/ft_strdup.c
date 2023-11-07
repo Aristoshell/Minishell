@@ -4,10 +4,12 @@
 char	*ft_strdup(const char *s)
 {
 	char	*dest;
+	size_t	len;
 
-	dest = malloc((ft_strlen(s) + 1) * sizeof(char));
+	len = ft_strlen(s);
+	dest = malloc((len + 1) * sizeof(char));
 	if (dest == NULL)
 		return (NULL);
-	ft_strlcpy(dest, s, ft_strlen(s) + 1);
+	ft_strlcpy(dest, s, len + 1);
 	return (dest);
 }

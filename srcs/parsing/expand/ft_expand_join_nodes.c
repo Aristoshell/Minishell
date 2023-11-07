@@ -13,16 +13,8 @@ int	ft_join_nodes(t_list *list, t_data *data)
 	while (list)
 	{
 		current_token = (t_token *)list->content;
-		while (list && current_token->empty_node) //passer les empty
-		{
-			//printf("Passer les empty : %s\n", current_token->string);
-			list = list->next;
-			if (list)
-				current_token = (t_token *)list->content;
-		}
 		while (list && !current_token->join_with_next) //passer les non join
 		{
-			//printf("Passer les non join: %s\n", current_token->string);
 			list = list->next;
 			if (list)
 				current_token = (t_token *)list->content;
@@ -37,10 +29,13 @@ int	ft_join_nodes(t_list *list, t_data *data)
 				join = ft_strjoin(current_token->string, next_token->string);
 				if (!join)
 					return (MEMORY_ERR_NB);
-				free (current_token->string);
+				free(current_token->string);
 				current_token->string = join;
-				next_token->empty_node = true;
 				current_token->join_with_next = next_token->join_with_next;
+				t_list *save;
+				save = list->next->next;
+				ft_lstdelone(list->next, (void *)ft_clean_token);
+				list->next = save;
 			}
 			list = list->next;
 		}
