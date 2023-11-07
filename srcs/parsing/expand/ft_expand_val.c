@@ -78,9 +78,7 @@ int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 	free(curr_token->string);
 	curr_token->string = NULL;
 	if (!env)
-	{
-		curr_token->string = ft_strdup("\0"); // a proteger
-	}
+		curr_token->string = NULL;
 	else if (curr_token->quote == double_q)
 	{
 		curr_token->string = ft_strdup(env->val);

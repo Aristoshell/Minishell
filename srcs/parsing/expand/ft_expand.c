@@ -10,6 +10,7 @@ int	ft_expand(t_envlist *envp, t_data *data)
 
 	list = data->tokens;
 	dollar_loc = 0;
+	prev_type = type_default;
 	while (list)
 	{
 		curr_token = (t_token *)list->content;

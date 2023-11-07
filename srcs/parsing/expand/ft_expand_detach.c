@@ -6,7 +6,7 @@ int	ft_need_detach(char *str)
 	int		i;
 
 	i = 1;
-	//rajouter une condition qui va checker avant quon n'a pas de = juste apres le $
+	//rajouter une condition qui va checker avant quon n'a pas de = juste apres le $""$DONTEXISTE
 	if (str[1] == '?')
 	{
 		if (!str[2])

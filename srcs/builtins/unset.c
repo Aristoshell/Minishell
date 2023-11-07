@@ -36,7 +36,7 @@ int	unset(t_envlist **env, char **key)
 	int	i;
 
 	i = 1;
-	if (key[i][0] == '-')
+	if (key[i] && key[i][0] == '-')
 		return (ft_dprintf(2, D_ER_EXPORT_UNSET, "unset", key[1]), 2);
 	while (key[i])
 	{
