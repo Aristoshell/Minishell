@@ -64,7 +64,7 @@ int	display_export(t_envlist *env, char **args)
 
 	if (args[1])
 	{
-		ft_dprintf(2, D_ER_EXPORT_UNSET, "export", args[1]);
+		ft_dprintf(2, D_ER_EXPORT_UNSET, "export", args[1][0], args[1][1]);
 		return (2);
 	}
 	i = 0;

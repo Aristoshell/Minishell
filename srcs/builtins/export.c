@@ -30,7 +30,7 @@ void	ft_update_curr(t_envlist *new, t_envlist *curr)
 	free(new);
 }
 
-int	is_forbiden_in_var(char *str)
+int	is_forbiden_in_var(const char *str)
 {
 	int	i;
 
@@ -48,13 +48,13 @@ int	export_single(t_envlist **env, char *line)
 	t_envlist	*new;
 	t_envlist	*temp;
 	t_envlist	*curr;
-
-	if ((!isalpha(line[0]) && line[0] != '_') || is_forbiden_in_var(&line[1]))
-		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 1);
+	
 	temp = *env;
 	new = ft_new_envvar(line);
 	if (!new)
 		return (MEMORY_ERR_NB);
+	if ((!isalpha(new->key[0]) && new->key[0] != '_') || is_forbiden_in_var(&new->key[1]))
+		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 1); // free le node (pas encore fait)
 	if (!(*env))
 		return (*env = new, FUNCTION_SUCCESS);
 	curr = ft_key_exist(*env, (char *)new->key);

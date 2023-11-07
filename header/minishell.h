@@ -26,7 +26,7 @@
 # define D_ER_NO_FILDIR "minishell: %s: No such file or directory\n"
 # define D_ER_ISDIR "minishell: %s: Is a directory\n"
 # define D_ER_EXPAND "minishell: export: `%s': not a valid identifier\n"
-# define D_ER_EXPORT_UNSET "minishell: %s: %s: option forbidden\n"
+# define D_ER_EXPORT_UNSET "minishell: %s: %c%c: invalid option\n"
 # define D_ER_ENV "env: '%s': please use env with no option or argument\n"
 # define FUNCTION_SUCCESS	0
 # define EXIT				1
