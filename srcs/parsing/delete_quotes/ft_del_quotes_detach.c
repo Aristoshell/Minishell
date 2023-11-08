@@ -41,7 +41,6 @@ int	ft_insert_next_node(int i, t_list *list)
 	nw_tok->expand = false;
 	nw_tok->join_with_next = false;
 	nw_tok->quote = false;
-	nw_tok->empty_node = false;// a tej
 	nw_tok->redir_file = false;
 	new = ft_lstnew((void *)nw_tok);
 	if (!new)
@@ -51,7 +50,8 @@ int	ft_insert_next_node(int i, t_list *list)
 	return (FUNCTION_SUCCESS);
 }
 /* This function aims to detach tokens that have several parts.
-ex: a token with a string "hihi"ahah'omgg'yeaah) will be detatched in 4 different tokens :
+ex: a token with a string "hihi"ahah'omgg'yeaah)
+will be detatched in 4 different tokens :
 		- "hihi" (enum quote = true)
 		- ahah (enum quote = no)
 		- 'omg' (enum quote = true)
@@ -59,11 +59,13 @@ ex: a token with a string "hihi"ahah'omgg'yeaah) will be detatched in 4 differen
 - If the quote is located at the begining, the ft_get_length 
 will check where the closing quote is located to check if another parts needs
 to be detatched or not. In both case, the node will have its quote enum to true.
-If the token ends at the closing quote, there is no need to continue, and the function returns
+
+If the token ends at the closing quote, there is no need to continue, 
+and the function returns
 - The function continues if the quote was not in the first part or if there
  is another part after quotes, to separate the parts with insert new node
-- After the new node is created, the current node will get his extra part
-that has been aded in a new node removed with the function change current string*/
+- After the new node is created, the current node will get his extra part that
+has been aded in a new node removed with the function change current string*/
 
 int	ft_detach_quotes(int i, t_list *list, char quote)
 {

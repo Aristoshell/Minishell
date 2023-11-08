@@ -16,7 +16,6 @@ void	ft_display_lexer(t_data data)
 		ft_dprintf(STDERR_FILENO, "expand : %d, ", curr_token->expand);
 		ft_dprintf(STDERR_FILENO, "join : %d, ", curr_token->join_with_next);
 		ft_dprintf(STDERR_FILENO, "in quote : %d, ", curr_token->quote);
-		ft_dprintf(STDERR_FILENO, "empty : %d\n", curr_token->empty_node);
 		data.tokens = data.tokens->next;
 	}
 }

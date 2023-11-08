@@ -2,9 +2,7 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-t_envlist		// printf("tokens cleaned\n");
-	// printf("tokens cleaned\n");
-*ft_key_exist(t_envlist *env, char *new_key)
+t_envlist	*ft_key_exist(t_envlist *env, char *new_key)
 {
 	while (env)
 	{
@@ -43,17 +41,19 @@ int	is_forbiden_in_var(const char *str)
 	}
 	return (0);
 }
+
 int	export_single(t_envlist **env, char *line)
 {
 	t_envlist	*new;
 	t_envlist	*temp;
 	t_envlist	*curr;
-	
+
 	temp = *env;
 	new = ft_new_envvar(line);
 	if (!new)
 		return (MEMORY_ERR_NB);
-	if ((!isalpha(new->key[0]) && new->key[0] != '_') || is_forbiden_in_var(&new->key[1]))
+	if ((!isalpha(new->key[0]) && new->key[0] != '_')
+		|| is_forbiden_in_var(&new->key[1]))
 		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 1); // free le node (pas encore fait)
 	if (!(*env))
 		return (*env = new, FUNCTION_SUCCESS);

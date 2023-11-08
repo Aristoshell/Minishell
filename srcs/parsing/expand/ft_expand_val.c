@@ -12,9 +12,8 @@ int	ft_insert_expand_splitted(t_list *list, char *new_word, bool join_next)
 	new_token->string = new_word;
 	new_token->type = type_word;
 	new_token->expand = false;
-	new_token->join_with_next = join_next; //pb ici, attention pour le dernier ?
+	new_token->join_with_next = join_next;
 	new_token->quote = false;
-	new_token->empty_node = false; // a tej ici
 	new_token->redir_file = false;
 	new = ft_lstnew((void *)new_token);
 	if (!new)
@@ -24,23 +23,22 @@ int	ft_insert_expand_splitted(t_list *list, char *new_word, bool join_next)
 	return (FUNCTION_SUCCESS);
 }
 
-int	ft_expand_val_split(t_list *list, char *env_val) // celle la je lai pas encore revue
+int	ft_expand_val_split(t_list *list, char *env_val, t_data *data)
 {
 	char	**splited;
-	t_token	*current_token;
 	int		i;
 	bool	mem_last;
 
 	splited = ft_split(env_val, ' ');
 	if (!splited)
 		return (MEMORY_ERR_NB);
-	current_token = list->content;
-	current_token->expand = true; // a checker //est ce aue je met a jour que le node est vide ? jai peur que ca pete le code plus loin...
-	current_token->string = splited[0];
-	mem_last = current_token->join_with_next;
-	current_token->join_with_next = false;
+	data->curr_token = list->content;
+	data->curr_token->expand = true;
+	data->curr_token->string = splited[0];
+	mem_last = data->curr_token->join_with_next;
+	data->curr_token->join_with_next = false;
 	if (!splited[0])
-		return (current_token->string = ft_strdup("\0"), FUNCTION_SUCCESS); //faudra le mettre dans une autre fonction
+		return (data->curr_token->string = ft_strdup("\0"), FUNCTION_SUCCESS);
 	i = 1;
 	while (splited && splited[i])
 	{
@@ -49,15 +47,17 @@ int	ft_expand_val_split(t_list *list, char *env_val) // celle la je lai pas enco
 		i++;
 		list = list->next;
 	}
-	current_token = (t_token *)list->content;
-	return (current_token->join_with_next = mem_last, FUNCTION_SUCCESS);
+	data->curr_token = (t_token *)list->content;
+	return (data->curr_token->join_with_next = mem_last, FUNCTION_SUCCESS);
 }
 
 int	ft_expand_questionmark(t_token *curr_token, t_data *data)
 {
+	char *nb;
+
 	free(curr_token->string);
 	curr_token->string = NULL;
-	char *nb = ft_itoa(data->exec_val);
+	nb = ft_itoa(data->exec_val);
 	if (!nb)
 		return (MEMORY_ERR_NB);
 	curr_token->string = nb;
@@ -85,7 +85,7 @@ int	ft_expand_val(t_list *list, t_envlist *env, t_data *data)
 		if (!curr_token->string)
 			return (MEMORY_ERR_NB);
 	}
-	else if (ft_expand_val_split(list, env->val))
+	else if (ft_expand_val_split(list, env->val, data))
 		return (MEMORY_ERR_NB);
 	return (FUNCTION_SUCCESS);
 }

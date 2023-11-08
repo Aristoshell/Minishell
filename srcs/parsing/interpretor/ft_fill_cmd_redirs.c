@@ -84,7 +84,7 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 		redir->filetype = (t_filetype)curr_tok->type - 1;
 		list = list->next;
 		curr_tok = (t_token *)list->content;
-		while (list && curr_tok->empty_node)
+		while (list && !curr_tok->string)
 		{
 			if (!curr_tok->join_with_next)
 			{
@@ -119,7 +119,7 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 int	ft_fill_cmd_redirs(t_cmd *cmd, t_data *data, t_list *list)
 {
 	if (ft_fill_cmd_redirs_pipe_in(cmd, data)
-		|| ft_fill_cmd_redirs_pipe_out(cmd, data) 
+		|| ft_fill_cmd_redirs_pipe_out(cmd, data)
 		|| ft_fill_cmd_redirs_files(cmd, list))
 		return (MEMORY_ERR_NB);
 	return (FUNCTION_SUCCESS);

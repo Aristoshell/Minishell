@@ -19,7 +19,7 @@ int	ft_init_tab_cmd(t_data *data)
 {
 	data->cmd = malloc(sizeof(t_cmd) * data->nb_command);
 	if (!data->cmd)
-		return (MEMORY_ERR_NB); // attention check retour de cette fonction avant (previously on retournais -1) + effacer ce qui a ete alloue avant
+		return (MEMORY_ERR_NB);
 	return (FUNCTION_SUCCESS);
 }
 
@@ -57,7 +57,8 @@ int	ft_interprete(t_data *data)
 		return (MEMORY_ERR_NB);
 	if (ft_fill_tab_cmd(data, data->tokens))
 		return (MEMORY_ERR_NB);
+	return (FUNCTION_SUCCESS);
+}
+
 	// printf("INTERPRETE\n");
 	// ft_display_lexer(*data);
-	return (0);
-}

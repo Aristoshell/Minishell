@@ -2,21 +2,36 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
+void	ft_check_signal(t_data *data)
+{
+	if (g_glb == 130)
+	{
+		data->exec_val = 130;
+		g_glb = 0;
+	}
+}
+
+void	ft_no_input(t_data *data)
+{
+	int			exec_val;
+
+	exec_val = data->exec_val;
+	printf("exit\n"); // mon ft_printf est pete oups (il attend les args dun d printf)
+	ft_clean_t_data(data);
+	clear_history();
+	exit(exec_val);
+}
+
 int	prompt(t_data *data)
 {
 	const char	*input;
 	int			check_error;
-	int			exec_val;
 
 	while (1)
 	{
 		handle_signals_prompt(data);
 		input = readline("minishell$ ");
-		if (g_glb == 130)
-		{
-			data->exec_val = 130;
-			g_glb = 0;
-		}
+		ft_check_signal(data);
 		if (input && input[0] != 0)
 		{
 			add_history(input);
@@ -30,13 +45,7 @@ int	prompt(t_data *data)
 			ft_reinit_data(data);
 		}
 		else if (!input)
-		{
-			exec_val = data->exec_val;
-			printf("exit\n");
-			ft_clean_t_data(data);
-			clear_history();
-			exit(exec_val);
-		}
+			ft_no_input(data);
 	}
 	return (clear_history(), FUNCTION_SUCCESS);
 }

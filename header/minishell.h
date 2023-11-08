@@ -82,7 +82,6 @@ typedef struct s_token
 	bool			join_with_next;
 	bool			expand;
 	t_open_quote	quote;
-	bool			empty_node;
 	bool			redir_file;
 }			t_token;
 
@@ -146,14 +145,16 @@ typedef struct s_envlist
 
 typedef struct s_data
 {
-	int			current_cmd;
-	int			nb_command;
-	t_cmd		**cmd;
-	t_envlist	*envp;
-	t_list		*tokens;
-	int			exec_val;
-	int			stdin_save;
-	int			stdout_save;
+	int				current_cmd;
+	int				nb_command;
+	t_cmd			**cmd;
+	t_envlist		*envp;
+	t_list			*tokens;
+	int				exec_val;
+	int				stdin_save;
+	int				stdout_save;
+	int				dollar_loc;
+	t_token			*curr_token;
 }			t_data;
 
 t_data			*ft_create_data(char **envp);
@@ -199,8 +200,7 @@ int				ft_detach_quotes(int i, t_list *list, char quote);
 int				ft_detatch_expand(t_list *list, int i);
 int				ft_expand(t_envlist *envp, t_data *data);
 int				ft_expand_val(t_list *list, t_envlist *env, t_data *data);
-
-int	ft_join_nodes(t_list *list, t_data *data);
+int				ft_join_nodes(t_list *list, t_data *data);
 
 int				ft_interprete(t_data *data);
 void			ft_count_cmd(t_list *list, t_data *data);

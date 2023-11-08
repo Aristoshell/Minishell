@@ -1,8 +1,10 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-/* This function checks for each token whether there are quotes or not. 
-If applicable, a function will check wether there are more parts that need to be separated or not */
+/* This function checks for each token whether 
+there are quotes or not. 
+If applicable, a function will check wether there 
+are more parts that need to be separated or not */
 
 int	ft_split_quotes(t_list *list)
 {
@@ -25,7 +27,8 @@ int	ft_split_quotes(t_list *list)
 
 /* This function aims to delete the quotes from the tokens :
 1) splitting nodes that have several parts using quotes as separator
-2) removing the quotes from the strings of nodes needing it, specifying wether the string used to have  simple or double quotes using a boolean */
+2) removing the quotes from the strings of nodes needing it, specifying
+wether the string used to have  simple or double quotes using a boolean */
 
 int	ft_del_quotes(t_data *data)
 {
@@ -39,7 +42,7 @@ int	ft_del_quotes(t_data *data)
 		curr_tok = (t_token *)list->content;
 		if (curr_tok->type == type_word)
 		{
-			if (ft_split_quotes(list) != FUNCTION_SUCCESS) 
+			if (ft_split_quotes(list) != FUNCTION_SUCCESS)
 				return (MEMORY_ERR_NB);
 			if (curr_tok->quote)
 			{
@@ -50,7 +53,8 @@ int	ft_del_quotes(t_data *data)
 		}
 		list = list->next;
 	}
-	// printf("DEL QUOTES\n");
-	// ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }
+
+	// printf("DEL QUOTES\n");
+	// ft_display_lexer(*data);

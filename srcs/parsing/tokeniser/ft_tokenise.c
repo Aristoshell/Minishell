@@ -12,7 +12,6 @@ int	ft_init_token(t_token *new_token, const char *input, int *i)
 	new_token->expand = false;
 	new_token->join_with_next = false;
 	new_token->quote = no_q;
-	new_token->empty_node = false;
 	new_token->redir_file = false;
 	return (FUNCTION_SUCCESS);
 }
@@ -56,7 +55,8 @@ int	ft_tokenise(const char *input, t_data *data)
 		}
 		ft_lstadd_back(&data->tokens, new_node);
 	}
-	// printf("TOKENISE\n");
-	// ft_display_lexer(*data);
 	return (FUNCTION_SUCCESS);
 }
+
+	// printf("TOKENISE\n");
+	// ft_display_lexer(*data);

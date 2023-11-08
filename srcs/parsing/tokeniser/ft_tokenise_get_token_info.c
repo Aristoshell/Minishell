@@ -71,7 +71,7 @@ char	*get_token_val(const char *input, int *i)
 		return (NULL);
 	word = malloc(sizeof(char) * (size + 1));
 	if (!word)
-		return (MEMORY_ERROR_PT); // penser a free ce qui a ete malloc avant aussi
+		return (MEMORY_ERROR_PT);
 	ft_fill_token_val(word, input, size, *i);
 	return (word);
 }

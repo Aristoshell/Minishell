@@ -6,10 +6,12 @@ void	ft_init_data(t_data *data)
 {
 	data->current_cmd = 0;
 	data->nb_command = 0;
+	data->dollar_loc = 0;
 	data->cmd = NULL;
 	data->tokens = NULL;
 	data->stdin_save = -1;
 	data->stdout_save = -1;
+	data->curr_token = NULL;
 }
 
 void	ft_clean_cmd(t_cmd *cmd)
