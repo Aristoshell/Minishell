@@ -108,7 +108,8 @@ typedef enum e_filetype
 	file_to,
 	heredoc_,
 	append_,
-	ambiguous,
+	ambiguous_in,
+	ambiguous_out,
 	stdin_,
 	stdout_,
 }			t_filetype;

@@ -10,7 +10,7 @@ int	ft_fill_cmd_count_args(t_list *list)
 	curr_token = (t_token *)list->content;
 	while (curr_token->type != type_pipe)
 	{
-		if (curr_token->type == type_word && !curr_token->redir_file)
+		if (curr_token->type == type_word && curr_token->string && !curr_token->redir_file)
 			nb_agrs++;
 		list = list->next;
 		if (!list)
@@ -46,7 +46,7 @@ int	ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_list *list, int n_args)
 	curr_token = (t_token *)list->content;
 	while (i < n_args)
 	{
-		if (curr_token->type == type_word && !curr_token->empty_node
+		if (curr_token->type == type_word
 			&& curr_token->string && !curr_token->redir_file)
 		{
 			cmd->cmd_args[i] = ft_strdup(curr_token->string);

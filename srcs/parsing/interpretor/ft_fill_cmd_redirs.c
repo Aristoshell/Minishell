@@ -88,7 +88,10 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 		{
 			if (!curr_tok->join_with_next)
 			{
-				redir->filetype = ambiguous;
+				if (redir->filetype == append_ || redir->filetype == file_to)
+					redir->filetype = ambiguous_out;
+				else
+					redir->filetype = ambiguous_in;
 				redir->filename = NULL;
 				curr_tok->redir_file = true;
 			}
@@ -96,7 +99,7 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 			if (list)
 				curr_tok = (t_token *)list->content;
 		}
-		if (redir->filetype != ambiguous)
+		if (redir->filetype != ambiguous_in && redir->filetype != ambiguous_out)
 		{
 			curr_tok->redir_file = true;
 			redir->filename = ft_strdup(curr_tok->string);
