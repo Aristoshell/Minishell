@@ -13,18 +13,22 @@ void	close_and_free(t_pipe *pipes, int stdin_save, int stdout_save, int status)
 
 void	close_pipes(t_data *data, t_pipe *pipes)
 {
-	if (data->nb_command > 1)
+	if (pipes)
 	{
-		if (pipes->tube[0][0] != -1)
-			close(pipes->tube[0][0]);
-		if (pipes->tube[0][1] != -1)
+		if (data->nb_command > 1)
+		{
+			if (pipes->tube[0][0] != -1)
+				close(pipes->tube[0][0]);
+			if (pipes->tube[0][1] != -1)
 			close(pipes->tube[0][1]);
+		}
+		if (pipes->tube[1][0] != -1)
+			close(pipes->tube[1][0]);
+		if (pipes->tube[1][1] != -1)
+			close(pipes->tube[1][1]);
+		free(pipes);
 	}
-	if (pipes->tube[1][0] != -1)
-		close(pipes->tube[1][0]);
-	if (pipes->tube[1][1] != -1)
-		close(pipes->tube[1][1]);
-	free(pipes);
+
 }
 
 void	close_fd(t_cmd **cmd, int len_list,

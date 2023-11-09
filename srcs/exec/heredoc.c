@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/03 12:02:18 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/09 14:21:41 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,16 +90,16 @@ int	heredoc2(const char *limiter, int fd)
 		input = readline(">");
 		if (g_glb == 130)
 			return (-1);
-		if (!input || input[0] == 0)
-			return (printf("aristoshell: warning: here-document at line 1 delimited by end-of-file (wanted `stop')\n"), 0);
-		if (ft_strncmp(input, limiter, ft_strlen(limiter)) == 0 && \
-			(input[ft_strlen(limiter)] == 0 || input[ft_strlen(limiter)] == '\n'))
-			return (0);
-		else
+		if (input && input[0] != 0)
 		{
+			if (ft_strncmp(input, limiter, ft_strlen(limiter)) == 0 && \
+			(input[ft_strlen(limiter)] == 0 || input[ft_strlen(limiter)] == '\n'))
+				return (0);
 			ft_putstr_fd((char *)input, fd);
 			write(fd, "\n", 1);
 		}
+		if (!input)
+			return (printf("aristoshell: warning: here-document at line 1 delimited by end-of-file (wanted `%s')\n", limiter), 0);
 		input = NULL;
 	}
 	return (0);
@@ -141,10 +141,7 @@ int	handle_heredoc(t_data *data)
 				f->filename = seeded_word(785 * (data->nb_command + 1), \
 				"abcdefghijklmnopqrstuvwxyz0123456789");
 				if (!f->filename)
-				{
-					//error 1
 					return (-1);
-				}
 			}
 			else
 			{
@@ -153,10 +150,7 @@ int	handle_heredoc(t_data *data)
 					data->current_cmd), \
 					"abcdefghijklmnopqrstuvwxyz0123456789");
 				if (!f->filename)
-				{
-					//error 1
 					return (-1);
-				}
 			}
 			handle_signals_heredoc(data);
 			cmd->fd_in = heredoc(f->filename, limiter);

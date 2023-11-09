@@ -65,6 +65,7 @@ void	error_fork(void);
 void    handle_signals_heredoc(t_data *data);
 void    handle_signals_prompt(t_data *data);
 void	handle_signals_exec(t_data *data);
+void    reset_signals(void);
 int		handle_heredoc(t_data *data);
 int		heredoc(char *filemame, char *limiter);
 

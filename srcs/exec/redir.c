@@ -17,8 +17,9 @@ l'entree standard dans tout les cas possible
 grace a dup2 exactement comme on le fait dans split
 */
 
-t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
+t_pipe	*redir_fd_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes)
 {
+	printf("fd to fd\n");
 	if (cmd->input != stdin_)
 	{
 		if (dup2(cmd->fd_in, 0) == -1)
@@ -29,22 +30,21 @@ t_pipe	*redir_fd_to_fd(t_cmd *cmd, t_pipe *pipes)
 		if (dup2(cmd->fd_out, 1) == -1)
 			error_dup2();
 	}
+	close_pipes(data, pipes);
 	return (pipes);
 }
 
-t_pipe	*redir_pipe_to_pipe(t_pipe *pipes)
+t_pipe	*redir_pipe_to_pipe(t_data *data, t_pipe *pipes)
 {
+	printf("pipe to pipe\n");
 	if (dup2(pipes->tube[0][0], 0) == -1 \
 		|| dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();
-	close(pipes->tube[0][0]);	
-	close(pipes->tube[0][1]);
-	close(pipes->tube[1][0]);
-	close(pipes->tube[1][1]);
+	close_pipes(data, pipes);
 	return (pipes);
 }
 
-t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
+t_pipe	*redir_pipe_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes)
 {
 	if (cmd->output != stdout_)
 	{
@@ -53,14 +53,11 @@ t_pipe	*redir_pipe_to_fd(t_cmd *cmd, t_pipe *pipes)
 	}
 	if (dup2(pipes->tube[0][0], 0) == -1)
 		error_dup2();
-	close(pipes->tube[0][0]);	
-	close(pipes->tube[0][1]);
-	close(pipes->tube[1][0]);
-	close(pipes->tube[1][1]);
+	close_pipes(data, pipes);
 	return (pipes);
 }
 
-t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
+t_pipe	*redir_fd_to_pipe(t_data *data, t_cmd *cmd, t_pipe *pipes)
 {
 	if (cmd->input != stdin_)
 	{
@@ -69,12 +66,7 @@ t_pipe	*redir_fd_to_pipe(t_cmd *cmd, t_pipe *pipes)
 	}
 	if (dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();
-	close(pipes->tube[1][0]);
-	if (pipes->tube[1][0] != -1)
-	{
-		close(pipes->tube[1][0]);
-		close(pipes->tube[1][1]);
-	}
+	close_pipes(data, pipes);
 	return (pipes);
 }
 
@@ -133,10 +125,26 @@ int	set_redir(t_cmd *cmd, t_list *l)
 				cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
 				if (cmd->fd_out == -1)
 				{
-					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename); //1
+					ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 					cmd->fd_out = -1;
 				}
 				prev_out = true;
+			}
+			else if (f->filetype == ambiguous_in)
+			{
+				if (prev_in)
+					close (cmd->fd_in);
+				cmd->fd_in = -1;
+				ft_dprintf(STDERR_FILENO, D_ER_AMB, f->filename);
+				return (1);
+			}
+			else if (f->filetype == ambiguous_out)
+			{
+				if (prev_out)
+					close (cmd->fd_out);
+				cmd->fd_out = -1;
+				ft_dprintf(STDERR_FILENO, D_ER_AMB, f->filename);
+				return (1);
 			}
 			else if (f->filetype == pipe_in_)
 				cmd->input = pipe_in_;
@@ -155,7 +163,8 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 	t_cmd	*cmd;
 
 	cmd = data->cmd[data->current_cmd];
-	set_redir(cmd, cmd->list_files);
+	if (set_redir(cmd, cmd->list_files) == 1)
+		return (g_glb = 999, pipes);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
 	if (cmd->fd_in == -2)
@@ -165,10 +174,10 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 	if (cmd->input == pipe_in_ || cmd->output == pipe_out_)
 	{
 		if (cmd->input == pipe_in_ && cmd->output != pipe_out_)
-			return (redir_pipe_to_fd(cmd ,pipes));
+			return (redir_pipe_to_fd(data, cmd ,pipes));
 		if (cmd->input != pipe_in_ && cmd->output == pipe_out_)
-			return (redir_fd_to_pipe(cmd, pipes));
-		return (redir_pipe_to_pipe(pipes));
+			return (redir_fd_to_pipe(data, cmd, pipes));
+		return (redir_pipe_to_pipe(data, pipes));
 	}
-	return (redir_fd_to_fd(cmd, pipes));
+	return (redir_fd_to_fd(data, cmd, pipes));
 }

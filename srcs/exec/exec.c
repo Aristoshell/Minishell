@@ -118,14 +118,22 @@ int	child_process(t_data *data, t_pipe *pipes)
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
+	if (g_glb == 999)
+	{
+		close_files(data);
+		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
+		close_pipes(data, pipes);
+		ft_clean_t_data(data);
+		free_envp(envp);
+		exit (1);
+	}
 	close_files(data);
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	if (cmd->cmd_type != no)
 	{
 		exec_val = handle_builtins(data, pipes);
 		free_envp(envp);
-		if (data->nb_command > 1)
-			close_pipes(data, pipes);
+		close_pipes(data, pipes);
 		ft_clean_t_data(data);
 		exit(exec_val);
 	}
@@ -138,8 +146,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 			exec_val = data->exec_val;
 			handle_builtins(data, pipes);
 			free_envp(envp);
-			if (data->nb_command > 1)
-				close_pipes(data, pipes);
+			close_pipes(data, pipes);
 			ft_clean_t_data(data);
 			exit(2);
 		}
@@ -150,8 +157,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	if (!exec || cmd->cmd_type == no_cmd)
 	{
 		free_envp(envp);
-		if (data->nb_command > 1)
-			close_pipes(data, pipes);
+		close_pipes(data, pipes);
 		close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 		close_files(data);
 		if (data->exec_val != 130)
@@ -163,8 +169,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	}
 	execve(exec, cmd->cmd_args, envp);
 	free_envp(envp);
-	if (data->nb_command > 1)
-		close_pipes(data, pipes);
+	close_pipes(data, pipes);
 	if (data->exec_val != 130)
 		exec_val = g_glb;
 	else
@@ -245,6 +250,8 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 		&& data->nb_command == 1)
 	{
 		pipes = handle_redirection(data, pipes);
+		if (g_glb == 999)
+			return (data->exec_val = 1, pipes);
 		data->exec_val = handle_builtins(data, pipes);
 		return (pipes);
 	}
@@ -294,9 +301,9 @@ void	close_files(t_data *data)
 	i = 0;
 	while (i < data->nb_command)
 	{
-		if (data->cmd[i]->input == file_from && data->cmd[i]->fd_out != -1)
+		if (data->cmd[i]->input == file_from && data->cmd[i]->fd_in != -1 && data->cmd[i]->fd_in != -2)
 			close(data->cmd[i]->fd_in);
-		if (data->cmd[i]->output == file_to && data->cmd[i]->fd_out != -1)
+		if (data->cmd[i]->output == file_to && data->cmd[i]->fd_out != -1 && data->cmd[i]->fd_out != -2)
 			close(data->cmd[i]->fd_out);
 		unlink_files(data->cmd[i]->list_files);
 		i++;
@@ -330,8 +337,7 @@ int	cross_array_list(t_data *data)
 			return (0);
 		data->current_cmd++;
 	}
-	if (data->nb_command > 1)
-		close_pipes(data, pipe_);
+	close_pipes(data, pipe_);
 	wait_childs(data);
 	if (g_glb == 130)
 		data->exec_val = 130;
