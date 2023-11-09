@@ -19,7 +19,6 @@ grace a dup2 exactement comme on le fait dans split
 
 t_pipe	*redir_fd_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes)
 {
-	printf("fd to fd\n");
 	if (cmd->input != stdin_)
 	{
 		if (dup2(cmd->fd_in, 0) == -1)
@@ -36,7 +35,6 @@ t_pipe	*redir_fd_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes)
 
 t_pipe	*redir_pipe_to_pipe(t_data *data, t_pipe *pipes)
 {
-	printf("pipe to pipe\n");
 	if (dup2(pipes->tube[0][0], 0) == -1 \
 		|| dup2(pipes->tube[1][1], 1) == -1)
 		error_dup2();

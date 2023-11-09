@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/09 14:21:41 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/09 16:58:15 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,6 @@ int	handle_heredoc(t_data *data)
 			handle_signals_heredoc(data);
 			cmd->fd_in = heredoc(f->filename, limiter);
 			free(limiter);
-			handle_signals_prompt(data);
 		}
 		l = l->next;
 		if (l)

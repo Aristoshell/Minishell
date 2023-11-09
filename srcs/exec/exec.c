@@ -118,6 +118,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
+	handle_signals_exec(data);
 	if (g_glb == 999)
 	{
 		close_files(data);
@@ -255,7 +256,6 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 		data->exec_val = handle_builtins(data, pipes);
 		return (pipes);
 	}
-	handle_signals_exec(data);
 	pid = fork();
 	if (pid == -1)
 		error_fork();
@@ -341,7 +341,6 @@ int	cross_array_list(t_data *data)
 	wait_childs(data);
 	if (g_glb == 130)
 		data->exec_val = 130;
-	handle_signals_prompt(data);
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	close_files(data);
 	return (0);
