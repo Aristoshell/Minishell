@@ -28,6 +28,7 @@
 # define D_ER_EXPAND "minishell: export: `%s': not a valid identifier\n"
 # define D_ER_EXPORT_UNSET "minishell: %s: %c%c: invalid option\n"
 # define D_ER_ENV "env: '%s': please use env with no option or argument\n"
+# define ALPNU "abcdefghijklmnopqrstuvwxyz0123456789"
 # define FUNCTION_SUCCESS	0
 # define EXIT				1
 # define MEMORY_ERR_NB		99
@@ -116,6 +117,7 @@ typedef enum e_filetype
 typedef struct s_files
 {
 	char			*filename;
+	char			*limiter;
 	t_filetype		filetype;
 	bool			open;
 	bool			redirect;
@@ -133,6 +135,8 @@ typedef struct s_cmd
 	int					fd_out;
 	t_filetype			input;
 	t_filetype			output;
+	bool				prev_in;
+	bool				prev_out;
 }			t_cmd;
 
 typedef struct s_envlist
@@ -142,6 +146,11 @@ typedef struct s_envlist
 	int					flag;
 	struct s_envlist	*next;
 }					t_envlist;
+
+typedef struct s_pipe
+{
+	int tube[2][2];
+}	t_pipe;
 
 typedef struct s_data
 {
@@ -154,6 +163,7 @@ typedef struct s_data
 	int				stdin_save;
 	int				stdout_save;
 	int				dollar_loc;
+	t_pipe			*pipe;
 	t_token			*curr_token;
 }			t_data;
 

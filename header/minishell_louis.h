@@ -15,10 +15,6 @@
 
 extern int g_glb;
 
-typedef struct s_pipe
-{
-	int tube[2][2];
-}	t_pipe;
 
 char	*get_args(char **argv);
 char	*get_cmd(char **paths, char *cmd);

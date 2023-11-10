@@ -68,29 +68,7 @@ char	*join_lign_env(t_envlist *list)
 	return (ret);
 }
 
-char	**list_to_array(t_envlist *list)
-{
-	int	i;
-	int j;
-	char **ret;
 
-	i = ft_envlstsize(list);
-	ret = ft_calloc(i + 1, sizeof(char *));
-	if (!ret)
-		return (NULL);
-	j = 0;
-	while (j < i)
-	{
-		if (list->flag == MASK_ENV)
-		{
-			ret[j] = join_lign_env(list);
-			j++;
-		}
-		list = list->next;
-	}
-	ret[j] = NULL;
-	return (ret);
-}
 
 void free_envp(char **a)
 {
@@ -312,32 +290,29 @@ void	close_files(t_data *data)
 
 int	cross_array_list(t_data *data)
 {
-	t_pipe	*pipe_;
-
-	data->stdin_save = dup(0);
-	data->stdout_save = dup(1);
-	pipe_ = NULL;
+	data->stdin_save = dup(0); // verif
+	data->stdout_save = dup(1); // verif
 	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
-		pipe_ = malloc(sizeof(t_pipe));
-		pipe_->tube[0][0] = -1;
-		pipe_->tube[0][1] = -1;
-		pipe_->tube[1][1] = -1;
-		pipe_->tube[1][1] = -1;
-		if (!pipe_)
+		data->pipe = malloc(sizeof(t_pipe));
+		if (!data->pipe)
 			return (close_and_free(NULL, data->stdin_save, data->stdout_save, 0), MEMORY_ERR_NB);
-		if (pipe(pipe_->tube[1]) != 0)
-			return (close_and_free(pipe_, data->stdin_save, data->stdout_save, 1), MEMORY_ERR_NB);
+		data->pipe->tube[0][0] = -1;
+		data->pipe->tube[0][1] = -1;
+		data->pipe->tube[1][1] = -1;
+		data->pipe->tube[1][1] = -1;
+		if (pipe(data->pipe->tube[1]) != 0)
+			return (free(data->pipe), close_and_free(pipe_, data->stdin_save, data->stdout_save, 1), MEMORY_ERR_NB);
 	}
 	while (data->current_cmd < data->nb_command)
 	{
-		pipe_ = gen_child(data, pipe_);
-		if (pipe_ == NULL && data->nb_command > 1)
-			return (0);
+		data->pipe = gen_child(data, data->pipe);
+		if (data->pipe == NULL && data->nb_command > 1)
+			return (0); //wtf
 		data->current_cmd++;
 	}
-	close_pipes(data, pipe_);
+	close_pipes(data, data->pipe);
 	wait_childs(data);
 	if (g_glb == 130)
 		data->exec_val = 130;

@@ -4,7 +4,7 @@
 
 void	error_dup2(void)
 {
-	printf("erno : %sn",strerror(errno));
+	printf("erno : %s\n", strerror(errno));
 	exit(1);
 }
 

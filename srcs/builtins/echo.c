@@ -2,9 +2,9 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-int check_n(char *arg)
+int	check_n(char *arg)
 {
-	int j;
+	int	j;
 
 	if (arg[0] != '-')
 		return (0);
@@ -21,11 +21,11 @@ int check_n(char *arg)
 
 int	bt_echo(t_data *data, int to_do)
 {
-	int	i;
-	int n_option;
-	int	printed;
-
+	int		i;
+	int		n_option;
+	int		printed;
 	t_cmd	*cmd;
+
 	cmd = data->cmd[to_do];
 	n_option = 0;
 	printed = 0;

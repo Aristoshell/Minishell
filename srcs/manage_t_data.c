@@ -12,6 +12,7 @@ void	ft_init_data(t_data *data)
 	data->stdin_save = -1;
 	data->stdout_save = -1;
 	data->curr_token = NULL;
+	data->pipe = NULL;
 }
 
 void	ft_clean_cmd(t_cmd *cmd)

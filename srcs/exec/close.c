@@ -2,8 +2,8 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
-void	close_and_free(t_pipe *pipes, int stdin_save, int stdout_save, int status)
+void	close_and_free(t_pipe *pipes, int stdin_save,
+int stdout_save, int status)
 {
 	if (status > 0)
 		free(pipes);
@@ -20,7 +20,7 @@ void	close_pipes(t_data *data, t_pipe *pipes)
 			if (pipes->tube[0][0] != -1)
 				close(pipes->tube[0][0]);
 			if (pipes->tube[0][1] != -1)
-			close(pipes->tube[0][1]);
+				close(pipes->tube[0][1]);
 		}
 		if (pipes->tube[1][0] != -1)
 			close(pipes->tube[1][0]);
@@ -28,11 +28,9 @@ void	close_pipes(t_data *data, t_pipe *pipes)
 			close(pipes->tube[1][1]);
 		free(pipes);
 	}
-
 }
 
-void	close_fd(t_cmd **cmd, int len_list,
-	int stdin_save, int stdout_save)
+void	close_fd(t_cmd **cmd, int len_list, int stdin_save, int stdout_save)
 {
 	int	i;
 

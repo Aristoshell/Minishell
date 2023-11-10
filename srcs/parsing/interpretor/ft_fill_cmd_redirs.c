@@ -10,6 +10,11 @@ void	ft_clean_t_file(t_files *file)
 			free(file->filename);
 			file->filename = NULL;
 		}
+		if (file->limiter)
+		{
+			free(file->limiter);
+			file->limiter = NULL;
+		}
 		free(file);
 		file = NULL;
 	}
@@ -26,6 +31,7 @@ int	ft_fill_cmd_redirs_pipe_in(t_cmd *cmd, t_data *data)
 		if (!redirs)
 			return (MEMORY_ERR_NB);
 		redirs->filename = NULL;
+		redirs->limiter = NULL;
 		redirs->filetype = pipe_in_;
 		redirs->open = false;
 		redirs->redirect = false;
@@ -49,6 +55,7 @@ int	ft_fill_cmd_redirs_pipe_out(t_cmd *cmd, t_data *data)
 		if (!redirs)
 			return (MEMORY_ERR_NB);
 		redirs->filename = NULL;
+		redirs->limiter = NULL;
 		redirs->filetype = pipe_out_;
 		redirs->open = false;
 		redirs->redirect = false;
