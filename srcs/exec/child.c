@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:48:34 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 17:15:10 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 17:38:19 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,25 +25,12 @@ void	exit_clean_child(t_data *data, t_pipe *pipes, char **envp, int exit_val)
 	exit (exit_val);
 }
 
-int	child_process(t_data *data, t_pipe *pipes)
+int child_process2(t_data *data, t_pipe *pipes, t_cmd *cmd, char **envp)
 {
-	char	*exec;
 	char	*path_temp;
-	t_cmd	*cmd;
-	char	**envp;
+	char	*exec;
 	int		exec_val;
 	
-	envp = list_to_array(data->envp);
-	cmd = data->cmd[data->current_cmd];
-	pipes = handle_redirection(data, pipes);
-	handle_signals_exec();
-	if (g_glb == 999)
-		exit_clean_child(data, pipes, envp, 1);
-	if (cmd->cmd_type != no)
-	{
-		exec_val = handle_builtins(data, pipes);
-		exit_clean_child(data, pipes, envp, exec_val);
-	}
 	path_temp = find_path(envp);
 	if (path_temp)
 	{
@@ -65,6 +52,26 @@ int	child_process(t_data *data, t_pipe *pipes)
 	execve(exec, cmd->cmd_args, envp);
 	ft_dprintf(STDERR_FILENO, "EXECVE FAILED\n");
 	return (exit_clean_child(data, pipes, envp, 99), 1);
+}
+
+int	child_process(t_data *data, t_pipe *pipes)
+{
+	t_cmd	*cmd;
+	char	**envp;
+	int		exec_val;
+	
+	envp = list_to_array(data->envp);
+	cmd = data->cmd[data->current_cmd];
+	pipes = handle_redirection(data, pipes);
+	handle_signals_exec();
+	if (g_glb == 999)
+		exit_clean_child(data, pipes, envp, 1);
+	if (data->cmd[data->current_cmd]->cmd_type != no)
+	{
+		exec_val = handle_builtins(data, pipes);
+		exit_clean_child(data, pipes, envp, exec_val);
+	}
+	return(child_process2(data, pipes, cmd, envp));
 }
 
 t_pipe	*gen_child(t_data *data, t_pipe *pipes)
