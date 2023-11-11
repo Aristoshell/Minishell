@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:52:16 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 20:01:20 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 23:40:27 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ void	wait_childs(t_data *data)
 			waitpid(data->cmd[i]->pid, &status, 0);
 		if (data->nb_command > 1 || data->cmd[i]->cmd_type == no)
 			data->exec_val = WEXITSTATUS(status);
+		if (WTERMSIG(status) == 2)
+		{
+			printf("\n");
+			data->exec_val = 130;
+		}
+		if (WTERMSIG(status) == 3)
+		{
+			printf("Quit (core dumped)\n");
+			data->exec_val = 131;
+		}
 		i++;
 	}
 }

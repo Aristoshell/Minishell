@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:48:34 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 20:51:44 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 23:36:18 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ int	child_process(t_data *data, t_pipe *pipes)
 	char	**envp;
 	int		exec_val;
 
+	reset_signals();
 	envp = list_to_array(data->envp);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
-	handle_signals_exec();
 	if (g_glb == 999)
 		exit_clean_child(data, pipes, envp, 1);
 	if (data->cmd[data->current_cmd]->cmd_type != no)
@@ -91,6 +91,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 		data->exec_val = handle_builtins(data, pipes);
 		return (pipes);
 	}
+	handle_signals_exec();
 	pid = fork();
 	if (pid == -1)
 		error_fork();
