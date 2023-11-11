@@ -113,6 +113,13 @@ typedef enum e_filetype
 	stdout_,
 }			t_filetype;
 
+typedef struct s_redir
+{
+	int		fail_open;
+	bool	prev_in;
+	bool 	prev_out;
+}				t_redir;
+
 typedef struct s_files
 {
 	char			*filename;

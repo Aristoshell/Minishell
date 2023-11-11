@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:52:16 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 16:52:41 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:01:20 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,14 @@ t_pipe	*new_pipes(t_data *data, t_pipe *pipes, int i)
 	return (pipes);
 }
 
-void	init_pipe(t_pipe *pipes)
-{
-		pipes->tube[0][0] = -1;
-		pipes->tube[0][1] = -1;
-		pipes->tube[1][1] = -1;
-		pipes->tube[1][1] = -1;
-}
-
 t_pipe	*init_exec(t_data *data, t_pipe *pipes)
 {
 	data->stdin_save = dup(0);
+	if (data->stdin_save == -1)
+		error_dup(data, 0);
 	data->stdout_save = dup(1);
+	if (data->stdin_save == -1)
+		error_dup(data, 0);
 	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
@@ -74,6 +70,7 @@ t_pipe	*init_exec(t_data *data, t_pipe *pipes)
 		if (pipe(pipes->tube[1]) != 0)
 		{
 			ft_dprintf(STDERR_FILENO, "PIPE FUNCTION FAILED\n");
+			free(pipes);
 			pipe_error(data, pipes);
 		}
 	}
@@ -99,5 +96,7 @@ int	cross_array_list(t_data *data)
 		data->exec_val = 130;
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	close_files(data);
+	free(pipes);
+	unlink_files(data);
 	return (0);
 }

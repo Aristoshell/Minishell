@@ -6,14 +6,14 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:50:11 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 16:55:42 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 20:03:24 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
-void	unlink_files(t_list *l)
+void	unlink_heredoc(t_list *l)
 {
 	t_files	*f;
 
@@ -30,6 +30,18 @@ void	unlink_files(t_list *l)
 	}
 }
 
+void	unlink_files(t_data *data)
+{
+	int		i;
+
+	i = 0;
+	while (i < data->current_cmd)
+	{
+		unlink_heredoc(data->cmd[i]->list_files);
+		i++;
+	}
+}
+
 void	close_files(t_data *data)
 {
 	int		i;
@@ -43,7 +55,6 @@ void	close_files(t_data *data)
 		if (data->cmd[i]->output == file_to && \
 			data->cmd[i]->fd_out != -1 && data->cmd[i]->fd_out != -2)
 			close(data->cmd[i]->fd_out);
-		unlink_files(data->cmd[i]->list_files);
 		i++;
 	}
 }

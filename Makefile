@@ -47,14 +47,17 @@ SRCS_FILES	= 	minishell.c \
 				exec/error.c \
 				exec/free.c \
 				exec/redir.c \
+				exec/redir2.c \
 				exec/usefull.c \
 				exec/heredoc.c \
+				exec/heredoc2.c \
 				exec/signal_heredoc.c  \
 				exec/child.c \
 				exec/close2.c \
 				exec/signal_exec.c  \
 				exec/signal_prompt.c  \
 				exec/get_cmd.c \
+				exec/all_redir_possibilities.c\
 				builtins/cd.c  \
 				builtins/env.c  \
 				builtins/export.c  \

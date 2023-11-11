@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:56:38 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 16:57:13 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 19:47:10 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	pipe_error(t_data *data, t_pipe *pipes)
 	close(data->stdin_save);
 	close(data->stdout_save);
 	close_pipes(data, pipes);
+	unlink_files(data);
 	ft_clean_t_data(data);
 	exit(99);
 }
