@@ -15,7 +15,7 @@ attente des childs
 free tout
 */
 
-void	init_pipe_tube()
+void	init_pipe_tube(t_data *data)
 {
 	data->pipe->tube[0][0] = -1;
 	data->pipe->tube[0][1] = -1;
@@ -33,9 +33,9 @@ int	cross_array_list(t_data *data)
 		data->pipe = malloc(sizeof(t_pipe));
 		if (!data->pipe)
 			return (close_and_free(NULL, data->stdin_save, data->stdout_save, 0), MEMORY_ERR_NB);
-		init_pipe_tube();
+		init_pipe_tube(data);
 		if (pipe(data->pipe->tube[1]) != 0)
-			return (free(data->pipe), close_and_free(pipe_, data->stdin_save, data->stdout_save, 1), MEMORY_ERR_NB);
+			return (free(data->pipe), close_and_free(data->pipe, data->stdin_save, data->stdout_save, 1), MEMORY_ERR_NB);
 	}
 	while (data->current_cmd < data->nb_command)
 	{

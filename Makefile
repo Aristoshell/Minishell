@@ -2,7 +2,6 @@ SRCS_FILES	= 	minishell.c \
 				utils/free_list_args.c \
 				utils/strlen_list.c \
 				utils/ft_free_2d_array.c \
-				utils/list_to_array.c \
 				struct/manage_t_data.c \
 				signals/signals_exec.c \
 				signals/signals_heredoc.c \

@@ -48,7 +48,7 @@ int	bt_pwd(t_data *data)
 
 	cmd = data->cmd[data->current_cmd];
 	if (!cmd->cmd_args[1])
-		return (pwd_no_arg(void));
+		return (pwd_no_arg());
 	i = 1;
 	while (cmd->cmd_args[i])
 	{

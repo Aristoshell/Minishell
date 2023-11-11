@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/10 23:05:01 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/11 01:17:43 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	heredoc2(const char *limiter, int fd)
 			printf("by end-of-file wanted `%s')\n", limiter);
 			return (0);
 		}
-		free (input);
+		free((void *)input);
 		input = NULL;
 	}
 	return (0);
@@ -68,6 +68,7 @@ int	get_heredoc_name(t_files *f, t_data *data)
 	}
 	if (!f->filename)
 		return (-1);
+	return (0);
 }
 
 int	handle_heredoc(t_data *data)

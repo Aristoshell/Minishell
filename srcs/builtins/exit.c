@@ -60,7 +60,7 @@ int	bt_exit(t_data *data, int i, t_pipe *pipes)
 	built_cmd = data->cmd[i];
 	exit_val = 0;
 	if (!built_cmd->cmd_args[1])
-		exit_no_code();
+		exit_no_code(data, pipes);
 	if (ft_isnumber((built_cmd->cmd_args[1])))
 	{
 		if (exit_with_code(built_cmd, &exit_val) == 1)

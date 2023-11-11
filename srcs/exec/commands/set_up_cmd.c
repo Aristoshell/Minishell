@@ -27,11 +27,10 @@ bool	ft_special_case(char *cmd)
 	return (false);
 }
 
-int	check_access(t_cmd *cmd)
+char	*check_access(char *cmd)
 {
 	struct stat	file_info;
 
-	file_info = NULL;
 	if (access(cmd, F_OK) == 0)
 	{
 		if (access(cmd, X_OK) == 0)
@@ -62,7 +61,7 @@ char	*get_cmd(char **paths, char *cmd)
 	if (ft_special_case(cmd))
 		return (g_glb = 127, ft_dprintf(2, D_ER_CMD_NF, cmd), NULL); // 127
 	else if (!paths || ft_strchr(cmd, '/'))
-		return (check_access());
+		return (check_access(cmd));
 	while (*paths)
 	{
 		tmp = ft_strjoin(*paths, "/");//verif

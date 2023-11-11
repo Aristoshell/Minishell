@@ -2,8 +2,6 @@
 #include "minishell.h"
 #include "minishell_louis.h"
 
-int g_glb = 0;
-
 void	wait_childs(t_data *data)
 {
 	int	i;
@@ -28,23 +26,23 @@ on recup la variable d'env PATH que l'on vas split en fonction du char :
 on execute ensuite la commande voulue (sauf builtins)
 */
 
-void	exit_err_redir()
+void	exit_err_redir(t_data *data, char **envp)
 {
 	close_files(data);
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
-	close_pipes(data, pipes);
+	close_pipes(data, data->pipe);
 	ft_clean_t_data(data);
 	free_envp(envp);
 	exit (1);
 }
 
-void	exit_builtins()
+void	exit_builtins(t_data *data, char **envp)
 {
 	int		exec_val;
 
-	exec_val = handle_builtins(data, pipes);
+	exec_val = handle_builtins(data, data->pipe);
 	free_envp(envp);
-	close_pipes(data, pipes);
+	close_pipes(data, data->pipe);
 	ft_clean_t_data(data);
 	exit(exec_val);
 }
@@ -62,13 +60,13 @@ int	child_process(t_data *data, t_pipe *pipes)
 	envp = list_to_array(data->envp); // verif
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
-	handle_signals_exec(data);
+	handle_signals_exec();
 	if (g_glb == ERROR_REDIR)
-		exit_err_redir();
+		exit_err_redir(data, envp);
 	close_files(data);
 	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
 	if (cmd->cmd_type != no)
-		exit_builtins();
+		exit_builtins(data, envp);
 	path_temp = find_path(envp);
 	if (path_temp)
 	{

@@ -1,11 +1,11 @@
 #ifndef MINISHELL_LOUIS_H
 # define MINISHELL_LOUIS_H
 
-# include<stdio.h>
-# include<stdlib.h>
-# include<unistd.h>
-# include<string.h>
-# include<limits.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <limits.h>
 # include <errno.h>
 # include <sys/types.h>
 # include <sys/stat.h>
@@ -52,7 +52,21 @@ int		bt_pwd(t_data *data);
 int		bt_cd(t_data *data);
 // void	display_export(t_envlist *env);
 
-void	error_management(t_cmd *cmd, char *str, int exit_val);
+
+
+
+/* Redirs */
+void	redir_from(t_cmd *cmd, t_files *f, int *fail_open);
+void	redir_to(t_cmd *cmd, t_files *f);
+void	redir_append(t_cmd *cmd, t_files *f);
+int		redir_ambigous_in(t_cmd *cmd, t_files *f);
+int		redir_ambigous_out(t_cmd *cmd, t_files *f);
+t_pipe	*redir_fd_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes);
+t_pipe	*redir_pipe_to_pipe(t_data *data, t_pipe *pipes);
+t_pipe	*redir_pipe_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes);
+t_pipe	*redir_fd_to_pipe(t_data *data, t_cmd *cmd, t_pipe *pipes);
+
+
 void	error_pipe(void);
 void	error_dup2(void);
 void	error_malloc(void);
@@ -60,12 +74,18 @@ void	error_fork(void);
 
 void    handle_signals_heredoc(t_data *data);
 void    handle_signals_prompt(t_data *data);
-void	handle_signals_exec(t_data *data);
+void	handle_signals_exec(void);
 void    reset_signals(void);
+void	sighandler(int signum);
+
 int		handle_heredoc(t_data *data);
 int		heredoc(char *filemame, char *limiter);
+char	*seeded_word(long nbr, char *alnum);
+int		total_ascii(char **cmd, int multiplier);
 
 int		ft_envlstsize(t_envlist *lst);
+void	free_envp(char **a);
 char	**list_to_array(t_envlist *list);
+
 void	close_files(t_data *data);
 #endif

@@ -42,7 +42,7 @@ int	set_redir(t_cmd *cmd, t_list *l)
 	fail_open = 0;
 	if (l)
 		f = (t_files *)l->content;
-	while (l & fail_open != 1)
+	while (l && fail_open != 1)
 	{
 		if (choose_redir(cmd, f, &fail_open))
 			return (1);
