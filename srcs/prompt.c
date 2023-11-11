@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prompt.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/11 13:38:41 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 13:39:08 by lmarchai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
@@ -16,7 +27,7 @@ void	ft_no_input(t_data *data)
 	int			exec_val;
 
 	exec_val = data->exec_val;
-	printf("exit\n"); // mon ft_printf est pete oups (il attend les args dun d printf)
+	printf("exit\n");
 	ft_clean_t_data(data);
 	clear_history();
 	exit(exec_val);

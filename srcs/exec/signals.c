@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 22:15:18 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/09 17:22:46 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:25:05 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	sighandler_heredoc(int sig)
 
 void handle_signals_heredoc(t_data *data)
 {
-	printf(",heredoc\n");
 	if (g_glb == 130)
 		data->exec_val = 130;
 	g_glb = 0;
@@ -57,7 +56,6 @@ void	sighandler(int signum)
 
 void    handle_signals_prompt(t_data *data)
 {
-	printf("prompt\n");
 	if (g_glb == 130)
 		data->exec_val = 130;
 	g_glb = 0;
@@ -74,7 +72,6 @@ void	sighandler_exec2(int signum)
 
 void	sighandler_exec(int signum)
 {
-	printf("exec\n");
 	(void)signum;
 	signal(SIGINT, &sighandler_exec2);
 	signal(SIGQUIT, SIG_DFL);
@@ -82,6 +79,5 @@ void	sighandler_exec(int signum)
 
 void	handle_signals_exec()
 {
-	printf("child\n");
 	signal(SIGCHLD, &sighandler_exec);
 }

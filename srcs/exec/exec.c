@@ -221,8 +221,10 @@ apres appel :
 [1][1] --> 10
 */
 
-t_pipe	*new_pipes(t_pipe *pipes, int i)
+t_pipe	*new_pipes(t_data *data, t_pipe *pipes, int i)
 {
+	if (data)
+		printf("oui\n");
 	if (i > 1)
 	{
 		close(pipes->tube[0][0]);
@@ -231,7 +233,7 @@ t_pipe	*new_pipes(t_pipe *pipes, int i)
 	pipes->tube[0][0] = pipes->tube[1][0];
 	pipes->tube[0][1] = pipes->tube[1][1];
 	if (pipe(pipes->tube[1]) != 0)
-		error_pipe();
+		exit(789);
 	return (pipes);
 }
 
@@ -244,9 +246,9 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 {
 	pid_t	pid;
 
-	handle_heredoc(data);
+	handle_heredoc(data, pipes);
 	if (data->nb_command > 1 && data->current_cmd >= 1)
-		pipes = new_pipes(pipes, data->current_cmd);
+		pipes = new_pipes(data, pipes, data->current_cmd);
 	if (data->cmd[data->current_cmd]->cmd_type != no && data->cmd[data->current_cmd]->cmd_type != no_cmd 
 		&& data->nb_command == 1)
 	{
@@ -310,34 +312,50 @@ void	close_files(t_data *data)
 	}
 }
 
-int	cross_array_list(t_data *data)
+void	init_pipe(t_pipe *pipes)
 {
-	t_pipe	*pipe_;
+		pipes->tube[0][0] = -1;
+		pipes->tube[0][1] = -1;
+		pipes->tube[1][1] = -1;
+		pipes->tube[1][1] = -1;
+}
 
+void	init_exec(t_data *data, t_pipe *pipes)
+{
 	data->stdin_save = dup(0);
 	data->stdout_save = dup(1);
-	pipe_ = NULL;
 	data->current_cmd = 0;
 	if (data->nb_command > 1)
 	{
-		pipe_ = malloc(sizeof(t_pipe));
-		pipe_->tube[0][0] = -1;
-		pipe_->tube[0][1] = -1;
-		pipe_->tube[1][1] = -1;
-		pipe_->tube[1][1] = -1;
-		if (!pipe_)
-			return (close_and_free(NULL, data->stdin_save, data->stdout_save, 0), MEMORY_ERR_NB);
-		if (pipe(pipe_->tube[1]) != 0)
-			return (close_and_free(pipe_, data->stdin_save, data->stdout_save, 1), MEMORY_ERR_NB);
+		pipes = malloc(sizeof(t_pipe));
+		if (!pipes)
+		{
+			ft_dprintf(STDERR_FILENO, D_ER_MEM);
+			pipe_error(data, pipes);
+		}
+		init_pipe(pipes);
+		if (pipe(pipes->tube[1]) != 0)
+		{
+			ft_dprintf(STDERR_FILENO, "PIPE FUNCTION FAILED\n");
+			pipe_error(data, pipes);
+		}
 	}
+}
+
+int	cross_array_list(t_data *data)
+{
+	t_pipe	*pipes;
+
+	pipes = NULL;
+	init_exec(data, pipes);
 	while (data->current_cmd < data->nb_command)
 	{
-		pipe_ = gen_child(data, pipe_);
-		if (pipe_ == NULL && data->nb_command > 1)
+		pipes = gen_child(data, pipes);
+		if (pipes == NULL && data->nb_command > 1)
 			return (0);
 		data->current_cmd++;
 	}
-	close_pipes(data, pipe_);
+	close_pipes(data, pipes);
 	wait_childs(data);
 	if (g_glb == 130)
 		data->exec_val = 130;

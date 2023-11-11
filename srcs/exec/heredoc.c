@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/09 16:58:15 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/09 18:31:57 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ char	*seeded_word(long nbr, char *alnum)
 	int		i;
 
 	word = malloc((nbr / 10) * sizeof(char));
-	if (!word)
+	if (word)
 		return (NULL);
 	i = 0;
 	while (nbr > 0)
@@ -119,7 +119,7 @@ int heredoc(char *filename, char *limiter)
 	return (fd);
 }
 
-int	handle_heredoc(t_data *data)
+int	handle_heredoc(t_data *data, t_pipe *pipes)
 {
 	t_files	*f;
 	t_list	*l;
@@ -140,8 +140,15 @@ int	handle_heredoc(t_data *data)
 			{
 				f->filename = seeded_word(785 * (data->nb_command + 1), \
 				"abcdefghijklmnopqrstuvwxyz0123456789");
-				if (!f->filename)
-					return (-1);
+				if (f->filename)
+				{
+					free(limiter);
+					close(data->stdin_save);
+					close(data->stdout_save);
+					close_pipes(data, pipes);
+					ft_clean_t_data(data);
+					exit(1);	
+				}
 			}
 			else
 			{
@@ -149,8 +156,15 @@ int	handle_heredoc(t_data *data)
 					(data->cmd[data->current_cmd]->cmd_args, \
 					data->current_cmd), \
 					"abcdefghijklmnopqrstuvwxyz0123456789");
-				if (!f->filename)
-					return (-1);
+				if (f->filename)
+				{
+					free(limiter);
+					close(data->stdin_save);
+					close(data->stdout_save);
+					close_pipes(data, pipes);
+					ft_clean_t_data(data);
+					exit(1);	
+				}
 			}
 			handle_signals_heredoc(data);
 			cmd->fd_in = heredoc(f->filename, limiter);

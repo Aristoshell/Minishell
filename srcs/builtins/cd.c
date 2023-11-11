@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 14:12:17 by lmarchai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
@@ -75,7 +86,8 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 			return (1);
 		}
 	}
-	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1] && chdir(cmd->cmd_args[1]) == -1)
+	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1] \
+		&& chdir(cmd->cmd_args[1]) == -1)
 	{
 		update_env(envp, cwd);
 		return (1);
