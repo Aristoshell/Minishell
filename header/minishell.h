@@ -39,6 +39,7 @@
 # define ERROR_BUILTIN		17
 # define DOUBLE_QUOTE 		34
 # define SIMPLE_QUOTE 		39
+# define ERROR_REDIR 		999
 # define MASK_SET			0x10
 # define MASK_EXPORT		0x01
 # define MASK_ENV			0x11

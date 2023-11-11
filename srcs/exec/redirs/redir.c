@@ -59,7 +59,7 @@ t_pipe	*handle_redirection(t_data *data, t_pipe *pipes)
 
 	cmd = data->cmd[data->current_cmd];
 	if (set_redir(cmd, cmd->list_files) == 1)
-		return (g_glb = 999, pipes);
+		return (g_glb = ERROR_REDIR, pipes);
 	if (cmd->input == stdin_ && cmd->output == stdout_)
 		return (pipes);
 	if (cmd->fd_in == -2)
