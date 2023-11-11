@@ -1,15 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   close.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/11 16:56:38 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 16:57:13 by lmarchai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
-void	close_and_free(t_pipe *pipes, int stdin_save, int stdout_save, int status)
+void	close_and_free(t_pipe *pipes, int stdin_save, \
+	int stdout_save, int status)
 {
 	if (status > 0)
 		free(pipes);
 	close(stdin_save);
 	close(stdout_save);
 }
+
 void	pipe_error(t_data *data, t_pipe *pipes)
 {
 	close(data->stdin_save);
@@ -28,15 +40,13 @@ void	close_pipes(t_data *data, t_pipe *pipes)
 			if (pipes->tube[0][0] != -1)
 				close(pipes->tube[0][0]);
 			if (pipes->tube[0][1] != -1)
-			close(pipes->tube[0][1]);
+				close(pipes->tube[0][1]);
 		}
 		if (pipes->tube[1][0] != -1)
 			close(pipes->tube[1][0]);
 		if (pipes->tube[1][1] != -1)
 			close(pipes->tube[1][1]);
-	free(pipes);
 	}
-
 }
 
 void	close_fd(t_cmd **cmd, int len_list,

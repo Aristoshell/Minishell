@@ -1,26 +1,27 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   free.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/11 16:57:37 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 16:58:01 by lmarchai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
-
-void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list)
+void	free_envp(char **a)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	while (i < len_list)
+	while (a[i])
 	{
-		j = 0;
-		while (cmd[i]->cmd_args[j])
-		{
-			free(cmd[i]->cmd_args[j]);
-			j++;
-		}
-		free(cmd[i]->cmd_args);
-		free(cmd[i]);
+		free(a[i]);
 		i++;
 	}
-	if (len_list > 1)
-		free(pipes);
+	free(a);
 }

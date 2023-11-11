@@ -68,7 +68,7 @@ void	pipe_error(t_data *data, t_pipe *pipes);
 
 void    handle_signals_heredoc(t_data *data);
 void    handle_signals_prompt(t_data *data);
-void	handle_signals_exec(t_data *data);
+void	handle_signals_exec(void);
 void    reset_signals(void);
 int		handle_heredoc(t_data *data, t_pipe *pipes);
 int		heredoc(char *filemame, char *limiter);
@@ -76,4 +76,7 @@ int		heredoc(char *filemame, char *limiter);
 int		ft_envlstsize(t_envlist *lst);
 char	**list_to_array(t_envlist *list);
 void	close_files(t_data *data);
+char	*join_lign_env(t_envlist *list);
+t_pipe	*gen_child(t_data *data, t_pipe *pipes);
+void	free_envp(char **a);
 #endif

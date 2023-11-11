@@ -1,21 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   signal_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 13:35:21 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 13:35:22 by lmarchai         ###   ########.fr       */
+/*   Created: 2023/11/11 16:41:06 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 16:46:57 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
+#include "minishell_louis.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	sighandler(int signum)
 {
-	if (s == NULL)
-		return ;
-	ft_putstr_fd(s, fd);
-	write(fd, "\n", 1);
+	(void)signum;
+	if (isatty(STDOUT_FILENO))
+	{
+		printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	g_glb = 130;
+	return ;
+}
+
+void	handle_signals_prompt(t_data *data)
+{
+	if (g_glb == 130)
+		data->exec_val = 130;
+	g_glb = 0;
+	signal(SIGINT, &sighandler);
+	signal(SIGQUIT, SIG_IGN);
 }

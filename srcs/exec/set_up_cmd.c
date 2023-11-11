@@ -6,17 +6,36 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:14:01 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 14:34:11 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:54:35 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
-/*
-appellera le builtin voulu en fonction de la valeurs dans le champ cmd->type
-de la struct cmd
-*/
+char	**list_to_array(t_envlist *list)
+{
+	int		i;
+	int		j;
+	char	**ret;
+
+	i = ft_envlstsize(list);
+	ret = ft_calloc(i + 1, sizeof(char *));
+	if (!ret)
+		return (NULL);
+	j = 0;
+	while (j < i)
+	{
+		if (list->flag == MASK_ENV)
+		{
+			ret[j] = join_lign_env(list);
+			j++;
+		}
+		list = list->next;
+	}
+	ret[j] = NULL;
+	return (ret);
+}
 
 int	handle_builtins2(t_cmd **cmd, t_data *data, t_pipe *pipes)
 {

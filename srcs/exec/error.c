@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   error.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/11 16:55:50 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 16:56:10 by lmarchai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
 void	error_dup2(void)
 {
-	printf("erno : %sn",strerror(errno));
+	printf("erno : %sn", strerror(errno));
 	exit(1);
 }
 

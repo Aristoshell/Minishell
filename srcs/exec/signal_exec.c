@@ -1,21 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
+/*   signal_exec.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/11 13:35:21 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 13:35:22 by lmarchai         ###   ########.fr       */
+/*   Created: 2023/11/11 16:41:03 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/11 16:47:05 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header/libft.h"
+#include "minishell.h"
+#include "minishell_louis.h"
 
-void	ft_putendl_fd(char *s, int fd)
+void	sighandler_exec2(int signum)
 {
-	if (s == NULL)
-		return ;
-	ft_putstr_fd(s, fd);
-	write(fd, "\n", 1);
+	(void)signum;
+	printf("\n");
+	g_glb = 130;
+}
+
+void	sighandler_exec(int signum)
+{
+	(void)signum;
+	signal(SIGINT, &sighandler_exec2);
+	signal(SIGQUIT, SIG_DFL);
+}
+
+void	handle_signals_exec(void)
+{
+	signal(SIGCHLD, &sighandler_exec);
 }

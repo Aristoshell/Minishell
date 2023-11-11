@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 13:56:13 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/11 16:10:37 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	error_exit(t_data *data, t_pipe *pipes, t_cmd *cmd, int exit_val)
 	if (!cmd)
 		return ;
 	clean_exit(data, pipes);
-	ft_dprintf(STDERR_FILENO, BT_EXIT_ARG, \
-		cmd->cmd_args[1]);
 	exit(exit_val);
 }
 
@@ -65,7 +63,8 @@ int	bt_exit(t_data *data, int i, t_pipe *pipes)
 	exit_val = 0;
 	if (!built_cmd->cmd_args[1])
 	{
-		ft_dprintf(STDERR_FILENO, "exit\n");
+		if (data->nb_command == 1)
+			ft_dprintf(STDERR_FILENO, "exit\n");
 		clean_exit(data, pipes);
 		exit(0);
 	}
@@ -77,7 +76,8 @@ int	bt_exit(t_data *data, int i, t_pipe *pipes)
 	}
 	else
 		error_exit(data, pipes, built_cmd, 2);
-	ft_dprintf(STDERR_FILENO, "exit\n");
+	if (data->nb_command == 1)
+		ft_dprintf(STDERR_FILENO, "exit\n");
 	exit(exit_val);
 	return (0);
 }
