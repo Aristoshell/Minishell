@@ -6,14 +6,12 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 21:33:24 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:29:19 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
-
-
 
 int	heredoc2(const char *limiter, int fd)
 {
@@ -57,7 +55,7 @@ int	heredoc(char *filename, char *limiter)
 
 void	get_name(t_files *f, t_data *data, t_cmd *cmd, t_pipe *pipes)
 {
-	char 	*limiter;
+	char	*limiter;
 
 	limiter = f->filename;
 	if (!data->cmd[data->current_cmd]->cmd_args)

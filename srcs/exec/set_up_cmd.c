@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:14:01 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 16:54:35 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 15:10:35 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ char	**list_to_array(t_envlist *list)
 		if (list->flag == MASK_ENV)
 		{
 			ret[j] = join_lign_env(list);
+			if (ret[j] == NULL)
+				return (NULL);
 			j++;
 		}
 		list = list->next;

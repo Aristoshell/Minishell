@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell_louis.h                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/12 15:16:08 by lmarchai          #+#    #+#             */
+/*   Updated: 2023/11/12 15:17:46 by lmarchai         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MINISHELL_LOUIS_H
 # define MINISHELL_LOUIS_H
 
@@ -15,11 +27,11 @@
 
 # define BT_EXIT_ARG "minishell: exit: %s: numeric argument required\n"
 
-extern int g_glb;
+extern int	g_glb;
 
 typedef struct s_pipe
 {
-	int tube[2][2];
+	int	tube[2][2];
 }	t_pipe;
 
 char	*get_args(char **argv);
@@ -44,7 +56,8 @@ int		handle_builtins(t_data *data, t_pipe *pipes);
 
 void	free_list_args(t_cmd **cmd, t_pipe *pipes, int len_list);
 void	close_fd(t_cmd **cmd, int len_list, int stdin_, int stdout_);
-void	close_and_free(t_pipe *pipes, int stdin_save, int stdout_save, int status);
+void	close_and_free(t_pipe *pipes, int stdin_save, \
+int stdout_save, int status);
 
 void	close_pipes(t_data *data, t_pipe *pipes);
 
@@ -59,17 +72,14 @@ int		bt_cd(t_data *data);
 // void	display_export(t_envlist *env);
 
 void	error_management(t_cmd *cmd, char *str, int exit_val);
-void	error_pipe(void);
 void	error_dup2(void);
 void	error_malloc(void);
-void	error_fork(void);
 void	pipe_error(t_data *data, t_pipe *pipes);
 
-
-void    handle_signals_heredoc(t_data *data);
-void    handle_signals_prompt(t_data *data);
+void	handle_signals_heredoc(t_data *data);
+void	handle_signals_prompt(t_data *data);
 void	handle_signals_exec(void);
-void    reset_signals(void);
+void	reset_signals(void);
 int		handle_heredoc(t_data *data, t_pipe *pipes);
 int		heredoc(char *filemame, char *limiter);
 
@@ -94,4 +104,6 @@ void	redir_ambigous_out(t_files *f, t_cmd *cmd, t_redir r);
 int		total_ascii(char **cmd, int multiplier);
 char	*seeded_word(long nbr, char *alnum);
 void	clean_heredoc(t_data *data, t_pipe *pipes, char *limiter);
+void	error_pipe(t_data *data, t_pipe *pipes);
+void	error_fork(t_data *data, t_pipe *pipes);
 #endif

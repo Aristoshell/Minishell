@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:50:11 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 20:03:24 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 15:14:11 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	close_files(t_data *data)
 			data->cmd[i]->fd_in != -1 && data->cmd[i]->fd_in != -2)
 			close(data->cmd[i]->fd_in);
 		if (data->cmd[i]->output == file_to && \
-			data->cmd[i]->fd_out != -1 && data->cmd[i]->fd_out != -2)
+				data->cmd[i]->fd_out != -1 && data->cmd[i]->fd_out != -2)
 			close(data->cmd[i]->fd_out);
 		i++;
 	}

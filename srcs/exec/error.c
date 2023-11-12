@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:55:50 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 16:56:10 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 15:15:19 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,43 @@
 
 void	error_dup2(void)
 {
-	printf("erno : %sn", strerror(errno));
-	exit(1);
+	int	i;
+
+	i = 0;
+	g_glb = 990;
+	ft_dprintf(STDERR_FILENO, "!!!!ERROR DUP2!!!!");
 }
 
-void	error_pipe(void)
+void	error_pipe(t_data *data, t_pipe *pipes)
 {
-	printf("error pipe");
-	exit(1);
+	int	i;
+
+	i = 0;
+	g_glb = 990;
+	if (data->current_cmd > 1)
+		waitpid(-1, NULL, 0);
+	close(data->stdin_save);
+	close(data->stdout_save);
+	close_pipes(data, pipes);
+	ft_clean_t_data(data);
+	free(pipes);
+	ft_dprintf(STDERR_FILENO, "!!!!ERROR PIPE!!!!");
+	exit(99);
 }
 
-void	error_fork(void)
+void	error_fork(t_data *data, t_pipe *pipes)
 {
-	printf("error_fork");
-	exit(1);
-}
+	int	i;
 
-void	error_malloc(void)
-{
-	printf("error_malloc");
-	exit(1);
+	i = 0;
+	g_glb = 990;
+	if (data->current_cmd > 1)
+		waitpid(-1, NULL, 0);
+	close(data->stdin_save);
+	close(data->stdout_save);
+	close_pipes(data, pipes);
+	ft_clean_t_data(data);
+	free(pipes);
+	ft_dprintf(STDERR_FILENO, "!!!!ERROR FORK!!!!");
+	exit(99);
 }

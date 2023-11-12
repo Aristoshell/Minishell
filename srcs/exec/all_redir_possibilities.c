@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 20:05:20 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 20:05:51 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 14:07:31 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 t_pipe	*redir_fd_to_fd(t_data *data, t_cmd *cmd, t_pipe *pipes)
 {
+	if (!data)
+		return (pipes);
 	if (cmd->input != stdin_)
 	{
 		if (dup2(cmd->fd_in, 0) == -1)

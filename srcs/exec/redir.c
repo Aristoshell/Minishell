@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 20:04:48 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 21:21:16 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:12:33 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,17 @@ int	set_redir(t_cmd *cmd, t_list *l)
 	t_redir	r;
 
 	r.fail_open = 0;
+	r.prev_in = false;
+	r.prev_out = false;
 	if (!l)
 		return (0);
 	f = (t_files *)l->content;
 	while (l)
 	{
-		if (r.fail_open != 1 && r.fail_open != -1)
+		if (r.fail_open != 1)
 		{
 			r = select_redir(f, cmd, r);
-			if (r.fail_open == -1)
+			if (r.fail_open != 0)
 				return (1);
 		}
 		l = l->next;

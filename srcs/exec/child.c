@@ -6,23 +6,30 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:48:34 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 23:36:18 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 15:39:05 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
+void	exit_child_builtin(t_data *data, t_pipe *pipes, int exit_val)
+{
+	close_pipes(data, pipes);
+	ft_clean_t_data(data);
+	free(pipes);
+	exit(exit_val);
+}
+
 void	exit_clean_child(t_data *data, t_pipe *pipes, char **envp, int exit_val)
 {
-	close_files(data);
-	close(data->stdin_save);
-	close(data->stdout_save);
+	if (exit_val == 99)
+		printf("!!!!ERROR MALLOC!!!!");
 	close_pipes(data, pipes);
 	ft_clean_t_data(data);
 	free_envp(envp);
 	free(pipes);
-	exit (exit_val);
+	exit(exit_val);
 }
 
 int	child_process2(t_data *data, t_pipe *pipes, t_cmd *cmd, char **envp)
@@ -60,16 +67,23 @@ int	child_process(t_data *data, t_pipe *pipes)
 	char	**envp;
 	int		exec_val;
 
+	envp = NULL;
 	reset_signals();
+	close(data->stdin_save);
+	close(data->stdout_save);
 	envp = list_to_array(data->envp);
+	if (envp == NULL)
+		return (close_files(data), exit_clean_child(data, pipes, envp, 99), 99);
 	cmd = data->cmd[data->current_cmd];
 	pipes = handle_redirection(data, pipes);
+	close_files(data);
 	if (g_glb == 999)
 		exit_clean_child(data, pipes, envp, 1);
 	if (data->cmd[data->current_cmd]->cmd_type != no)
 	{
+		free_envp(envp);
 		exec_val = handle_builtins(data, pipes);
-		exit_clean_child(data, pipes, envp, exec_val);
+		exit_child_builtin(data, pipes, exec_val);
 	}
 	return (child_process2(data, pipes, cmd, envp));
 }
@@ -94,7 +108,7 @@ t_pipe	*gen_child(t_data *data, t_pipe *pipes)
 	handle_signals_exec();
 	pid = fork();
 	if (pid == -1)
-		error_fork();
+		error_fork(data, pipes);
 	if (pid == 0)
 		child_process(data, pipes);
 	else

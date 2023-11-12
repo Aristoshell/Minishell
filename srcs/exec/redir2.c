@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:20:58 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 21:24:24 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:16:36 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_redir	redir_file_from(t_files *f, t_cmd *cmd, t_redir r)
 		cmd->fd_in = open(f->filename, O_RDONLY);
 		if (cmd->fd_in == -1)
 			ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
+		r.fail_open = 1;
 		r.prev_in = true;
 	}
 	return (r);
@@ -42,6 +43,7 @@ t_redir	redir_file_to(t_files *f, t_cmd *cmd, t_redir r)
 	cmd->fd_out = open(f->filename, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (cmd->fd_out == -1)
 	{
+		r.fail_open = 1;
 		ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 		cmd->fd_out = -1;
 	}
@@ -57,6 +59,7 @@ t_redir	redir_append(t_files *f, t_cmd *cmd, t_redir r)
 	cmd->fd_out = open(f->filename, O_CREAT | O_APPEND | O_RDWR, 0666);
 	if (cmd->fd_out == -1)
 	{
+		r.fail_open = 1;
 		ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 		cmd->fd_out = -1;
 	}

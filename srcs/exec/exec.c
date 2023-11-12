@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:52:16 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 23:40:27 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 16:27:40 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,28 +15,42 @@
 
 int	g_glb = 0;
 
+int	wait_child(t_data *data, t_cmd *cmd, int error_print)
+{
+	int	status;
+
+	status = 0;
+	if (cmd->pid != -1)
+		waitpid(cmd->pid, &status, 0);
+	if (data->nb_command > 1 || cmd->cmd_type == no)
+		data->exec_val = WEXITSTATUS(status);
+	if (WTERMSIG(status) == 2 && error_print == 0)
+	{
+		error_print = 1;
+		printf("\n");
+		data->exec_val = 130;
+	}
+	if (WTERMSIG(status) == 3 && error_print == 0)
+	{
+		error_print = 1;
+		printf("Quit (core dumped)\n");
+		data->exec_val = 131;
+	}
+	return (error_print);
+}
+
 void	wait_childs(t_data *data)
 {
 	int	i;
 	int	status;
+	int	error_print;
 
+	error_print = 0;
+	status = 0;
 	i = 0;
 	while (i < data->nb_command)
 	{
-		if (data->cmd[i]->pid != -1)
-			waitpid(data->cmd[i]->pid, &status, 0);
-		if (data->nb_command > 1 || data->cmd[i]->cmd_type == no)
-			data->exec_val = WEXITSTATUS(status);
-		if (WTERMSIG(status) == 2)
-		{
-			printf("\n");
-			data->exec_val = 130;
-		}
-		if (WTERMSIG(status) == 3)
-		{
-			printf("Quit (core dumped)\n");
-			data->exec_val = 131;
-		}
+		error_print = wait_child(data, data->cmd[i], error_print);
 		i++;
 	}
 }
@@ -53,7 +67,7 @@ t_pipe	*new_pipes(t_data *data, t_pipe *pipes, int i)
 		pipes->tube[0][0] = pipes->tube[1][0];
 		pipes->tube[0][1] = pipes->tube[1][1];
 		if (pipe(pipes->tube[1]) != 0)
-			exit(789);
+			error_pipe(data, pipes);
 		return (pipes);
 	}
 	return (pipes);
