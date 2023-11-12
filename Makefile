@@ -66,7 +66,8 @@ SRCS_FILES	= 	minishell.c \
 				builtins/unset.c  \
 				builtins/exit.c \
 				builtins/echo.c \
-				builtins/pwd.c
+				builtins/pwd.c \
+				builtins/ft_putstr_fd_checked.c
 				
 PREFIX	= srcs
 

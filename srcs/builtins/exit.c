@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 14:27:03 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:30:16 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ void	clean_exit(t_data *data, t_pipe *pipes)
 
 int	error_exit(t_cmd *cmd)
 {
-	ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument required\n", cmd->cmd_args[1]);
+	ft_dprintf(STDERR_FILENO, "minishell: exit: %s: \
+		numeric argument required\n", cmd->cmd_args[1]);
 	return (2);
 }
 

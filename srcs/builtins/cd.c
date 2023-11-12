@@ -6,17 +6,12 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 16:18:52 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:31:20 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
-
-/*
-fonction get_env a modif un fois les deux codes link 
-au lieu de parcourir envp on parcourra la liste chainée
-*/
 
 char	*find_home(char **envp)
 {
@@ -30,17 +25,6 @@ char	*find_home(char **envp)
 	}
 	return (*envp + 5);
 }
-
-/*
-principe de go_to :
-
-prends en param la commande et un int du nombre d'argument
-(soit 0 soit 1)
-si 0 go_to doit chdir vers HOME
-si 1 go_to doit chdir vers l'arg
-	pourquoi les gens bossent avec des statics ?
-met a jour old_pwd et pwd
-*/
 
 int	update_env(t_envlist *envp, char *old_pwd)
 {
@@ -111,14 +95,14 @@ int	bt_cd(t_data *data)
 	{
 		if (cmd->cmd_args[2])
 		{
-			ft_dprintf(2,"too many arguments\n");
+			ft_dprintf(2, "too many arguments\n");
 			return (ft_free_2d_array(env), 1);
 		}
 		return (ft_free_2d_array(env), go_to(cmd, 1, data->envp, env));
 	}
 	if (!find_home(env))
 	{
-		ft_dprintf(2,"HOME not set\n");
+		ft_dprintf(2, "HOME not set\n");
 		return (ft_free_2d_array(env), 1);
 	}
 	go_to(cmd, 0, data->envp, env);

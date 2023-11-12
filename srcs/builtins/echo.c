@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:41 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 14:13:32 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:04:08 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,19 @@ int	bt_echo(t_data *data, int to_do)
 	cmd = data->cmd[to_do];
 	n_option = 0;
 	printed = 0;
-	i = 1;
-	while (cmd->cmd_args[i])
+	i = 0;
+	while (cmd->cmd_args[++i])
 	{
 		if (printed == 1 || check_n(cmd->cmd_args[i]) == 0)
 		{
 			if (printed == 1)
 				write(cmd->fd_out, " ", 1);
-			ft_putstr_fd(cmd->cmd_args[i], cmd->fd_out);
+			if (ft_putstr_fd_checked(cmd->cmd_args[i], cmd->fd_out) == 1)
+				return (1);
 			printed = 1;
 		}
 		else
 			n_option = 1;
-		i++;
 	}
 	if (n_option == 0)
 		write(cmd->fd_out, "\n", 1);

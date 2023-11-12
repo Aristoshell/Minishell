@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:16:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 15:17:46 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:00:53 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,4 +106,5 @@ char	*seeded_word(long nbr, char *alnum);
 void	clean_heredoc(t_data *data, t_pipe *pipes, char *limiter);
 void	error_pipe(t_data *data, t_pipe *pipes);
 void	error_fork(t_data *data, t_pipe *pipes);
+int		ft_putstr_fd_checked(char *s, int fd);
 #endif

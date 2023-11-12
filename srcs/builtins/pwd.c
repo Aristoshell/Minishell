@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:57:54 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 14:11:38 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/12 17:31:44 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,19 @@ void	print_dashes(char *str)
 	}
 }
 
-int	print_pwd(void)
+int	print_pwd(t_data *data)
 {
 	char	cwd[PATH_MAX];
 
 	if (getcwd(cwd, PATH_MAX))
 	{
-		ft_putendl_fd(cwd, 1);
+		if (ft_putstr_fd_checked(cwd, \
+			data->cmd[data->current_cmd]->fd_out) == 1)
+		{
+			printf("oui\n");
+			return (1);
+		}
+		ft_putchar_fd('\n', 1);
 		return (0);
 	}
 	return (1);
@@ -61,12 +67,12 @@ int	bt_pwd(t_data *data)
 
 	cmd = data->cmd[data->current_cmd];
 	if (!cmd->cmd_args[1])
-		return (print_pwd());
+		return (print_pwd(data));
 	i = 1;
 	while (cmd->cmd_args[i])
 	{
 		if (check_params(data->cmd[data->current_cmd]->cmd_args[i]) == 0)
-			return (print_pwd());
+			return (print_pwd(data));
 		i++;
 	}
 	ft_dprintf(2, "pwd: ");

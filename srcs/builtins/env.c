@@ -9,7 +9,10 @@ int	display_env(t_envlist *env, char **args)
 	while (env)
 	{
 		if (MASK_EXPORT & env->flag && MASK_SET & env->flag)
-			ft_dprintf(STDOUT_FILENO, "%s=%s\n", env->key, env->val);
+		{
+			if (ft_dprintf(STDOUT_FILENO, "%s=%s\n", env->key, env->val) == -1)
+				return (125);
+		}
 		if (env->next)
 			env = env->next;
 		else
