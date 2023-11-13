@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 14:25:17 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:08:30 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ int	update_env(t_envlist *envp, char old_pwd[PATH_MAX], int to_ret)
 int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 {
 	char	cwd[PATH_MAX];
+	struct stat	file_info;
 
 	cwd[0] = 0;
 	getcwd(cwd, PATH_MAX);
@@ -84,9 +85,14 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 		if (chdir(find_home(env)) == -1)
 			return (update_env(envp, cwd, 1));
 	}
-	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1] \
-		&& chdir(cmd->cmd_args[1]) == -1)
-		return (update_env(envp, cwd, 1));
+	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1])
+	{
+		if (stat(cmd->cmd_args[1], &file_info) == 0)
+			return (ft_dprintf(STDERR_FILENO, \
+			"minishell: cd: %s: Not a directory\n",cmd->cmd_args[1]));
+		if (chdir(cmd->cmd_args[1]) == -1)
+			return (update_env(envp, cwd, 1));			
+	}
 	return (update_env(envp, cwd, 0));
 }
 

@@ -130,6 +130,8 @@ PREFIX	= srcs
 
 SRCS = $(addprefix ${PREFIX}/, ${SRCS_FILES})
 OBJS = $(SRCS:.c=.o)
+HEADERS = header/minishell.h \
+			header/minishell_louis.h
 
 PREFIX_LIB = libft/srcs
 LIBFT_SRCS = $(addprefix ${PREFIX_LIB}/, ${LIBFT_FILES})
@@ -179,7 +181,7 @@ ${LIBFT}: ${LIBFT_OBJS}
 	${MAKE} -sC ${LIBFT_DIR}
 	echo "${GREEN}Done 💅${NC}"
 
-${NAME}: ${OBJS}
+${NAME}: ${OBJS} ${HEADERS}
 	echo -n "${BOLD_WHITE}⏳ COMPILING MINISHELL${NC}"
 	${CC} ${CFLAGS} ${OBJS} ${LIB} -o ${NAME}
 	echo "${GREEN}Done 💅${NC}"

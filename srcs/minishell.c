@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:38:35 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 01:54:57 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/13 18:36:24 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	main(int argc, char **argv, char **envp)
 	(void) argv ;
 	if (argc != 1)
 		return (ft_dprintf(STDERR_FILENO, D_ER_ARG), 1);
+	if (isatty(STDIN_FILENO) != 1)
+		return (1);
 	data = NULL;
 	data = ft_create_data(envp);
 	if (!data)
