@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:32:20 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 14:35:21 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:48:20 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ char	*find_path(char **envp)
 {
 	if (!envp[0])
 		return (NULL);
-	while (strncmp("PATH", *envp, 4))
+	while (ft_strncmp("PATH", *envp, 4))
 	{
 		envp++;
 		if (!*envp)

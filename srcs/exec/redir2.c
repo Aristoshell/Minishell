@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:20:58 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 12:02:59 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:03:43 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ t_redir	redir_file_from(t_files *f, t_cmd *cmd, t_redir r)
 		ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, f->filename);
 		r.fail_open = 1;
 	}
+	else
+		r.prev_in = true;
 	if (f->filetype == heredoc_ && cmd->fd_in != -2)
 	{
 		cmd->fd_in = open(f->filename, O_RDONLY);
@@ -33,7 +35,7 @@ t_redir	redir_file_from(t_files *f, t_cmd *cmd, t_redir r)
 			ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
 		r.prev_in = true;
 	}
-	else
+	else if (f->filetype == heredoc_)
 		r.fail_open = 1;
 	return (r);
 }

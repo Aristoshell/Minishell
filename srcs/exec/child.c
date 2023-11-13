@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:48:34 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 12:18:52 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 13:52:17 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,6 @@ int	child_process(t_data *data, t_pipe *pipes)
 		exit_child_builtin(data, pipes, exec_val);
 	}
 	return (child_process2(data, pipes, cmd, envp));
-}
-
-t_pipe	*ctrl_c_heredoc(t_data *data, t_pipe *pipes)
-{
-	if (data->current_cmd > 1)
-		waitpid(-1, NULL, 0);
-	close_pipes(data, pipes);
-	free(pipes);
-	close_fd(data->cmd, data->nb_command, data->stdin_save, data->stdout_save);
-	close_files(data);
-	unlink_files(data);
-	return (NULL);
 }
 
 t_pipe	*gen_child(t_data *data, t_pipe *pipes)
