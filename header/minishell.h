@@ -6,7 +6,7 @@
 /*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 01:55:39 by marine            #+#    #+#             */
-/*   Updated: 2023/11/13 03:37:41 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/13 03:54:08 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@
 # define PROMPT_RESET		"\001\033[0m\002"
 # define BLUE				"\033[1;36m"
 # define NC					"\033[0m"
-# define DETACH_BEGGINGIN    1
-# define DETACH_REST        2
 
 //typedefs
 
