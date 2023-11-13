@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_prompt.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:41:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 23:38:54 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 03:01:49 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	sighandler(int signum)
 	{
 		printf("\n");
 		rl_on_new_line();
-		rl_replace_line("", 0);
+		//rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	g_glb = 130;

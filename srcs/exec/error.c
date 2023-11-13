@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:55:50 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 15:15:19 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 03:01:22 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	error_dup2(void)
 	int	i;
 
 	i = 0;
+	(void) i;
 	g_glb = 990;
 	ft_dprintf(STDERR_FILENO, "!!!!ERROR DUP2!!!!");
 }
@@ -27,6 +28,7 @@ void	error_pipe(t_data *data, t_pipe *pipes)
 	int	i;
 
 	i = 0;
+	(void) i;
 	g_glb = 990;
 	if (data->current_cmd > 1)
 		waitpid(-1, NULL, 0);
@@ -44,6 +46,7 @@ void	error_fork(t_data *data, t_pipe *pipes)
 	int	i;
 
 	i = 0;
+	(void) i;
 	g_glb = 990;
 	if (data->current_cmd > 1)
 		waitpid(-1, NULL, 0);

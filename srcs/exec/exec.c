@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:52:16 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 16:27:40 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 03:00:33 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	wait_childs(t_data *data)
 
 	error_print = 0;
 	status = 0;
+	(void) status;
 	i = 0;
 	while (i < data->nb_command)
 	{

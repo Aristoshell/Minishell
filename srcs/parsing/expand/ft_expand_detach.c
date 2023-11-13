@@ -1,8 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expand_detach.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/13 01:56:27 by marine            #+#    #+#             */
+/*   Updated: 2023/11/13 01:56:35 by marine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "minishell_louis.h"
-
-/* rajouter une condition qui va checker avant
-quon n'a pas de = juste apres le $""$DONTEXIST */
 
 int	ft_need_detach(char *str)
 {

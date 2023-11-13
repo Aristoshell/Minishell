@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minishell.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/13 01:55:39 by marine            #+#    #+#             */
+/*   Updated: 2023/11/13 03:37:41 by marine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
@@ -29,6 +40,7 @@
 # define D_ER_EXPORT_UNSET "minishell: %s: %c%c: invalid option\n"
 # define D_ER_ENV "env: '%s': please use env with no option or argument\n"
 # define FUNCTION_SUCCESS	0
+# define STOP				2
 # define EXIT				1
 # define MEMORY_ERR_NB		99
 # define MEMORY_ERROR_PT	NULL
@@ -117,7 +129,7 @@ typedef struct s_redir
 {
 	int		fail_open;
 	bool	prev_in;
-	bool 	prev_out;
+	bool	prev_out;
 }				t_redir;
 
 typedef struct s_files
@@ -185,7 +197,6 @@ void			ft_lst_env_clear(t_envlist **lst);
 
 int				prompt(t_data *data);
 void			ft_free_2d_array(char **two_di_array);
-int				ft_error(int err_code, char *arg);
 
 void			ft_display_lexer(t_data data);
 int				parsing(t_data *data, const char *input);
@@ -214,15 +225,12 @@ void			ft_count_cmd(t_list *list, t_data *data);
 int				ft_init_tab_cmd(t_data *data);
 int				ft_init_cmd(t_data *data, int i);
 int				ft_fill_cmd(t_cmd *cmd, t_list *list, t_data *data);
-// int		ft_fill_cmd_no_agrs(t_cmd *cmd);
 int				ft_fill_cmd_redirs(t_cmd *cmd, t_data *data, t_list *list);
 int				ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list);
 void			ft_clean_t_file(t_files *file);
 int				ft_fill_cmd_count_args(t_list *list);
 int				ft_fill_cmd_init_tab_args(int nb_args, t_cmd *cmd);
 int				ft_fill_cmd_fill_tab_args(t_cmd *cmd, t_list *list, int n_args);
-void			ft_display_tab_cmd(t_data *data);
-void			ft_print_redir_files(t_list *list_files);
 int				ft_check_builtin(t_cmd *cmd);
 
 bool			ft_is_space(char c);

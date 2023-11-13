@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc2.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:31:12 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 21:33:30 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 03:01:38 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	clean_heredoc(t_data *data, t_pipe *pipes, char *limiter)
 	int	i;
 
 	i = 0;
+	(void) i;
 	g_glb = 990;
 	if (data->current_cmd > 1)
 		waitpid(-1, NULL, 0);

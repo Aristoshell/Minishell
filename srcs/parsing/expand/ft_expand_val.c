@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_expand_val.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/13 01:56:43 by marine            #+#    #+#             */
+/*   Updated: 2023/11/13 02:04:24 by marine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "minishell_louis.h"
 
@@ -53,7 +65,7 @@ int	ft_expand_val_split(t_list *list, char *env_val, t_data *data)
 
 int	ft_expand_questionmark(t_token *curr_token, t_data *data)
 {
-	char *nb;
+	char	*nb;
 
 	free(curr_token->string);
 	curr_token->string = NULL;

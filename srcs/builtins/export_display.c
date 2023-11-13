@@ -3,15 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   export_display.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:56:25 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 13:56:28 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 01:45:26 by marine           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
+
+void	free_copy_export(char ***copy_export, int size)
+{
+	int	i;
+
+	i = 0;
+	if (copy_export == NULL)
+		return ;
+	while (i < size)
+	{
+		if (copy_export[i] != NULL)
+			free(copy_export[i]);
+		i++;
+	}
+	free(copy_export);
+}
 
 int	ft_get_size_export(t_envlist *env)
 {
@@ -42,7 +58,10 @@ char	***ft_get_copy_export(t_envlist *env, int size)
 		{
 			copy_export[i] = (char **)malloc(size * sizeof(char *));
 			if (!copy_export[i])
-				return (MEMORY_ERROR_PT); //et d'autres free
+			{
+				free_copy_export(copy_export, size);
+				return (MEMORY_ERROR_PT);
+			}
 			copy_export[i][0] = (char *)env->key;
 			copy_export[i][1] = env->val;
 			i++;

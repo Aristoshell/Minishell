@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fill_cmd_args.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/13 01:56:02 by marine            #+#    #+#             */
+/*   Updated: 2023/11/13 02:02:57 by marine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "minishell_louis.h"
 
@@ -10,7 +22,8 @@ int	ft_fill_cmd_count_args(t_list *list)
 	curr_token = (t_token *)list->content;
 	while (curr_token->type != type_pipe)
 	{
-		if (curr_token->type == type_word && curr_token->string && !curr_token->redir_file)
+		if (curr_token->type == type_word && curr_token->string
+			&& !curr_token->redir_file)
 			nb_agrs++;
 		list = list->next;
 		if (!list)

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   export.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/12 20:36:41 by marine            #+#    #+#             */
+/*   Updated: 2023/11/13 01:31:44 by marine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
@@ -54,7 +65,11 @@ int	export_single(t_envlist **env, char *line)
 		return (MEMORY_ERR_NB);
 	if ((!isalpha(new->key[0]) && new->key[0] != '_')
 		|| is_forbiden_in_var(&new->key[1]))
-		return (ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line), 1); // free le node (pas encore fait)
+	{
+		ft_lst_env_delone(new);
+		ft_dprintf(STDERR_FILENO, D_ER_EXPAND, line);
+		return (1);
+	}
 	if (!(*env))
 		return (*env = new, FUNCTION_SUCCESS);
 	curr = ft_key_exist(*env, (char *)new->key);

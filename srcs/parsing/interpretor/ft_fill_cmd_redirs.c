@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_fill_cmd_redirs.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/11/13 01:56:05 by marine            #+#    #+#             */
+/*   Updated: 2023/11/13 03:46:01 by marine           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 #include "minishell_louis.h"
 
@@ -55,62 +67,6 @@ int	ft_fill_cmd_redirs_pipe_out(t_cmd *cmd, t_data *data)
 		new = ft_lstnew((void *)redirs);
 		if (!new)
 			return (free(redirs), redirs = NULL, MEMORY_ERR_NB);
-		ft_lstadd_back(&cmd->list_files, new);
-	}
-	return (FUNCTION_SUCCESS);
-}
-
-int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
-{
-	t_token	*curr_tok;
-	t_files	*redir;
-	t_list	*new;
-
-	curr_tok = (t_token *)list->content;
-	while (list && curr_tok->type != type_pipe)
-	{
-		while (list && curr_tok->type < type_from)
-		{
-			list = list->next;
-			if (!list)
-				return (FUNCTION_SUCCESS);
-			curr_tok = (t_token *)list->content;
-			if (curr_tok->type == type_pipe)
-				return (FUNCTION_SUCCESS);
-		}
-		redir = malloc(sizeof(t_files));
-		if (!redir)
-			return (MEMORY_ERR_NB);
-		redir->filetype = (t_filetype)curr_tok->type - 1;
-		list = list->next;
-		curr_tok = (t_token *)list->content;
-		while (list && !curr_tok->string)
-		{
-			if (!curr_tok->join_with_next)
-			{
-				if (redir->filetype == append_ || redir->filetype == file_to)
-					redir->filetype = ambiguous_out;
-				else
-					redir->filetype = ambiguous_in;
-				redir->filename = NULL;
-				curr_tok->redir_file = true;
-			}
-			list = list->next;
-			if (list)
-				curr_tok = (t_token *)list->content;
-		}
-		if (redir->filetype != ambiguous_in && redir->filetype != ambiguous_out)
-		{
-			curr_tok->redir_file = true;
-			redir->filename = ft_strdup(curr_tok->string);
-			if (!redir->filename)
-				return (free(redir), redir = NULL, MEMORY_ERR_NB);
-		}
-		redir->open = false;
-		redir->redirect = false;
-		new = ft_lstnew((void *)redir);
-		if (!new)
-			return (free(redir->filename), redir->filename = NULL, free(redir), redir = NULL, MEMORY_ERR_NB);
 		ft_lstadd_back(&cmd->list_files, new);
 	}
 	return (FUNCTION_SUCCESS);
