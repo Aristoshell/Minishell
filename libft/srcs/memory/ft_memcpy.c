@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:36:55 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 13:36:56 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:21:36 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n)
 	if (!dest && !src)
 		return (dest);
 	while (i < n)
-	{	
+	{
 		((unsigned char *)dest)[i] = ((unsigned char *)src)[i];
 		i++;
 	}

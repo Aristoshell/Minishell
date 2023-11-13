@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:19 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 20:01:25 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:16:58 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 
 void	init_pipe(t_pipe *pipes)
 {
-		pipes->tube[0][0] = -1;
-		pipes->tube[0][1] = -1;
-		pipes->tube[1][1] = -1;
-		pipes->tube[1][1] = -1;
+	pipes->tube[0][0] = -1;
+	pipes->tube[0][1] = -1;
+	pipes->tube[1][1] = -1;
+	pipes->tube[1][1] = -1;
 }
 
 void	error_dup(t_data *data, int status)

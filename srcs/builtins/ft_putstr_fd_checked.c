@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 16:56:11 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 17:30:37 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 05:21:55 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ int	ft_putstr_fd_checked(char *s, int fd)
 		return (1);
 	if (write(fd, s, ft_strlen(s)) != (ssize_t)ft_strlen(s))
 	{
-		ft_dprintf(2, "minishell: echo: write error: No space left on device\n");
+		ft_dprintf(2, "minishell: echo: write error:\
+			No space left on device\n");
 		return (1);
 	}
 	return (0);
