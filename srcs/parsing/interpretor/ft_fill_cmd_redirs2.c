@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_fill_cmd_redirs2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 01:56:05 by marine            #+#    #+#             */
-/*   Updated: 2023/11/13 03:46:20 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/13 11:33:06 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	ft_find_redir_token(t_list *list, t_token *curr_tok)
 	return (FUNCTION_SUCCESS);
 }
 
-t_files	*ft_create_new_redir(t_list *list, t_token *curr_tok)
+t_files	*ft_create_new_redir(t_token *curr_tok)
 {
 	t_files	*redir;
 
@@ -72,8 +72,6 @@ t_files	*ft_create_new_redir(t_list *list, t_token *curr_tok)
 	redir->filetype = (t_filetype)curr_tok->type - 1;
 	redir->open = false;
 	redir->redirect = false;
-	list = list->next;
-	curr_tok = (t_token *)list->content;
 	return (redir);
 }
 
@@ -88,9 +86,11 @@ int	ft_fill_cmd_redirs_files(t_cmd *cmd, t_list *list)
 	{
 		if (ft_find_redir_token(list, curr_tok) == STOP)
 			return (FUNCTION_SUCCESS);
-		redir = ft_create_new_redir(list, curr_tok);
+		redir = ft_create_new_redir(curr_tok);
 		if (!redir)
 			return (MEMORY_ERR_NB);
+		list = list->next;
+		curr_tok = (t_token *)list->content;
 		ft_check_ambigi_redir(list, curr_tok, redir);
 		if (ft_get_name_redir_file(curr_tok, redir))
 			return (MEMORY_ERR_NB);
