@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:57:54 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 17:31:44 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 20:12:00 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,7 @@ int	print_pwd(t_data *data)
 	{
 		if (ft_putstr_fd_checked(cwd, \
 			data->cmd[data->current_cmd]->fd_out) == 1)
-		{
-			printf("oui\n");
 			return (1);
-		}
 		ft_putchar_fd('\n', 1);
 		return (0);
 	}

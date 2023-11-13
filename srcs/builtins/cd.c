@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 19:08:30 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 19:59:33 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,9 +87,11 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 	}
 	if (cmd->cmd_args && cmd->cmd_args[0] && cmd->cmd_args[1])
 	{
-		if (stat(cmd->cmd_args[1], &file_info) == 0)
+		if (stat(cmd->cmd_args[1], &file_info) == 0 && !S_ISDIR(file_info.st_mode))
+		{
 			return (ft_dprintf(STDERR_FILENO, \
-			"minishell: cd: %s: Not a directory\n",cmd->cmd_args[1]));
+				"minishell: cd: %s: Not a directory\n",cmd->cmd_args[1]));
+		}
 		if (chdir(cmd->cmd_args[1]) == -1)
 			return (update_env(envp, cwd, 1));			
 	}
