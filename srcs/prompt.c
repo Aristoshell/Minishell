@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:38:41 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 01:54:49 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/13 16:29:04 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	ft_no_input(t_data *data)
 	exec_val = data->exec_val;
 	printf("exit\n");
 	ft_clean_t_data(data);
-	clear_history();
+	rl_clear_history();
 	exit(exec_val);
 }
 
@@ -50,13 +50,14 @@ int	prompt(t_data *data)
 			free((void *)input);
 			input = NULL;
 			if (check_error)
-				return (clear_history(), ft_clean_t_data(data), MEMORY_ERR_NB);
+				return (rl_clear_history(), \
+					ft_clean_t_data(data), MEMORY_ERR_NB);
 			if (cross_array_list(data))
-				return (clear_history(), ft_clean_t_data(data), EXIT);
+				return (rl_clear_history(), ft_clean_t_data(data), EXIT);
 			ft_reinit_data(data);
 		}
 		else if (!input)
 			ft_no_input(data);
 	}
-	return (clear_history(), FUNCTION_SUCCESS);
+	return (rl_clear_history(), FUNCTION_SUCCESS);
 }
