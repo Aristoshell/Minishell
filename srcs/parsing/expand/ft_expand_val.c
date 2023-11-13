@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_expand_val.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 01:56:43 by marine            #+#    #+#             */
-/*   Updated: 2023/11/13 02:04:24 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/13 13:57:06 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,14 @@ int	ft_insert_expand_splitted(t_list *list, char *new_word, bool join_next)
 	return (FUNCTION_SUCCESS);
 }
 
+int	ft_dup_nothing(t_data *data, char **splited)
+{
+	data->curr_token->string = ft_strdup("\0");
+	if (!data->curr_token->string)
+		return (ft_free_2d_array(splited), MEMORY_ERR_NB);
+	return (ft_free_2d_array(splited), FUNCTION_SUCCESS);
+}
+
 int	ft_expand_val_split(t_list *list, char *env_val, t_data *data)
 {
 	char	**splited;
@@ -50,7 +58,7 @@ int	ft_expand_val_split(t_list *list, char *env_val, t_data *data)
 	mem_last = data->curr_token->join_with_next;
 	data->curr_token->join_with_next = false;
 	if (!splited[0])
-		return (data->curr_token->string = ft_strdup("\0"), FUNCTION_SUCCESS);
+		return (ft_dup_nothing(data, splited));
 	i = 1;
 	while (splited && splited[i])
 	{
@@ -60,6 +68,7 @@ int	ft_expand_val_split(t_list *list, char *env_val, t_data *data)
 		list = list->next;
 	}
 	data->curr_token = (t_token *)list->content;
+	free(splited);
 	return (data->curr_token->join_with_next = mem_last, FUNCTION_SUCCESS);
 }
 
