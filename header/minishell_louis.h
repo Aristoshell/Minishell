@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:16:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 14:01:54 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 21:07:26 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stddef.h>
 
 # define BT_EXIT_ARG "minishell: exit: %s: numeric argument required\n"
+# define A "minishell: cd: %s: Not a directory\n"
 
 extern int	g_glb;
 
@@ -58,6 +59,8 @@ t_redir	redir_file_to(t_files *f, t_cmd *cmd, t_redir r);
 t_redir	redir_append(t_files *f, t_cmd *cmd, t_redir r);
 void	redir_ambigous_in(t_files *f, t_cmd *cmd, t_redir r);
 void	redir_ambigous_out(t_files *f, t_cmd *cmd, t_redir r);
+t_redir	redir_from_heredoc(t_files *f, t_cmd *cmd, t_redir r);
+t_redir	redir_from_file(t_files *f, t_cmd *cmd, t_redir r);
 
 int		handle_builtins(t_data *data, t_pipe *pipes);
 int		bt_exit(t_data *data, int i, t_pipe *pipes);

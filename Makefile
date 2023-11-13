@@ -48,6 +48,7 @@ SRCS_FILES	= 	minishell.c \
 				exec/free.c \
 				exec/redir.c \
 				exec/redir2.c \
+				exec/redir3.c \
 				exec/usefull.c \
 				exec/heredoc.c \
 				exec/heredoc2.c \
@@ -131,7 +132,7 @@ PREFIX	= srcs
 SRCS = $(addprefix ${PREFIX}/, ${SRCS_FILES})
 OBJS = $(SRCS:.c=.o)
 HEADERS = header/minishell.h \
-			header/minishell_louis.h
+		header/minishell_louis.h
 
 PREFIX_LIB = libft/srcs
 LIBFT_SRCS = $(addprefix ${PREFIX_LIB}/, ${LIBFT_FILES})
