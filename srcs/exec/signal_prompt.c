@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:41:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 05:19:25 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 11:16:21 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	sighandler(int signum)
 	{
 		printf("\n");
 		rl_on_new_line();
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	g_glb = 130;
