@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 13:46:59 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/13 14:25:17 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ char	*find_home(char **envp)
 	return (*envp + 5);
 }
 
-int	update_lines(t_envlist *envp, char pwd[PATH_MAX])
+int	update_lines(t_envlist *envp, char old_pwd[PATH_MAX], char pwd[PATH_MAX])
 {
 	if (ft_strncmp(envp->key, "OLDPWD", 7) == 0)
 	{
 		free(envp->val);
-		envp->val = ft_strdup(pwd);
+		envp->val = ft_strdup(old_pwd);
 		if (!envp->val)
 			return (2);
 	}
@@ -45,20 +45,23 @@ int	update_lines(t_envlist *envp, char pwd[PATH_MAX])
 	return (0);
 }
 
-int	update_env(t_envlist *envp, char *old_pwd, int to_ret)
+int	update_env(t_envlist *envp, char old_pwd[PATH_MAX], int to_ret)
 {
 	int		i;
 	int		j;
 	char	pwd[PATH_MAX];
 
+	pwd[0] = 0;
 	i = 0;
 	if (!old_pwd)
-		return (0);
+		return (1);
 	j = ft_envlstsize(envp);
 	getcwd(pwd, PATH_MAX);
+	if (pwd[0] == 0)
+		return (2);
 	while (i < j)
 	{
-		if (update_lines(envp, pwd) == 2)
+		if (update_lines(envp, old_pwd, pwd) == 2)
 			return (2);
 		envp = envp->next;
 		i++;
@@ -70,7 +73,10 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 {
 	char	cwd[PATH_MAX];
 
+	cwd[0] = 0;
 	getcwd(cwd, PATH_MAX);
+	if (cwd[0] == 0)
+		return (1);
 	if (!env)
 		return (1);
 	if (nbr_arg == 0)
