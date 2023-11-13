@@ -33,7 +33,6 @@ SRCS_FILES	= 	minishell.c \
 				parsing/expand/ft_expand.c \
 				parsing/interpretor/ft_fill_cmd_args.c \
 				parsing/interpretor/ft_fill_cmd_redirs.c \
-				parsing/interpretor/ft_fill_cmd_redirs2.c \
 				parsing/interpretor/ft_init_cmd.c \
 				parsing/interpretor/ft_interprete.c \
 				parsing/interpretor/ft_check_builtins.c \

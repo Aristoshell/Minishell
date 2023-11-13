@@ -3,31 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   export_display.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marine <marine@student.42.fr>              +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:56:25 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 01:45:26 by marine           ###   ########.fr       */
+/*   Updated: 2023/11/13 12:01:13 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
-
-void	free_copy_export(char ***copy_export, int size)
-{
-	int	i;
-
-	i = 0;
-	if (copy_export == NULL)
-		return ;
-	while (i < size)
-	{
-		if (copy_export[i] != NULL)
-			free(copy_export[i]);
-		i++;
-	}
-	free(copy_export);
-}
 
 int	ft_get_size_export(t_envlist *env)
 {
@@ -41,6 +25,23 @@ int	ft_get_size_export(t_envlist *env)
 		env = env->next;
 	}
 	return (size);
+}
+
+void	ft_del_sorted_export(char ***tab, int size)
+{
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return ;
+	while (i < size)
+	{
+		free(tab[i]);
+		tab[i] = NULL;
+		i++;
+	}
+	free (tab);
+	tab = NULL;
 }
 
 char	***ft_get_copy_export(t_envlist *env, int size)
@@ -59,7 +60,7 @@ char	***ft_get_copy_export(t_envlist *env, int size)
 			copy_export[i] = (char **)malloc(size * sizeof(char *));
 			if (!copy_export[i])
 			{
-				free_copy_export(copy_export, size);
+				ft_del_sorted_export(copy_export, size);
 				return (MEMORY_ERROR_PT);
 			}
 			copy_export[i][0] = (char *)env->key;
@@ -71,46 +72,42 @@ char	***ft_get_copy_export(t_envlist *env, int size)
 	return (copy_export);
 }
 
-void	ft_del_sorted_export(char ***tab, int size)
+int	display_messages(char ***tab, int size)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (i < size)
 	{
-		free(tab[i]);
-		tab[i] = NULL;
+		if (tab[i][1])
+		{
+			if (ft_dprintf(1, "export %s=\"%s\"\n", tab[i][0], tab[i][1]) == -1)
+				return (ft_del_sorted_export(tab, size), 1);
+		}
+		else
+		{
+			if (ft_dprintf(1, "export %s\n", tab[i][0]) == -1)
+				return (ft_del_sorted_export(tab, size), 1);
+		}
 		i++;
 	}
-	free (tab);
-	tab = NULL;
+	return (ft_del_sorted_export(tab, size), FUNCTION_SUCCESS);
 }
 
 int	display_export(t_envlist *env, char **args)
 {
 	int		size;
 	char	***tab;
-	int		i;
 
 	if (args[1])
 	{
 		ft_dprintf(2, D_ER_EXPORT_UNSET, "export", args[1][0], args[1][1]);
 		return (2);
 	}
-	i = 0;
 	size = ft_get_size_export(env);
 	tab = ft_get_copy_export(env, size);
 	if (!tab)
 		return (MEMORY_ERR_NB);
 	ft_quick_sort(tab, 0, size - 1);
-	while (i < size)
-	{
-		if (tab[i][1])
-			ft_dprintf(STDOUT_FILENO, "export %s=\"%s\"\n", tab[i][0], tab[i][1]);
-		else
-			ft_dprintf(STDOUT_FILENO, "export %s\n", tab[i][0]);
-		i++;
-	}
-	ft_del_sorted_export(tab, size);
-	return (FUNCTION_SUCCESS);
+	return (display_messages(tab, size));
 }
