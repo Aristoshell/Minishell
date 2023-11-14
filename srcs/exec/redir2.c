@@ -6,13 +6,12 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 21:20:58 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 21:04:07 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:15:44 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
-
 
 t_redir	redir_file_from(t_files *f, t_cmd *cmd, t_redir r)
 {

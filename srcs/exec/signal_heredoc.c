@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:41:16 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 16:47:01 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:09:54 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void	handle_signals_heredoc(t_data *data)
 	g_glb = 0;
 	signal(SIGINT, sighandler_heredoc);
 	signal(SIGQUIT, SIG_IGN);
+	signal(SIGPIPE, SIG_IGN);
 }

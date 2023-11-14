@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 20:24:54 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:16:50 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ int	bt_cd(t_data *data)
 	{
 		if (cmd->cmd_args[2])
 		{
-			ft_dprintf(2, "too many arguments\n");
+			ft_dprintf(2, "cd: too many arguments\n");
 			return (ft_free_2d_array(env), 1);
 		}
 		return (ft_free_2d_array(env), go_to(cmd, 1, data->envp, env));
