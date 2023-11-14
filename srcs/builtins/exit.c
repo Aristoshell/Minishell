@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 17:30:16 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 00:10:19 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,13 @@ void	clean_exit(t_data *data, t_pipe *pipes)
 	free(pipes);
 }
 
-int	error_exit(t_cmd *cmd)
+void	error_exit(t_cmd *cmd, t_data *data, t_pipe *pipes)
 {
+	ft_dprintf(STDERR_FILENO, "exit\n");
 	ft_dprintf(STDERR_FILENO, "minishell: exit: %s: \
 		numeric argument required\n", cmd->cmd_args[1]);
-	return (2);
+	clean_exit(data, pipes);
+	exit(2);
 }
 
 int	ft_isnumber(char *str)
@@ -75,7 +77,7 @@ int	bt_exit(t_data *data, int i, t_pipe *pipes)
 		exit_val = ft_atoi(built_cmd->cmd_args[1]) % 256;
 	}
 	else
-		return (error_exit(built_cmd));
+		error_exit(built_cmd, data, pipes);
 	if (data->nb_command == 1)
 		ft_dprintf(STDERR_FILENO, "exit\n");
 	clean_exit(data, pipes);
