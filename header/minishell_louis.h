@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:16:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 21:07:26 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:52:23 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int		bt_exit(t_data *data, int i, t_pipe *pipes);
 int		bt_echo(t_data *data, int to_do);
 int		bt_pwd(t_data *data);
 int		bt_cd(t_data *data);
+void	manage_errno(void);
 
 int		child_process(t_data *data, t_pipe *pipes);
 

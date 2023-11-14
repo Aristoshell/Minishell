@@ -6,12 +6,18 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:19 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 05:16:58 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:52:12 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
+
+void	manage_errno(void)
+{
+	if (errno == 2)
+		ft_dprintf(2, "minishell: cd: No such file or directory\n");
+}
 
 void	init_pipe(t_pipe *pipes)
 {

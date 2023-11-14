@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/14 13:16:50 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 13:52:03 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,9 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 	{
 		if (stat(cmd->cmd_args[1], &file_info) == 0 \
 			&& !S_ISDIR(file_info.st_mode))
-		{
 			return (ft_dprintf(2, A, cmd->cmd_args[1]));
-		}
 		if (chdir(cmd->cmd_args[1]) == -1)
-			return (update_env(envp, cwd, 1));
+			return (manage_errno(), update_env(envp, cwd, 1));
 	}
 	return (update_env(envp, cwd, 0));
 }
@@ -116,7 +114,7 @@ int	bt_cd(t_data *data)
 	}
 	if (!find_home(env))
 	{
-		ft_dprintf(2, "HOME not set\n");
+		ft_dprintf(2, "cd: HOME not set\n");
 		return (ft_free_2d_array(env), 1);
 	}
 	go_to(cmd, 0, data->envp, env);
