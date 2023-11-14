@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:41 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/12 17:04:08 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/14 23:21:13 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ int	check_n(char *arg)
 	int	j;
 
 	if (arg[0] != '-')
+		return (0);
+	if (arg[1] != 'n')
 		return (0);
 	j = 1;
 	while (arg[j])
