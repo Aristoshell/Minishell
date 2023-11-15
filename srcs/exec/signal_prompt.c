@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:41:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/14 13:09:52 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 07:50:08 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,4 @@ void	handle_signals_prompt(t_data *data)
 	g_glb = 0;
 	signal(SIGINT, &sighandler);
 	signal(SIGQUIT, SIG_IGN);
-	signal(SIGPIPE, SIG_IGN);
 }

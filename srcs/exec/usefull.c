@@ -6,12 +6,19 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:35:36 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 05:07:52 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 08:04:50 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
+
+void	print_warning(const char *limiter)
+{
+	ft_dprintf(2, "aristoshell: warning: here-document");
+	ft_dprintf(2, \
+	"at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
+}
 
 char	*join_lign_env(t_envlist *list)
 {

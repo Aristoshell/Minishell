@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/13 21:04:00 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/14 13:15:50 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 07:54:49 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,23 @@
 t_redir	redir_from_heredoc(t_files *f, t_cmd *cmd, t_redir r)
 {
 	cmd->input = file_from;
-	if (cmd->fd_in == -1)
+	if (r.prev_in == true)
+		close(cmd->fd_in);
+	cmd->fd_in = open(f->filename, O_RDONLY);
+	if (access(f->filename, F_OK) == -1)
 	{
 		cmd->fd_in = -1;
 		ft_dprintf(STDERR_FILENO, D_ER_NO_FILDIR, f->filename);
 		r.fail_open = 1;
 	}
+	else if (access(f->filename, R_OK == -1) || cmd->fd_in == -1)
+	{
+		cmd->fd_in = -1;
+		ft_dprintf(STDERR_FILENO, D_ER_PERM, f->filename);
+		r.fail_open = 1;
+	}
+	if (r.fail_open != 1)
+		r.prev_in = true;
 	return (r);
 }
 

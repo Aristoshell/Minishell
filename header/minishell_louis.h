@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:16:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/14 13:52:23 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 08:04:38 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ char	*seeded_word(long nbr, char *alnum);
 int		heredoc(char *filemame, char *limiter);
 void	clean_heredoc(t_data *data, t_pipe *pipes, char *limiter);
 t_pipe	*ctrl_c_heredoc(t_data *data, t_pipe *pipes);
+void	print_warning(const char *limiter);
 
 t_pipe	*new_pipes(t_data *data, t_pipe *pipes, int i);
 

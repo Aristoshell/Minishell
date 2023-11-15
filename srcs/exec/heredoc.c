@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 13:52:48 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 08:04:00 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_pipe	*ctrl_c_heredoc(t_data *data, t_pipe *pipes)
 int	heredoc2(const char *limiter, int fd)
 {
 	const char	*input;
+	int			i;
 
 	while (1)
 	{
@@ -44,9 +45,9 @@ int	heredoc2(const char *limiter, int fd)
 			write(fd, "\n", 1);
 		}
 		if (!input)
-			return (printf("aristoshell: warning: here-document at line 1 \
-				delimited by end-of-file (wanted `%s')\n", limiter), 0);
+			return (print_warning(limiter), 0);
 		input = NULL;
+		i++;
 	}
 	return (0);
 }

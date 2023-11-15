@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:48:34 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 20:04:18 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 07:51:10 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	exit_child_builtin(t_data *data, t_pipe *pipes, int exit_val)
 	close_pipes(data, pipes);
 	ft_clean_t_data(data);
 	free(pipes);
+	signal(SIGPIPE, SIG_DFL);
 	exit(exit_val);
 }
 
@@ -82,6 +83,7 @@ int	child_process(t_data *data, t_pipe *pipes)
 	if (data->cmd[data->current_cmd]->cmd_type != no)
 	{
 		free_envp(envp);
+		signal(SIGPIPE, SIG_IGN);
 		exec_val = handle_builtins(data, pipes);
 		exit_child_builtin(data, pipes, exec_val);
 	}
