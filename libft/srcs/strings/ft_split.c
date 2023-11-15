@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:37:23 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/11 13:37:25 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 22:29:56 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ static int	countlenword(char const *s, char charset)
 		count++;
 	}
 	return (count);
+}
+
+char	*clean(char **tab, int words)
+{
+	int	i;
+
+	i = 0;
+	while (i <= words)
+	{
+		if (tab[i])
+		{
+			free(tab[i]);
+			tab[i] = NULL;
+		}
+		i++;
+	}
+	free(tab);
+	return (NULL);
 }
 
 char	**ft_split(char const *s, char c)

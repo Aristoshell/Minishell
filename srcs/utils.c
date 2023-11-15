@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:19 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/14 13:52:12 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 21:38:19 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "minishell_louis.h"
 
-void	manage_errno(void)
+void	manage_errno(char *arg)
 {
 	if (errno == 2)
-		ft_dprintf(2, "minishell: cd: No such file or directory\n");
+		ft_dprintf(2, "minishell: cd: %s: No such file or directory\n", arg);
+	if (errno == 13)
+		ft_dprintf(2, "minishell: cd: %s: Permission denied\n", arg);
 }
 
 void	init_pipe(t_pipe *pipes)

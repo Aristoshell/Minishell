@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
+/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 19:27:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/15 08:04:00 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/15 17:58:39 by madavid          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ int	heredoc2(const char *limiter, int fd)
 	const char	*input;
 	int			i;
 
+	i = 0;
 	while (1)
 	{
 		input = readline(">");
