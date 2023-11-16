@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_louis.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/12 15:16:08 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/15 21:33:52 by madavid          ###   ########.fr       */
+/*   Updated: 2023/11/16 15:51:24 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		bt_echo(t_data *data, int to_do);
 int		bt_pwd(t_data *data);
 int		bt_cd(t_data *data);
 void	manage_errno(char *arg);
+void	exp_err(void);
 
 int		child_process(t_data *data, t_pipe *pipes);
 

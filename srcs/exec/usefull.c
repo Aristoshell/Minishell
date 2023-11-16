@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:35:36 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/15 08:04:50 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/16 15:54:53 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,12 @@ void	print_warning(const char *limiter)
 	ft_dprintf(2, "aristoshell: warning: here-document");
 	ft_dprintf(2, \
 	"at line 1 delimited by end-of-file (wanted `%s')\n", limiter);
+}
+
+void	exp_err(void)
+{
+	ft_dprintf(2, "minishell: env: write error: ");
+	ft_dprintf(2, "No space left on device\n");
 }
 
 char	*join_lign_env(t_envlist *list)

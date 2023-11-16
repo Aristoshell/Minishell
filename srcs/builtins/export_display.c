@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_display.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:56:25 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 12:01:13 by madavid          ###   ########.fr       */
+/*   Updated: 2023/11/16 15:52:19 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,12 +82,12 @@ int	display_messages(char ***tab, int size)
 		if (tab[i][1])
 		{
 			if (ft_dprintf(1, "export %s=\"%s\"\n", tab[i][0], tab[i][1]) == -1)
-				return (ft_del_sorted_export(tab, size), 1);
+				return (exp_err(), ft_del_sorted_export(tab, size), 1);
 		}
 		else
 		{
 			if (ft_dprintf(1, "export %s\n", tab[i][0]) == -1)
-				return (ft_del_sorted_export(tab, size), 1);
+				return (exp_err(), ft_del_sorted_export(tab, size), 1);
 		}
 		i++;
 	}
