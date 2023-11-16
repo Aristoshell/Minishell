@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 16:48:34 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/15 07:51:10 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:46:02 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_child_builtin(t_data *data, t_pipe *pipes, int exit_val)
 void	exit_clean_child(t_data *data, t_pipe *pipes, char **envp, int exit_val)
 {
 	if (exit_val == 99)
-		printf("!!!!ERROR MALLOC!!!!");
+		ft_printf(STDERR_FILENO, D_ER_MEM);
 	close_pipes(data, pipes);
 	ft_clean_t_data(data);
 	free_envp(envp);

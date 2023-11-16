@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 14:12:06 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/16 13:10:20 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:22:51 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ int	go_to(t_cmd *cmd, int nbr_arg, t_envlist *envp, char **env)
 			&& !S_ISDIR(file_info.st_mode))
 			return (ft_dprintf(2, A, cmd->cmd_args[1]), 1);
 		if (chdir(cmd->cmd_args[1]) == -1)
-			return (manage_errno(cmd->cmd_args[1])1);
+			return (manage_errno(cmd->cmd_args[1]), 1);
 	}
 	return (update_env(envp, cwd, 0));
 }

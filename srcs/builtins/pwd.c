@@ -6,7 +6,7 @@
 /*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:57:54 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/13 20:12:00 by lmarchai         ###   ########.fr       */
+/*   Updated: 2023/11/16 14:48:14 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,12 @@ int	print_pwd(t_data *data)
 			return (1);
 		ft_putchar_fd('\n', 1);
 		return (0);
+	}
+	else
+	{
+		ft_dprintf(2, "pwd: error retrieving current directory: ");
+		ft_dprintf(2, "getcwd: cannot access parent directories: ");
+		ft_dprintf(2, "No such file or directory\n");
 	}
 	return (1);
 }

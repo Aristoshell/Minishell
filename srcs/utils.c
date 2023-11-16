@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:19 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/15 21:38:19 by madavid          ###   ########.fr       */
+/*   Updated: 2023/11/16 14:46:43 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	error_dup(t_data *data, int status)
 	if (status == 1)
 		close (data->stdin_save);
 	ft_clean_t_data(data);
-	printf("!!!!ERROR DUP!!!!\n");
+	ft_dprintf(2, "!!!!ERROR DUP!!!!\n");
 	exit(99);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: madavid <madavid@student.42.fr>            +#+  +:+       +#+        */
+/*   By: lmarchai <lmarchai@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/11 13:39:27 by lmarchai          #+#    #+#             */
-/*   Updated: 2023/11/15 00:10:19 by madavid          ###   ########.fr       */
+/*   Updated: 2023/11/16 14:43:41 by lmarchai         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	clean_exit(t_data *data, t_pipe *pipes)
 void	error_exit(t_cmd *cmd, t_data *data, t_pipe *pipes)
 {
 	ft_dprintf(STDERR_FILENO, "exit\n");
-	ft_dprintf(STDERR_FILENO, "minishell: exit: %s: \
-		numeric argument required\n", cmd->cmd_args[1]);
+	ft_dprintf(STDERR_FILENO, "minishell: exit: %s: numeric argument required\n"\
+		, cmd->cmd_args[1]);
 	clean_exit(data, pipes);
 	exit(2);
 }
